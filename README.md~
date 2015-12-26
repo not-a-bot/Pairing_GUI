@@ -42,6 +42,3 @@ It is up to committe to manually place in reason pair ended,
 at the moment. We could create
 another interface that lets committee members end pairs and add reason.
 
-I really hope that I make this and then it breaks horrendously in the future.
-That'd be no bueno.
-
