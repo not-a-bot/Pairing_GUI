@@ -1,17 +1,38 @@
 import os
 import time
+import authenticate as au
 
-#stolen from Analyze_Docs
-def remove_newlines(matrix):
-	for i in range(len(matrix)):
-	#something is fucky with this, the -1 works with arrays
-#when the backslash is not counted as a character but it is
-#counted as a character when used in writelines.. i think.
-		matrix[i] = matrix[i][0:len(matrix[i])-1]
-	return matrix
+#this is for testing atm
+def list_available_sheets(gc)
+	all_sheets = []
+	for sheet in gc.openall():
+		all_sheets.append("{}".format(sheet.title))
+	return all_sheets
+
+def open_sheet(spreadsheet):
+	#turn this into url to some cloud so dont have to
+	#show the file on github.
+	path2secretfile = 'first-eb1baeb00baf.json'
+	#load authentication with .json file
+	gc = au.LOAD(path2secretfile)
+	#like the file once you open a txt file
+	
+	#list all workbooks you can edit and make sure
+	#the user is opening one that they can.
+	here = list_available_sheets(gc)
+	
+	if spreadsheet in here:
+		sheet = gc.open(spreadsheet).sheet1
+	else:
+	#if spreadsheet isnt available tell user and give them a
+	#list of all the ones that the user can edit.
+		return "Spreadsheet is not available.", here
+	
+	return sheet
+
 
 #only kinda stolen from Analyze_Docs
-def list_lines(sheet_name):
+def list_names(sheet_name):
 	#this function takes a document and creates an array
 	#of all the lines in the document in order.	
 	#and lower case
