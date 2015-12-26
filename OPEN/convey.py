@@ -1,0 +1,87 @@
+import os
+import time
+
+#stolen from Analyze_Docs
+def remove_newlines(matrix):
+	for i in range(len(matrix)):
+	#something is fucky with this, the -1 works with arrays
+#when the backslash is not counted as a character but it is
+#counted as a character when used in writelines.. i think.
+		matrix[i] = matrix[i][0:len(matrix[i])-1]
+	return matrix
+
+#only kinda stolen from Analyze_Docs
+def list_lines(sheet_name):
+	#this function takes a document and creates an array
+	#of all the lines in the document in order.	
+	#and lower case
+	path = path = os.getcwd() + "/spreadsheets/"
+	sheet = open(path + sheet_name + ".txt", 'r')
+	list_of_lines = sheet.readlines()
+
+	sheet.close()
+	return list_of_lines
+
+#given the sheet_name takes that and turns each individual line
+#into an array
+#this is really just changing list lines into this function....
+def queues_as_arrays(queue):
+	array = list_lines(queue)
+	new_array = []
+	for element in array:
+		new_array.append(element.lower())
+	#array1 = remove_newlines(array)
+	return new_array
+
+#given a sheet name and list of names this function
+#writes those names to the sheet
+#writelines method REQUIRES \n in there for new lines, make sure to have it!!
+def rewrite_sheet(sheet_name, new_list_of_names):
+	
+	path = os.getcwd() + "/spreadsheets/"
+	sheet = open(path + sheet_name + ".txt", 'w')
+	sheet.writelines(new_list_of_names)
+	sheet.close()
+
+def add_pair(chosen_pair):
+	#given a pair, friend, warrior this will add the pair to the
+	#current pairings sheet and the all pairings sheet
+	#along with a time stamp and in the future a tag showing who
+	#paired them.	
+	for element in ["Current-Pairings", "All-Pairings"]:
+		pairs = queues_as_arrays(element)
+		the_time = time.strftime("%m-%d-%y", time.gmtime())
+		pairs.append(chosen_pair[0] + ' ' + chosen_pair[1] + ' ' + the_time + '\n')
+		rewrite_sheet(element, pairs)
+		
+
+def remove_from_queue(sheet_name, name, extra=1):
+	#this removes a person from a queue
+	#used after they have been paired so dont need to be paired anymore
+	#remove only one instance of name so that friends who place themselves
+	#on the q multiple times to be paired multiple times dont have all of
+	#their names they put on removed
+	list_of_names = queues_as_arrays(sheet_name)
+	new_names = []
+	i = 0
+	#extra represents how many instances of the name to remove
+	for element in list_of_names:
+		if element == name and i < extra:
+			i = i + 1
+		else:
+			new_names.append(element)
+	rewrite_sheet(sheet_name, new_names)
+
+
+#used to add friends who want to be added to queue, maybe also to create
+#warrior queue from
+#array of names without \n at the end already
+def add_to_queue(sheet_name, list_of_names):
+	names = queues_as_arrays(sheet_name)
+	for name in list_of_names:
+		names.append(name + '\n')
+	rewrite_sheet(sheet_name, names)
+		
+
+
+

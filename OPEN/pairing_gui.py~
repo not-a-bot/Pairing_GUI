@@ -1,0 +1,17 @@
+import web
+
+urls = (
+	'/', 'Pairing'
+)
+
+app = web.application(urls, globals())
+
+render = web.template.render('templates/')
+
+class Pairing(object):
+	def Get(self):
+		queue = ['brit nay', 'michael', 'johnson']
+		return render.Pairing(list_of_names = queue)
+
+if __name__ == '__main__':
+	Pairing.run()

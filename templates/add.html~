@@ -1,0 +1,62 @@
+$def with (stuff)
+
+<html>
+
+<meta content="width=device-width, initial-scale=1, user-scalable=no">
+
+<head>
+	<title>
+	ADD TO QUEUE
+	</title>
+</head>
+
+<body style="text-align:center; background-color:lightgrey; font-family:sans-serif">
+$if stuff != 3:
+	$if stuff[0][0] == 'S':
+		<p>$stuff[0]</p>
+		<p>You have been added to the queue $stuff[1] time(s).</p>
+		<p style="text-align:center; font-size:20; color:purple">
+		<b>List of Available Friends</b></p>
+		$for element in stuff[2]:
+			<p style="color:purple; text-align:center">$element</p>
+	$else:
+		<p>$stuff[0]</p>
+$if stuff == 3:
+	<h1>Add Yourself to the Friend Queue</h1>
+	<p>The purpose of this page is for verified friends to be 
+	able to add themslves to the friends queue. Verification merely 
+	means that you have gone to enough trainings and we think you are 
+	ready to talke to people in delicate situations.</p>
+	<p>You can add yourself as many times as you want, though be 
+	aware that the number of times you add yourself to the list 
+	is the number of people you are willing to help.</p>
+	<p>At any point, you are able to go to the remove page and 
+	remove all instances of your name from the queue. This lets 
+	us know that you are too busy to be able to help at the moment.</p>
+	<p>However, at any point you are able to re-add yourself on 
+	this page again.</p>
+	<p>If you notice anything wrong on this or any 
+	other pages of the interface please let us know in #webdev 
+	on slack or bring it up at the next meeting.</p>
+	<p>HAPPY BUTTONING</p>
+	<br><hr><br>
+	<!Add to queue form, once we get a bluewaters login going we can just 
+	make this a nice, big red button, which is obviously the end goal
+	
+	the remove will be a big blue button, this is all non-negotiable.>
+	<form style="text-align:center; color:blue" method="POST">
+	NAME:<input style="background-color:darkgrey" type="text" name="name">
+	<! should we even allow 7? this will somewhat limit that 15
+	thing unless people add 7 three times>
+	<br>
+	MAXIMUM NUMBER OF PEOPLE YOU CAN PAIR WITH:
+	<br>
+	<input style="background-color:darkgrey" type="number" name="number" min="1" max="7">
+	<br>
+	<input style="background-color:red; color:white; height:100px; width:500px; font-size:50; font-family:sans-serif" type="submit" value="ADD TO QUEUE">
+	</form>
+
+
+</body>
+
+</html>

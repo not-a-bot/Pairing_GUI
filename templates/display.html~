@@ -1,0 +1,54 @@
+$def with (all_lists)
+
+<! all_lists should be of the form
+[chosen_pair, friendq, warriorq]
+where chosen_pair = [chosen_friend, chosen_warrior]
+>
+
+
+<html>
+
+<! stole from berwin on open ears website took out name="viewport"
+because unsure what that does>
+<meta content="width=device-width, initial-scale=1, user-scalable=no">
+
+<head>
+<title>DISPLAY LISTS</title>
+</head>
+
+
+<body style="background-color:lightgrey; font-family:sans-serif" >
+
+<h1 style="text-align:center">This is the pair you chose and what the lists currently look like.</h1>
+
+<!these are line breaks>
+
+<br><hr>
+<p style="text-align:center">
+
+<b style="color:purple">$all_lists[0][0]</b> is going to be a friend for <b style="color:blue">$all_lists[0][1]</b>
+
+</p>
+
+<hr><br>
+<! first list the available friends and then people seeking help
+eventually itd be nice to make these columns in this and the other
+html file
+
+LISTING QUEUES
+>
+
+<p style="font-size:20; text-align:center; color:purple"><b>List of Available Friends</b></p>
+
+$for element in all_lists[1]:
+	<p style="text-align:center; color:purple">$element</p>
+	
+
+<p style = "font-size:20; text-align:center; color:blue"><b>List of People Seeking Help</b></p>
+
+$for element in all_lists[2]:
+	<p style="text-align:center; color:blue">$element</p>
+
+
+
+
