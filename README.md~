@@ -1,4 +1,4 @@
-##PAIRING GUI and SHEET ORGANIZER
+#PAIRING GUI and SHEET ORGANIZER
 
 This repository is the initial workings of an interface to simplify the
 pairing process for Open Ears. People who are seeking help are nicknamed
@@ -6,7 +6,7 @@ pairing process for Open Ears. People who are seeking help are nicknamed
 are giving the help are 'friends.'
 
 
-#THE PROCESS
+##THE PROCESS
 
 Let's start with the friends. If a friend has gone through training and
 has been verified, they can then add themselves to a 
@@ -29,7 +29,7 @@ current pairings, but remains in all as a history of all people helped.
 (This code still needs to be done.)
 
 
-#NOTES
+##NOTES
 
 Only friends who are trained may be added to the queue. The pairing happens
 before the pair ever meets, so if someone gets cold feet then after a certain

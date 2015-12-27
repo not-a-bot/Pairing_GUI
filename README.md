@@ -45,3 +45,13 @@ another interface that lets committee members end pairs and add reason.
 I really hope that I make this and then it breaks horrendously in the future.
 That'd be no bueno.
 
+##So Sad
+
+This is actually a rewrite of the original gspread code. Why is it a rewrite?
+Because either my computer did not save my local change for some reason (it was
+being pretty glitchy last night) or the pull request I did from the master caused
+an overwrite of all my local files. I don't know if this is the reason though
+becuase I copied the directory before doing it and the copy only contained two
+functions with sheet functionality in convey.py, (which i just remember I had
+changed to conveyor.py so something mustve gone wonky with my computer...)
+
