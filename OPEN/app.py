@@ -10,9 +10,10 @@ urls = (
 app = web.application(urls, globals())
 render = web.template.render('templates/')
 
-
-friendq  = cv.queues_as_arrays("Friend-Q")
-warriorq = cv.queues_as_arrays("Warrior-Q")
+#list names in the Friend and Warrior qs
+#both are formatted so names are in column 1
+friendq  = cv.names_no_null("Friend-Q", 1)
+warriorq = cv.names_no_null("Warrior-Q", 1)
 
 
 class Pairing(object):
@@ -43,17 +44,20 @@ class Pairing(object):
 	#would need to be rly dumb, i guess there could be
 	#check that chosen is what they want... an r u sure button
 
-		chosen_pair = [form.friend, form.warrior]	
-		#will be finished in future
-		#doesnt return anything, just updates sheets
+		chosen_pair = [form.warrior, form.friend]	
 
+		#these three functions just updates sheets removing both 
+		#from the queues and adding them to both pairing sheets
 		cv.add_pair(chosen_pair)
-		cv.remove_from_queue("Friend-Q", form.friend + '\n')
-		cv.remove_from_queue("Warrior-Q", form.warrior + '\n')
+		
+		#this runs default and only removes their names once
+		cv.remove_from_queue("Friend-Q", form.friend)
+		cv.remove_from_queue("Warrior-Q", form.warrior)
+
 
 		#redownload queues to display updated versions.
-		friendq  = cv.queues_as_arrays("Friend-Q")
-		warriorq = cv.queues_as_arrays("Warrior-Q")
+		friendq  = cv.names_no_null("Friend-Q")
+		warriorq = cv.names_no_null("Warrior-Q")
 		this = [chosen_pair, friendq, warriorq]
 	
 #once all the form stuff is complete this will render
@@ -77,19 +81,21 @@ class Add(object):
 		i = 1
 		#im assuming this means the default setting is 1
 		form = web.input(name = "name", number = 1)
-		bowl = form.name.lower().strip() + ' ' + 'yes' + '\n'
+		formatted_name = form.name.lower().strip()
 		print form.number
 		print form.name
-		print bowl
+		print formatted_name
 		
 		num = int(form.number)
 		print num
 		
 		#check that they are on friend list AND verified
-		the_list = cv.queues_as_arrays("Friend-List")
+		name_col = 
+
+		the_list = cv.names_no_null("Friend-List", name_col)
 		print the_list	
 		for lines in the_list:
-			if bowl == lines:
+			if formatted_name == lines:
 				ver = ver + 1
 		#although it being >1 would be a mistake because a friend shouldnt
 		#be on the list multiple times
@@ -101,13 +107,13 @@ class Add(object):
 				i = i + 1
 			
 			cv.add_to_queue("Friend-Q", name_count)				
-			message = "Success!"
+			message = "Success! You have been added to the queue!"
 		else:
 			message = "Failure! You are either not on the list or not verified. If you believe this is a mistake please check with the Pairing Committee or somebody on exec board. It is possible that you were not verified after going through training."
 		
 		#display what new queue looks like and make sure it has their name
 		#on it
-		new_list = cv.queues_as_arrays("Friend-Q")
+		new_list = cv.names_no_null("Friend-Q")
 		return render.add(stuff = [message, i-1, new_list])
 
 
@@ -119,11 +125,11 @@ class Remove(object):
 		
 	def POST(self):
 		form = web.input(name = "name")
-		bowl = form.name.lower().strip() + '\n'
+		formatted_name = form.name.lower().strip()
 		#if someone put there name on there more than 15 times then
 		#I think we should just automatically add them to Warrior-Q
 		#because they need help 
-		cv.remove_from_queue("Friend-Q", bowl, 15)
+		cv.remove_from_queue("Friend-Q", formatted_name, 'rm all')
 		new_list = cv.queues_as_arrays("Friend-Q")
 		return render.remove(friendq = new_list)
 

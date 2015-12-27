@@ -21,12 +21,13 @@ because unsure what that does>
 
 <h1 style="text-align:center">This is the pair you chose and what the lists currently look like.</h1>
 
-<!these are line breaks>
+<!these are line breaks and hr is a horizontal line>
 
 <br><hr>
 <p style="text-align:center">
 
-<b style="color:purple">$all_lists[0][0]</b> is going to be a friend for <b style="color:blue">$all_lists[0][1]</b>
+<! chosen_pair = [warrior, friend]>
+<b style="color:purple">$all_lists[0][1]</b> is going to be a friend for <b style="color:blue">$all_lists[0][0]</b>
 
 </p>
 
