@@ -17,7 +17,7 @@ def open_sheet(spreadsheet):
 
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
-	path2secretfile = 'first-eb1baeb00baf.json'
+	path2secretfile = '/home/glitch/my_scripts/github/first-eb1baeb00baf.json'
 	
 	#load authentication with .json file
 	#like the file once you open a txt file
@@ -120,6 +120,7 @@ def remove_from_queue(sheet_name, name, number=1):
 	if number == 1:
 		#this requires perfect case though..
 		#ill get to it later,
+		#THIS IS FOR Q SO COL_NUM IS 1!!!!
 		#later, find name col. then search each cell.lower().strip()
 		#if matches given name.lower().strip() then remove
 		cell = sheet.find(name)
@@ -133,7 +134,9 @@ def remove_from_queue(sheet_name, name, number=1):
 #warrior queue from
 #array of names without \n at the end already
 def add_to_queue(sheet_name, list_of_names):
-	names = queues_as_arrays(sheet_name)
+	names = names_no_null(sheet_name)
+	#this is redundant but w.e.
+	sheet = open_sheet()
 	for name in list_of_names:
 		names.append(name + '\n')
 	rewrite_sheet(sheet_name, names)
