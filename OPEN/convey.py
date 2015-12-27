@@ -62,6 +62,7 @@ def names_no_null(sheet_name, col_num):
 
 #given a sheet name and list of names this function
 #writes those names to the sheet in a given column
+#im not sure if i even need this function
 def rewrite_column(sheet_name, col_num, new_list_of_names):
 	
 	sheet = open_sheet(sheet_name)
@@ -130,16 +131,28 @@ def remove_from_queue(sheet_name, name, number=1):
 		for cell in cell_list:
 			sheet.update_cell(cell.row, cell.col, '')
 
+
 #used to add friends who want to be added to queue, maybe also to create
 #warrior queue from
 #array of names without \n at the end already
 def add_to_queue(sheet_name, list_of_names):
 	names = names_no_null(sheet_name)
 	#this is redundant but w.e.
-	sheet = open_sheet()
+	sheet = open_sheet(sheet_name)
+	
+	#find the first empty row to update in.
+	array = sheet.row_values(1)
+	i = 0
+	length = len(array)
+	while i < length:
+		if array[i] == '':
+			first_empty_row = i	
+			i = length
+		else:
+			i = i + 1
+	
 	for name in list_of_names:
-		names.append(name + '\n')
-	rewrite_sheet(sheet_name, names)
+		sheet.update_cell(first_empty_row, 1, name)
 		
 
 
