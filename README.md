@@ -29,7 +29,7 @@ current pairings, but remains in all as a history of all people helped.
 (This code still needs to be done.)
 
 
-###I WANT TO USE THIS
+###"I WANT TO USE THIS!"
 
 You have to go to the developers console for the google account you want to use.
 Then you must enable the drive API, start a project and download the .json file
@@ -55,6 +55,38 @@ It is up to committe to manually place in reason pair ended,
 at the moment. We could create another interface that lets committee 
 members end pairs and add reason.
 
+###REGARDING SHEET FORMATS
+Current and All pairings must be formated as warrior, friend, date paired as
+their columns, in that order. The 
+queues must both conatain the names of people in the queue in the first column.
+All sheets require headers in the first row, any values placed in the first
+row will not be read. 
+
+(THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
+For friend and warrior list, the name header can be
+in any column but make sure that it does not have any other characters in
+it. This means when you make the submission forms put the title as
+'Name' or 'nAme' or 'name  ' etc. NOT 'First Name' or 'Last Name'. We will
+likely change this to read netIDs instead as Name may not be unique enough
+and is pretty vauge. It may also be difficult for friends to add themselves
+to the queue with there name as they may not remember if they submitted just
+first name or first and last or some nickname. But untill then. This setup 
+requires there to be a 'name' heading in the first row of the Friend
+and Warrior list. Which means a question that says 'Name' (NOT 'Name:')
+in any google forms. (AGAIN, ITS VERY LIKELY TO CHANGE. SO ASK IF YOU
+ARE UNSURE! WE ARE HELPUL PEOPLE! I SWEAR!)
+
+###REGARDING FUTURE BUG
+
+On queues there is a requirement that there is not
+more than a total of 20 spaces between names total. This should not be a
+problem since no one should ideally touch this but it is if we have multiple
+people add themselves a high number of times then if they all remove themselves
+and no one adds then there will be a large amount of spaces, this also will
+happen if we have a lot of people and they are removed but no one adds so
+the sheet doesnt rewrite and it all piles up... Maybe the remove function
+should call the rewrite to avoid this problem. itll be pretty slow tho
+
 ###REGARDING SUPER SECRET SENSITIVE INFORMATION
 You need a .json file to authenticate yourself as able to use drive API.
 Right now I am using my own email but I plan on swithing it to our 
@@ -65,7 +97,6 @@ publicly. Maybe store the .json in a secure cloud, but the problem remains
 that our public scripts still need to be able to access them and so anyone
 would still be able to access them.
 
-
 ###ITS NOT A SCIENCE!
 Something about how we need tests and people to break things and fix them
 because this was not thoruoughly tested the first time and the second
@@ -75,9 +106,9 @@ You have to use a test.config sheet in gsheets but idk how to do it so help
 would be nice.
 
 
-
 I really hope that I make this and then it breaks horrendously in the future.
-That'd be no bueno.
+That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
+i should stop writing things like this in my code.)
 
 ###so sad
 

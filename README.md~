@@ -39,6 +39,8 @@ you want to edit with the client email stored in the json file.
 BE AWARE your client emaail != your gmail account. (It took me too long to
 figure that out.)
 
+
+
 ##NOTES
 
 ###REGARDING STUFF
@@ -52,6 +54,27 @@ sheets integration is complete.)
 It is up to committe to manually place in reason pair ended, 
 at the moment. We could create another interface that lets committee 
 members end pairs and add reason.
+
+###REGARDING SHEET FORMATS
+Current and All pairings must be formated as warrior, friend, date paired as
+their columns, in that order. The 
+queues must both conatain the names of people in the queue in the first column.
+All sheets require headers in the first row, any values placed in the first
+row will not be read. 
+
+(THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
+For friend and warrior list, the name header can be
+in any column but make sure that it does not have any other characters in
+it. This means when you make the submission forms put the title as
+'Name' or 'nAme' or 'name  ' etc. NOT 'First Name' or 'Last Name'. We will
+likely change this to read netIDs instead as Name may not be unique enough
+and is pretty vauge. It may also be difficult for friends to add themselves
+to the queue with there name as they may not remember if they submitted just
+first name or first and last or some nickname. But untill then. This setup 
+requires there to be a 'name' heading in the first row of the Friend
+and Warrior list. Which means a question that says 'Name' (NOT 'Name:')
+in any google forms. (AGAIN, ITS VERY LIKELY TO CHANGE. SO ASK IF YOU
+ARE UNSURE! WE ARE HELPUL PEOPLE! I SWEAR!)
 
 ###REGARDING SUPER SECRET SENSITIVE INFORMATION
 You need a .json file to authenticate yourself as able to use drive API.
@@ -73,9 +96,9 @@ You have to use a test.config sheet in gsheets but idk how to do it so help
 would be nice.
 
 
-
 I really hope that I make this and then it breaks horrendously in the future.
-That'd be no bueno.
+That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
+i should stop writing things like this in my code.)
 
 ###so sad
 

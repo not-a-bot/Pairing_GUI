@@ -60,9 +60,9 @@ class Pairing(object):
 		warriorq = cv.names_no_null("Warrior-Q")
 		this = [chosen_pair, friendq, warriorq]
 	
-#once all the form stuff is complete this will render
-#the display html and show the new queues and the
-#pair of people you added to current pairs
+
+#this renders display.html. It shows the new queues and the
+#pair of people you added to both pairings lists
 		return render.display(all_lists = this)
 		
 		"""all_lists should be of the form
@@ -90,7 +90,7 @@ class Add(object):
 		print num
 		
 		#check that they are on friend list AND verified
-		name_col = 
+		name_col = 1
 
 		the_list = cv.names_no_null("Friend-List", name_col)
 		print the_list	
