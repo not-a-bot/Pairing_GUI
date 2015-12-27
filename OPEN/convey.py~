@@ -13,17 +13,22 @@ def open_sheet(spreadsheet):
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
 	path2secretfile = 'first-eb1baeb00baf.json'
+	#load authentication with .json file
 	gc = au.LOAD(path2secretfile)
 	#like the file once you open a txt file
+	
+	#list all workbooks you can edit and make sure
+	#the user is opening one that they can.
 	here = list_available_sheets(gc)
+	
 	if spreadsheet in here:
-		workbook = gc.open(spreadsheet).sheet1
+		sheet = gc.open(spreadsheet).sheet1
 	else:
 	#if spreadsheet isnt available tell user and give them a
 	#list of all the ones that the user can edit.
 		return "Spreadsheet is not available.", here
 	
-	return workbook
+	return sheet
 
 
 #only kinda stolen from Analyze_Docs

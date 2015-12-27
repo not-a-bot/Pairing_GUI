@@ -9,25 +9,35 @@ def list_available_sheets(gc)
 		all_sheets.append("{}".format(sheet.title))
 	return all_sheets
 
+#given a spreadsheet name, opens the spreadsheet
+#and returns a sheet that you can manipulate.
 def open_sheet(spreadsheet):
+	#change into key usage later
+	#key = turn_to_key(spreadsheet)
+
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
 	path2secretfile = 'first-eb1baeb00baf.json'
-	#load authentication with .json file
-	gc = au.LOAD(path2secretfile)
-	#like the file once you open a txt file
 	
+	#load authentication with .json file
+	#like the file once you open a txt file
+	gc = au.LOAD(path2secretfile)
+		
+	#assume the sheet exists
+	sheet = gc.open(spreadsheet).sheet1
+
+	'''
 	#list all workbooks you can edit and make sure
 	#the user is opening one that they can.
 	here = list_available_sheets(gc)
-	
 	if spreadsheet in here:
+		#sheet = gc.open_by_key(key).sheet1
 		sheet = gc.open(spreadsheet).sheet1
 	else:
 	#if spreadsheet isnt available tell user and give them a
 	#list of all the ones that the user can edit.
 		return "Spreadsheet is not available.", here
-	
+	'''
 	return sheet
 
 
