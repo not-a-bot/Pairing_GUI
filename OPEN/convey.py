@@ -102,25 +102,57 @@ def rewrite_column(sheet_name, col_num, new_list_of_names):
 #print names_no_null('Test1', 5)
 
 
-#im basically using this instead of rewrite so i know where to write
-#instead of just aimlessly rewriting the column, however, this method
-#only works if you know that there are no random empty cells between names
-#using rewrite will work better in that case.
-def first_empty(sheet, col_num):
+#this is mostly used to search the heading row
+#for some value like NAME or NETID
+def search_row(sheet, row_num, value):
 	#find the first empty row in column 1 to update in.
-	array = sheet.col_values(col_num)
+	array = sheet.row_values(row_num)
 	i = 0
 	length = len(array)
 	while i < length:
-		if array[i] == '':
-			#this is the number of the
-			#first row that is empty
-			return i
+		if array[i].lower().strip() == value.lower().strip():
+			#this is the number of the row the value is located
+			#you MUST do +1 because the array starts at index 0
+			#and sheets starts at 1.
+			return i + 1
 		else:
 			i = i + 1
 	#means entire thing is full and just start adding at the end
 	return length
 
+#this works for any case and with extra spaces
+#sheet=open_sheet('Friend-List')
+#row = search_row(sheet, 1, 'nAme ')
+
+#im basically using this instead of rewrite so i know where to write
+#instead of just aimlessly rewriting the column, however, this method
+#only works if you know that there are no random empty cells between names
+#using rewrite will work better in that case.
+def search_column(sheet, col_num, value):
+	#find the first empty row in column 1 to update in.
+	array = sheet.col_values(col_num)
+	i = 0
+	length = len(array)
+	while i < length:
+		#be aware that this means if you search for an empty cell, a cell
+		#with a space in it will also be considered empty (that seems good)
+		if array[i].lower().strip() == value.lower().strip():
+			#this is the number of the row the value is located
+			#you MUST do +1 because the array starts at index 0
+			#and sheets starts at 1.
+			return i + 1
+		else:
+			i = i + 1
+	#means entire thing is full and just start adding at the end
+	return length
+
+#yeah, i searched for john and it didnt show up because my name was
+#john d. its harder to standardize name, (FIRst, Last?) but 
+#netID will be easier so officially changing it to that now.
+#but we would still have to display names instead of netids..
+#wed just use netids for adding to queue then add their name to list
+#This works btw.
+#print search_column(sheet, row, 'john d')
 
 def add_pair(chosen_pair):
 	#given a pair, friend, warrior this will add the pair to the
@@ -134,7 +166,7 @@ def add_pair(chosen_pair):
 		sheet = open_sheet(element)
 		
 
-		first_empty_row = first_empty(sheet, 1)
+		first_empty_row = search_column(sheet, 1, '')
 		
 		#once again, 1 is warriror, friend, date
 		#given array should be of form, [warrior, friend]
@@ -158,20 +190,30 @@ def remove_from_queue(sheet_name, name, number=1):
 	#remove only one instance of name so that friends who place themselves
 	#on the q multiple times to be paired multiple times dont have all of
 	#their names they put on removed
-	sheet = open_sheet(sheet_name)
+
+	#return all names in current
+	current_names = names_no_null(sheet_name, 1)
+	i = 0
+	new_names = []
 	if number == 1:
-		#this requires perfect case though.. tested it, it does
-		#it also requires no spaces after. absolute exactness
-		#ill get to it later,
-		#THIS IS FOR Q SO COL_NUM IS 1!!!!
-		#later, find name col. then search each cell.lower().strip()
-		#if matches given name.lower().strip() then remove
-		cell = sheet.find(name)
-		sheet.update_cell(cell.row, cell.col, '')
+		for element in current_names:
+			if element.lower().strip() == name.lower().strip() and i==0:
+				i = i + 1
+			else:
+				new_names.append(element.strip())
+		#rewrite and nnn both call open_sheet which makes
+		#this pretty slow probably
+		rewrite_column(sheet_name, col_num, names)
 	else:
-		cell_list = sheet.findall(name)
-		for cell in cell_list:
-			sheet.update_cell(cell.row, cell.col, '')
+		#only change this to no i so it will remove all instances of name
+		for element in current_names:
+			if element.lower().strip() == name.lower().strip():
+				i = i + 1
+			else:
+				new_names.append(element.strip())
+		#rewrite and nnn both call open_sheet which makes
+		#this pretty slow probably
+		rewrite_column(sheet_name, col_num, names)
 
 #both work as they should, for perfect case
 #remove_from_queue('Current-Pairings', 'George')
@@ -186,11 +228,11 @@ def remove_from_queue(sheet_name, name, number=1):
 def add_to_queue(sheet_name, list_of_names):
 	#the queue is in column one
 	#THIS DOESNT COPY REIKAS NAME FOR SOME REASON
+	#now it does.. idk what changed though.
 	names = names_no_null(sheet_name, 1)
-	print names
 	for element in list_of_names:
 		names.append(element)
-	print names
+	
 	#this opens the same sheet twice and is kinda
 	#redundant but w.e.
 	#rewrite old names with new attatched
