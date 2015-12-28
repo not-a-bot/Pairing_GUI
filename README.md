@@ -83,16 +83,6 @@ in any google forms. (AGAIN, ITS VERY LIKELY TO CHANGE. SO ASK IF YOU
 ARE UNSURE! WE ARE HELPUL PEOPLE! I SWEAR!)
 
 
-###REGARDING FUTURE BUG
-On queues there is a requirement that there is not
-more than a total of 20 spaces between names total. This should not be a
-problem since no one should ideally touch this but it is if we have multiple
-people add themselves a high number of times then if they all remove themselves
-and no one adds then there will be a large amount of spaces, this also will
-happen if we have a lot of people and they are removed but no one adds so
-the sheet doesnt rewrite and it all piles up... Maybe the remove function
-should call the rewrite to avoid this problem. itll be pretty slow tho
-
 
 ###REGARDING SUPER SECRET SENSITIVE INFORMATION
 You need a .json file to authenticate yourself as able to use drive API.

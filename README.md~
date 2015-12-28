@@ -62,7 +62,11 @@ Current and All pairings must be formated as warrior, friend, date paired as
 their columns, in that order. The 
 queues must both conatain the names of people in the queue in the first column.
 All sheets require headers in the first row, any values placed in the first
-row will not be read. 
+row will not be read. We also have the added pair be written to the row
+with the first empty space in column one. So if you remove a pair from current
+pair please make the entire row blank or remove the whole row. If you have
+a blank cell in the first column for a pair you want to keep it will likely
+be overwritten at some point.
 
 (THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
 For friend and warrior list, the name header can be
