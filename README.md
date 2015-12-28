@@ -43,6 +43,7 @@ figure that out.)
 
 ##NOTES
 
+
 ###REGARDING STUFF
 Only friends who are trained may be added to the queue. The pairing happens
 before the pair ever meets, so if someone gets cold feet then after a certain
@@ -55,12 +56,17 @@ It is up to committe to manually place in reason pair ended,
 at the moment. We could create another interface that lets committee 
 members end pairs and add reason.
 
+
 ###REGARDING SHEET FORMATS
 Current and All pairings must be formated as warrior, friend, date paired as
 their columns, in that order. The 
 queues must both conatain the names of people in the queue in the first column.
 All sheets require headers in the first row, any values placed in the first
-row will not be read. 
+row will not be read. We also have the added pair be written to the row
+with the first empty space in column one. So if you remove a pair from current
+pair please make the entire row blank or remove the whole row. If you have
+a blank cell in the first column for a pair you want to keep it will likely
+be overwritten at some point.
 
 (THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
 For friend and warrior list, the name header can be
@@ -76,8 +82,8 @@ and Warrior list. Which means a question that says 'Name' (NOT 'Name:')
 in any google forms. (AGAIN, ITS VERY LIKELY TO CHANGE. SO ASK IF YOU
 ARE UNSURE! WE ARE HELPUL PEOPLE! I SWEAR!)
 
-###REGARDING FUTURE BUG
 
+###REGARDING FUTURE BUG
 On queues there is a requirement that there is not
 more than a total of 20 spaces between names total. This should not be a
 problem since no one should ideally touch this but it is if we have multiple
@@ -86,6 +92,7 @@ and no one adds then there will be a large amount of spaces, this also will
 happen if we have a lot of people and they are removed but no one adds so
 the sheet doesnt rewrite and it all piles up... Maybe the remove function
 should call the rewrite to avoid this problem. itll be pretty slow tho
+
 
 ###REGARDING SUPER SECRET SENSITIVE INFORMATION
 You need a .json file to authenticate yourself as able to use drive API.
@@ -96,6 +103,7 @@ Idk how we will implement this in the future since everything is hosted
 publicly. Maybe store the .json in a secure cloud, but the problem remains
 that our public scripts still need to be able to access them and so anyone
 would still be able to access them.
+
 
 ###ITS NOT A SCIENCE!
 Something about how we need tests and people to break things and fix them
@@ -108,14 +116,15 @@ would be nice.
 
 I really hope that I make this and then it breaks horrendously in the future.
 That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
-i should stop writing things like this in my code.)
+i should stop writing things like this in my code. bad omens)
+
 
 ###so sad
-
 This is actually a rewrite of the original gspread code. Why is it a rewrite?
-Because either my computer did not save my local change for some reason (it was
-being pretty glitchy last night) or the pull request I did from the master caused
-an overwrite of all my local files. I don't know if this is the reason though
+Because either my computer did not save my local change for some reason 
+(it was being pretty glitchy last night) or the pull request I did from 
+the master caused an overwrite of all my local files. I don't know if 
+this is the reason though
 becuase I copied the directory before doing it and the copy only contained two
 functions with sheet functionality in convey.py, (which i just remember I had
 changed to conveyor.py so something mustve gone wonky with my computer...)

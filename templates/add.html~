@@ -21,6 +21,8 @@ $if stuff != 3:
 			<p style="color:purple; text-align:center">$element</p>
 	$else:
 		<p>$stuff[0]</p>
+
+<! having it = NONE didnt work....>
 $if stuff == 3:
 	<h1>Add Yourself to the Friend Queue</h1>
 	<p>The purpose of this page is for verified friends to be 

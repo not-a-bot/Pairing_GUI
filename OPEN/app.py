@@ -10,17 +10,15 @@ urls = (
 app = web.application(urls, globals())
 render = web.template.render('templates/')
 
-#list names in the Friend and Warrior qs
-#both are formatted so names are in column 1
-friendq  = cv.names_no_null("Friend-Q", 1)
-warriorq = cv.names_no_null("Warrior-Q", 1)
-
-
 class Pairing(object):
 	def GET(self):
 	#once /Pairing webpage is loaded the GET method
 	#renders the pairing gui.html from the templates folder
-
+		#list names in the Friend and Warrior qs
+		#both are formatted so names are in column 1
+		friendq  = cv.names_no_null("Friend-Q", 1)
+		warriorq = cv.names_no_null("Warrior-Q", 1)
+		
 		total = [friendq, warriorq]
 		
 		return render.pairing_gui(list_of_names = total)
@@ -34,7 +32,6 @@ class Pairing(object):
 #once this method is called upon it takes the pairs and 
 #removes them from the current queue, adding them to the
 #current pairings list. THIS IS WHERE THE MAGIC HAPPENS.		
-
 		form = web.input(friend = 'friend', warrior = 'warrior')
 		
 	#let this if statement verify that the user submitted
@@ -43,7 +40,9 @@ class Pairing(object):
 	#the if statements? well, now its dropdown, so user
 	#would need to be rly dumb, i guess there could be
 	#check that chosen is what they want... an r u sure button
-
+		
+		
+		#for some reason, firt last becomes just first...
 		chosen_pair = [form.warrior, form.friend]	
 
 		#these three functions just updates sheets removing both 
@@ -56,8 +55,8 @@ class Pairing(object):
 
 
 		#redownload queues to display updated versions.
-		friendq  = cv.names_no_null("Friend-Q")
-		warriorq = cv.names_no_null("Warrior-Q")
+		friendq  = cv.names_no_null("Friend-Q", 1)
+		warriorq = cv.names_no_null("Warrior-Q", 1)
 		this = [chosen_pair, friendq, warriorq]
 	
 
@@ -76,6 +75,12 @@ class Add(object):
 	def GET(self):
 		return render.add(stuff = 3)
 		
+
+	#THIS whole thing needs to be rewritten to check if 
+	#a friend is verified and if they are then add them to the list
+	#if not then display a correct error message of them either
+	#not being verified or not being on the list
+	#
 	def POST(self):	
 		ver = 0
 		i = 1
@@ -113,7 +118,7 @@ class Add(object):
 		
 		#display what new queue looks like and make sure it has their name
 		#on it
-		new_list = cv.names_no_null("Friend-Q")
+		new_list = cv.names_no_null("Friend-Q", 1)
 		return render.add(stuff = [message, i-1, new_list])
 
 
@@ -123,6 +128,8 @@ class Remove(object):
 	def GET(self):
 		return render.remove(friendq = 3)
 		
+	#This requires a rewrite of the function remove_from_queue()
+	#so that it allows a more lenient input
 	def POST(self):
 		form = web.input(name = "name")
 		formatted_name = form.name.lower().strip()
