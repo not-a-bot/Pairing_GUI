@@ -22,7 +22,7 @@ $if stuff != 3:
 	$else:
 		<p>$stuff[0]</p>
 
-<! having it = NONE didnt work....>
+<! having it = NONE didnt work.... so i set it to 3>
 $if stuff == 3:
 	<h1>Add Yourself to the Friend Queue</h1>
 	<p>The purpose of this page is for verified friends to be 
@@ -47,11 +47,13 @@ $if stuff == 3:
 	
 	the remove will be a big blue button, this is all non-negotiable.>
 	<form style="text-align:center; color:blue" method="POST">
-	NAME:<input style="background-color:darkgrey" type="text" name="name">
+	
+	<! does neid = 'netid' work? should it be name='netid'?>
+	netID:<input style="background-color:darkgrey" type="text" netid="netid">
 	<! should we even allow 7? this will somewhat limit that 15
 	thing unless people add 7 three times>
 	<br>
-	MAXIMUM NUMBER OF PEOPLE YOU CAN PAIR WITH:
+	MAXIMUM NUMBER OF PEOPLE YOU ARE WILLING TO PAIR WITH:
 	<br>
 	<input style="background-color:darkgrey" type="number" name="number" min="1" max="7">
 	<br>

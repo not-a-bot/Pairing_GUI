@@ -14,6 +14,7 @@ class Pairing(object):
 	def GET(self):
 	#once /Pairing webpage is loaded the GET method
 	#renders the pairing gui.html from the templates folder
+
 		#list names in the Friend and Warrior qs
 		#both are formatted so names are in column 1
 		friendq  = cv.names_no_null("Friend-Q", 1)
@@ -82,43 +83,61 @@ class Add(object):
 	#not being verified or not being on the list
 	#
 	def POST(self):	
-		ver = 0
-		i = 1
 		#im assuming this means the default setting is 1
-		form = web.input(name = "name", number = 1)
-		formatted_name = form.name.lower().strip()
-		print form.number
-		print form.name
-		print formatted_name
+		form = web.input(netid = "netid", number = 1)
+		#dont need to format name here because search does it for us
 		
+		#this is the number of times their name will be added to the list
+		#it is the number of warriors they are able to help. (battle can be ruf)
 		num = int(form.number)
-		print num
 		
 		#check that they are on friend list AND verified
-		name_col = 1
-
-		the_list = cv.names_no_null("Friend-List", name_col)
-		print the_list	
-		for lines in the_list:
-			if formatted_name == lines:
-				ver = ver + 1
-		#although it being >1 would be a mistake because a friend shouldnt
-		#be on the list multiple times
-		if ver >= 1:
-			name_count = []
-			while i <= num:
-			#remember, names must be submitted as arrays.
-				name_count.append(form.name)
-				i = i + 1
-			
-			cv.add_to_queue("Friend-Q", name_count)				
-			message = "Success! You have been added to the queue!"
-		else:
-			message = "Failure! You are either not on the list or not verified. If you believe this is a mistake please check with the Pairing Committee or somebody on exec board. It is possible that you were not verified after going through training."
 		
+		sheet = open_sheet('Friend-List')
+		#find columns of all these things
+		#name_col  = cv.search_row(sheet, 1, 'name')
+		#dont need names b/c namesnonull will display them just
+		netid_col = cv.search_row(sheet, 1, 'netid')
+		veri_col  = cv.search_row(sheet, 1, 'verified')
+
+		#find the row the netid they give is in and use this row to
+		#and other columns we found to find their other info
+		#case and extra spaces do not matter for this function
+		
+		row_num = cv.search_column(sheet, netid_col, form.netid)
+
+		#this error becomes a problem if we have more than 1000
+		#people sign up OR if we randomly get a spreadsheet that is
+		#automatically sized to 100 rows. (default was said to be 100
+		#or 1000 but ive only seen 1000 so far.)
+		if row_num >= 1000:
+			message = "FAILURE! We could not find your netID on the list. Please make sure you submitted the correct netID (%s). If this is the correct netID it is possible that was incorrectly entered on our spreadsheet or there is something wrong with this code (which is a very likely possibility). Please let us know about this problem, whether through our website, facebook, slack, next meeting, or randomly in the quad. THANK YOU!" % form.netid	
+
+		else:
+			#there is probably a way to call a specific cell
+			verified_values = sheet.col_values(veri_col)
+
+			#check that a friend is verified and if they are add them 
+			#to the queue 'num' times.
+			#because array starts at 0 and gsheets starts at 1
+			if verified_values[row_num + 1].lower().strip() == 'yes':
+				i = 1
+				name_count = []
+				while i <= num:
+				#remember, names must be submitted as arrays.
+					name_count.append(form.name)
+					i = i + 1
+			
+				cv.add_to_queue("Friend-Q", name_count)				
+				message = "SUCCESS! You have been added to the queue!"			
+		
+			else:
+				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 		#display what new queue looks like and make sure it has their name
 		#on it
 		new_list = cv.names_no_null("Friend-Q", 1)
+
+		#message, times added to queue, and new list of names on queue
 		return render.add(stuff = [message, i-1, new_list])
 
 
@@ -126,18 +145,35 @@ class Remove(object):
 	#this is the code for the buttons for friends to 
 	#remove themselves from the queue
 	def GET(self):
+		#this is three to display the part of if statement i want
+		#maybe calling a different .html woulda been better. maybe
 		return render.remove(friendq = 3)
 		
 	#This requires a rewrite of the function remove_from_queue()
 	#so that it allows a more lenient input
 	def POST(self):
-		form = web.input(name = "name")
-		formatted_name = form.name.lower().strip()
+		form = web.input(netid = "netid")
+
+		#this comment is irrelevant because times change and we do
+		#things differently now.
 		#if someone put there name on there more than 15 times then
 		#I think we should just automatically add them to Warrior-Q
 		#because they need help 
-		cv.remove_from_queue("Friend-Q", formatted_name, 'rm all')
-		new_list = cv.queues_as_arrays("Friend-Q")
+		
+		#this is done in a similar way to the Add POST method
+		#instead of verified col it is name though
+		sheet = open_sheet('Friend-Q')
+		name_col  = cv.search_row(sheet, 1, 'name')
+		netid_col = cv.search_row(sheet, 1, 'netid')
+		row_num = cv.search_column(sheet, netid_col, form.netid)
+
+		#use col and row info to find the name
+		#dont need to format because remove function will do that
+		name_values = sheet.col_values(name_col)
+		name = name_values[row_num + 1]
+
+		cv.remove_from_queue("Friend-Q", name, 'rm all')
+		new_list = cv.names_no_null("Friend-Q")
 		return render.remove(friendq = new_list)
 
 if __name__ == '__main__':

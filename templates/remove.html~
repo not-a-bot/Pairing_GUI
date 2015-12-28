@@ -32,8 +32,9 @@ $if friendq == 3:
 	by going back to the add page.</p>
 	<p>If you notice anything wrong on this or any 
 	other pages of the interface please let us know in #webdev 
-	on slack or bring it up at the next meeting.</p>
+	or bring it up at the next meeting.</p>
 	<p>HAPPY BUTTONING</p>
+	
 	<br><hr><br>
 	<!Add to queue form, once we get a bluewaters login going we can just 
 	make this a nice, big red button, which is obviously the end goal
