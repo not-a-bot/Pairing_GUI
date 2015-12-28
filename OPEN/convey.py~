@@ -121,8 +121,8 @@ def search_row(sheet, row_num, value):
 	return length
 
 #this works for any case and with extra spaces
-sheet=open_sheet('Friend-List')
-row = search_row(sheet, 1, 'nAme ')
+#sheet=open_sheet('Friend-List')
+#row = search_row(sheet, 1, 'nAme ')
 
 #im basically using this instead of rewrite so i know where to write
 #instead of just aimlessly rewriting the column, however, this method
@@ -146,7 +146,13 @@ def search_column(sheet, col_num, value):
 	#means entire thing is full and just start adding at the end
 	return length
 
-print search_column(sheet, row, 'john d')
+#yeah, i searched for john and it didnt show up because my name was
+#john d. its harder to standardize name, (FIRst, Last?) but 
+#netID will be easier so officially changing it to that now.
+#but we would still have to display names instead of netids..
+#wed just use netids for adding to queue then add their name to list
+#This works btw.
+#print search_column(sheet, row, 'john d')
 
 def add_pair(chosen_pair):
 	#given a pair, friend, warrior this will add the pair to the

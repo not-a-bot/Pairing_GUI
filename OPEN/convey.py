@@ -85,8 +85,10 @@ def rewrite_column(sheet_name, col_num, new_list_of_names):
 	#then overwrite the next 20 rows just in case, lets assume
 	#that the new list of names is no smaller than 20
 	#from the old one (plus or minus random empty cells)
+	#i will now assume just 10 because we call it when we remove and add
+	#so empty cells should not build up over time.
 	j = 0
-	while j <= 25:
+	while j <= 10:
 		#use i because you must start from where you left off
 		sheet.update_cell(i + 2, col_num, "")
 		i = i + 1
