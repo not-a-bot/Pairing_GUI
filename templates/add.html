@@ -48,8 +48,10 @@ $if stuff == 3:
 	the remove will be a big blue button, this is all non-negotiable.>
 	<form style="text-align:center; color:blue" method="POST">
 	
-	<! does neid = 'netid' work? should it be name='netid'?>
-	netID:<input style="background-color:darkgrey" type="text" netid="netid">
+	<! does neid = 'netid' work? should it be name='netid'?
+	no must be name='netid' b/c all inputs need name attribute but netid
+	becomes the thing you call and set a default to in app/add form = stuff>
+	netID:<input style="background-color:darkgrey" type="text" name="netid">
 	<! should we even allow 7? this will somewhat limit that 15
 	thing unless people add 7 three times>
 	<br>

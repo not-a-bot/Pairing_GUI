@@ -47,7 +47,9 @@ $if stuff == 3:
 	
 	the remove will be a big blue button, this is all non-negotiable.>
 	<form style="text-align:center; color:blue" method="POST">
-	netID:<input style="background-color:darkgrey" type="text" netid="netid">
+	
+	<! does neid = 'netid' work? should it be name='netid'?>
+	netID:<input style="background-color:darkgrey" type="text" name="netid">
 	<! should we even allow 7? this will somewhat limit that 15
 	thing unless people add 7 three times>
 	<br>

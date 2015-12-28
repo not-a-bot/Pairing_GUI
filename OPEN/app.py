@@ -22,6 +22,8 @@ class Pairing(object):
 		
 		total = [friendq, warriorq]
 		
+		print total
+		
 		return render.pairing_gui(list_of_names = total)
 #the rendered pairing gui contains a form on it, which
 #once submitted calls on the POST method below	
@@ -42,10 +44,12 @@ class Pairing(object):
 	#would need to be rly dumb, i guess there could be
 	#check that chosen is what they want... an r u sure button
 		
-		
+		#form.warrior cuts off KING OF LAND to just KING...
 		#for some reason, firt last becomes just first...
-		chosen_pair = [form.warrior, form.friend]	
-
+		#maybe i should only allow first name..
+		chosen_pair = [form.warrior, form.friend]
+		print chosen_pair
+		
 		#these three functions just updates sheets removing both 
 		#from the queues and adding them to both pairing sheets
 		cv.add_pair(chosen_pair)

@@ -28,19 +28,21 @@ capitalization should not matter.</p>
 
 <form style="text-align:center; color:green" method="POST">
 
-	<input style="color:white; font-family:sans-serif; background-color:purple; height:100px; width:150px; font-size:50"
-	type="submit" value="PAIR">
-	<br>
+	<! must allow spaces using pattern="[a-zA-Z0-9\s]+" but idk where to put it
+	so i put it in input and both selects.>
+
+	<input style="color:white; font-family:sans-serif; background-color:purple; height:100px; width:150px; font-size:50" pattern="[a-zA-Z ]+" type="submit" value="PAIR">
+	<br><br>
 	<! ADD AN ARE YOU SURE BUTTON!>
-		Friend:<select name="friend">
+		Friend:<select name="friend" pattern="[a-zA-Z ]+">
 		$for element in list_of_names[0]:	
-			<option value=$element>$element</option>
+			<option value=$element pattern="[a-zA-Z ]+">$element</option>
 		</select>
 		<! WHY WONT THIS SHOW!!!! lol forget end select tags>
 		<p>
-		Person Seeking Help:<select name="warrior">
+		Person Seeking Help:<select name="warrior" pattern="[a-zA-Z ]+">
 		$for thing in list_of_names[1]:	
-			<option value=$thing>$thing</option>
+			<option value=$thing pattern="[a-zA-Z ]+">$thing</option>
 		</select></p>
 </form>
 

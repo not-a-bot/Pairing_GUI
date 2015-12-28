@@ -68,6 +68,12 @@ pair please make the entire row blank or remove the whole row. If you have
 a blank cell in the first column for a pair you want to keep it will likely
 be overwritten at some point.
 
+As of now the queues MUST BE FIRST NAME ONLY. If they have full names on it 
+everything breaks. So the name question in friends list must be one name. 
+Ill change the code to search for first name or something like that. That means
+we also need to validate that the first names are really just one name without
+a space this can be done either in the google form or somewhere in this code.
+
 (THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
 For friend and warrior list, the name header can be
 in any column but make sure that it does not have any other characters in

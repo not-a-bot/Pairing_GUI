@@ -184,8 +184,8 @@ def add_pair(chosen_pair):
 
 
 
-#THIS NEEDS TO BE ABLE TO REMOVE NAME REGARDLESS OF CASE OR FORMAT
-#FIX
+#THIS NEEDS TO BE ABLE TO REMOVE NAMEs REGARDLESS OF CASE OR FORMAT
+#FIX it is fixed now
 def remove_from_queue(sheet_name, name, number=1):
 	#this removes a person from a queue a 'number' of times (1 or all)
 	#used after they have been paired so dont need to be paired anymore
@@ -204,8 +204,8 @@ def remove_from_queue(sheet_name, name, number=1):
 			else:
 				new_names.append(element.strip())
 		#rewrite and nnn both call open_sheet which makes
-		#this pretty slow probably
-		rewrite_column(sheet_name, col_num, names)
+		#this pretty slow probably, col_num always 1 for a queue
+		rewrite_column(sheet_name, 1, new_names)
 	else:
 		#only change this to no i so it will remove all instances of name
 		for element in current_names:
@@ -215,12 +215,10 @@ def remove_from_queue(sheet_name, name, number=1):
 				new_names.append(element.strip())
 		#rewrite and nnn both call open_sheet which makes
 		#this pretty slow probably
-		rewrite_column(sheet_name, col_num, names)
+		rewrite_column(sheet_name, 1, new_names)
 
-#both work as they should, for perfect case
-#remove_from_queue('Current-Pairings', 'George')
-#remove_from_queue('Current-Pairings', 'George', 'rm all')
-
+#this works for all upper/lower cases
+#remove_from_queue('Friend-Q', 'jessica jones', 3)
 
 
 #used to add friends who want to be added to queue, maybe also to create
