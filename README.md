@@ -110,8 +110,7 @@ You have to use a test.config sheet in gsheets but idk how to do it so help
 would be nice.
 
 
-<<<<<<< HEAD
-I really hope that I make this and then it breaks horrendously in the future.
+I really hope that after I make this that it DOES NOT break horrendously in the future.
 That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
 i should stop writing things like this in my code. bad omens)
 
@@ -121,12 +120,7 @@ This is actually a rewrite of the original gspread code. Why is it a rewrite?
 Because either my computer did not save my local change for some reason 
 (it was being pretty glitchy last night) or the pull request I did from 
 the master caused an overwrite of all my local files. I don't know if 
-this is the reason though
-becuase I copied the directory before doing it and the copy only contained two
-functions with sheet functionality in convey.py, (which i just remember I had
-changed to conveyor.py so something mustve gone wonky with my computer...)
-=======
-I really hope that after I make this that it DOES NOT break horrendously in the future.
-That'd be no bueno.
->>>>>>> 59701054650a92b1ff9a4393191bf697989d8e21
-
+this is the reason though becuase I copied the directory before doing it and 
+the copy only contained two functions with sheet functionality in convey.py, 
+(which i just remember I had changed to conveyor.py so something mustve gone 
+wonky with my computer...)
