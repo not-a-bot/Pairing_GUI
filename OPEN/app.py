@@ -22,8 +22,6 @@ class Pairing(object):
 		
 		total = [friendq, warriorq]
 		
-		print total
-		
 		return render.pairing_gui(list_of_names = total)
 #the rendered pairing gui contains a form on it, which
 #once submitted calls on the POST method below	
@@ -48,7 +46,6 @@ class Pairing(object):
 		#for some reason, firt last becomes just first...
 		#maybe i should only allow first name..
 		chosen_pair = [form.warrior, form.friend]
-		print chosen_pair
 		
 		#these three functions just updates sheets removing both 
 		#from the queues and adding them to both pairing sheets
