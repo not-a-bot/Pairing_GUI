@@ -31,14 +31,15 @@ current pairings, but remains in all as a history of all people helped.
 
 ###"I WANT TO USE THIS!"
 
-You have to go to the developers console for the google account you want to use.
-Then you must enable the drive API, start a project and download the .json file
-it gives you as credentials. Make the path2secretfile variable in convey.py
-open_sheet point to wherever you store it. Then make sure to share the sheets
-you want to edit with the client email stored in the json file.
-BE AWARE your client emaail != your gmail account. (It took me too long to
-figure that out.)
-
+openearsuiuc@gmail.com has been authorized to use the drive API with google.
+This means you do not have to go through the process of authorizing and sharing
+with your own account. Just go to the Open Ears Exec folder. Open GUI_Interface
+and download the .json file in there. It may be named pairing-gui or
+open-service with a lot of numbers and letters after it, I'm not sure which one
+it is. Download that file then change the path2secretfile variable in convey.py
+in the function open_sheet point to wherever you store the .json file. If you 
+did all of this correctly you should now be able to edit sheets and everything
+should be working.
 
 
 ##NOTES

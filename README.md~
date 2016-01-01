@@ -68,7 +68,8 @@ pair please make the entire row blank or remove the whole row. If you have
 a blank cell in the first column for a pair you want to keep it will likely
 be overwritten at some point.
 
-As of now the queues MUST BE FIRST NAME ONLY. If they have full names on it 
+As of now the queues MUST BE FIRST NAME ONLY (corresponding to a netid
+in the frieds list). If they have full names on it 
 everything breaks. So the name question in friends list must be one name. 
 Ill change the code to search for first name or something like that. That means
 we also need to validate that the first names are really just one name without
