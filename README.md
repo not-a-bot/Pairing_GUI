@@ -9,9 +9,9 @@ are helping said 'warriors' are named 'friends.'
 
 ###"I WANT TO USE THIS!"
 
-openearsuiuc@gmail.com has been authorized to use the drive API with google.
-This means you do not have to go through the process of authorizing your
-own account with google and sharing all of the sheets we edit with 
+The openearsuiuc@gmail.com has been authorized to use the drive API with 
+google. This means you do not have to go through the process of authorizing 
+your own account with google and sharing all of the sheets we edit with 
 said account. Just go to the Open Ears Exec folder, open the folder
 GUI_Interface and download the .json file in there (it may be in the next
 folder down). It is either named pairing-gui or open-service with a 
@@ -27,6 +27,8 @@ sheets with this application and everything should be working.
 
 
 ###THE PROCESS
+
+YAY FOR PAINT!
 
 ![picture](/flowchart.png)
 
@@ -54,11 +56,10 @@ form to the queue as well or have someone do it manually. Once they are
 on the queue, this sets them up to be helped by a friend.
 
 ####PAIRING PAGE
-Someone in the Pairing Commmittee will see both the queues and pair 
-someone in the 
-warrior queue with someone in the friends queue. This removes both people from
-the queues and adds them as a pair to the list of current pairings and all time
-pairings along with the date that they were paired. 
+Someone in the Pairing Commmittee will see both of the queues and pair 
+a warrior with a friend. This removes both people from
+the queues and adds them as a pair to Current-Pairings and All-Pairings
+along with the date that they were paired. 
 
 ####ANOTHER HOLE
 Once the warrior is finished being helped, the pair is removed from
