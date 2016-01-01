@@ -3,30 +3,8 @@
 This repository is the initial workings of an interface to simplify the
 pairing process for Open Ears. People who are seeking help are nicknamed
 'warriors' to simplify the coding and members of our organization who 
-are giving the help are 'friends.'
+are helping said 'warriors' are named 'friends.'
 
-
-###THE PROCESS
-
-Let's start with the friends. If a friend has gone through training and
-has been verified, they can then add themselves to a 
-queue from the /add page. Once they add themselves to the queue we will
-know they are available to help a certain amount of people
-(however many they put down). At any point, they may remove themselves 
-from this queue. This will let us know that they are not capable of being
-paired with anymore warriors at the moment for whatever reason. Be it school
-work is piling up, they are beginning to feel mentally drained, etc.
-
-Now, there is also a list of people who want to be helped, warriors. All warriors
-on this list are automatically added to the queue, setting them up to 
-be helped by a friend.
-Someone in the commmittee will see both the queues and pair someone in the 
-warrior queue with someone in the friends queue. This removes both people from
-the queues and adds them as a pair to the list of current pairings and all time
-pairings along with the date that they were paired. 
-Once the warrior is finished being helped, the pair is removed from
-current pairings, but remains in all as a history of all people helped.
-(This code still needs to be done.)
 
 
 ###"I WANT TO USE THIS!"
@@ -40,21 +18,66 @@ folder down). It is either named pairing-gui or open-service with a
 lot of numbers and letters after it. I'm not sure which one it is,
 but you'll know which one it is because it ends in .json. 
 
-Download that file.
-Change the path2secretfile variable in convey.py in the function open_sheet
-point to the location where you chose to store the .json file. If you 
-did all of this correctly you should now be able to edit sheets and everything
-should be working.
+Download the .json file.
+Change the path2secretfile variable in convey.py, in the function open_sheet
+to the path where you chose to store the .json file. 
+If you did all of this correctly you should now be able to edit the 
+sheets with this application and everything should be working.
+
+
+
+###THE PROCESS
+
+![alt tag](https://drive.google.com/file/d/0B1pACHzC1k9PVEJTbDQwSnREYUU/view?usp=sharing)
+
+
+####ADD PAGE
+Let's start with the friends. If a friend has gone through training and
+has been verified, they can add themselves to a 
+queue from the /add page. Once they add themselves to the queue the 
+Pairing Committee will
+know they are available to help a certain number of people
+(however many they put down). 
+
+####REMOVE PAGE
+At any point, they may remove themselves 
+from this queue. This will let us know that they are not capable of being
+paired with anymore warriors at the moment for whatever reason. Be it school
+work is piling up, they are beginning to feel mentally drained, etc.
+
+####A HOLE IN THE PROCESS
+Now, there is also a list of people who want to be helped, warriors.
+There is a list of all warriors somewhere with their traits and information
+listed. Warriors that submit a form are added to this list automatically.
+We need the google form to automatically add the warriors who submit a 
+form to the queue as well or have someone do it manually. Once they are
+on the queue, this sets them up to be helped by a friend.
+
+####PAIRING PAGE
+Someone in the Pairing Commmittee will see both the queues and pair 
+someone in the 
+warrior queue with someone in the friends queue. This removes both people from
+the queues and adds them as a pair to the list of current pairings and all time
+pairings along with the date that they were paired. 
+
+####ANOTHER HOLE
+Once the warrior is finished being helped, the pair is removed from
+current pairings, but remains in the all pairings list so that we have
+a record of everyone that we have helped and who helped who. This must
+currently be done manually.
+
 
 
 ##NOTES
 
 
 ###REGARDING STUFF
-Only friends who are trained may be added to the queue. The pairing happens
+Only friends who are trained may add themselves to the queue. 
+
+The pairing happens
 before the pair ever meets, so if someone gets cold feet then after a certain
 amount of time they will be removed from the current pairings, but will remain
-in all pairings with a description of what happened. 
+in all pairings with a description of what happened.
 It would be nice if all pairings  would change inactive pairs to red 
 and have active as greeen. (This is something to consider onces google 
 sheets integration is complete.)
@@ -113,7 +136,8 @@ You have to use a test.config sheet in gsheets but idk how to do it so help
 would be nice.
 
 
-I really hope that after I make this that it DOES NOT break horrendously in the future.
+I really hope that after I make this it DOES NOT break horrendously in the future.
+
 That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
 i should stop writing things like this in my code. bad omens)
 
