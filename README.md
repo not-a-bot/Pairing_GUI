@@ -28,7 +28,7 @@ sheets with this application and everything should be working.
 
 ###THE PROCESS
 
-![alt tag](https://drive.google.com/file/d/0B1pACHzC1k9PVEJTbDQwSnREYUU/view?usp=sharing)
+![picture](/flowchart.png)
 
 
 ####ADD PAGE
@@ -144,11 +144,10 @@ i should stop writing things like this in my code. bad omens)
 
 ###so sad
 This is actually a rewrite of the original gspread code. Why is it a rewrite?
-Because either my computer did not save my local change for some reason 
+Because my computer did not save my local change for some reason 
 (it was being pretty glitchy last night (last night to when i typed this,
-which is about Xmas 2015)) or the pull request I did from 
-the master caused an overwrite of all my local files. I don't know if 
-this is the reason though becuase I copied the directory before doing it and 
-the copy only contained two functions with sheet functionality in convey.py, 
-(which i just remember I had changed to conveyor.py so something mustve gone 
-wonky with my computer...)
+which is about Xmas 2015))
+
+I had also entertained the idea my pull request did something but I remembered
+I had changed convey to conveyor the night before but that did not show
+up in the repository. Stupid croutony computer.
