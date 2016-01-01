@@ -22,8 +22,6 @@ class Pairing(object):
 		
 		total = [friendq, warriorq]
 		
-		print total
-		
 		return render.pairing_gui(list_of_names = total)
 #the rendered pairing gui contains a form on it, which
 #once submitted calls on the POST method below	

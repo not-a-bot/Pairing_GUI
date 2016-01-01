@@ -68,25 +68,22 @@ pair please make the entire row blank or remove the whole row. If you have
 a blank cell in the first column for a pair you want to keep it will likely
 be overwritten at some point.
 
-As of now the queues MUST BE FIRST NAME ONLY. If they have full names on it 
+As of now the queues MUST BE FIRST NAME ONLY (corresponding to a netid
+in the frieds list). If they have full names on it 
 everything breaks. So the name question in friends list must be one name. 
 Ill change the code to search for first name or something like that. That means
 we also need to validate that the first names are really just one name without
 a space this can be done either in the google form or somewhere in this code.
 
-(THIS IS VERY LIKELY SUBJECT TO CHANGE FROM NAME TO netID)
-For friend and warrior list, the name header can be
-in any column but make sure that it does not have any other characters in
-it. This means when you make the submission forms put the title as
-'Name' or 'nAme' or 'name  ' etc. NOT 'First Name' or 'Last Name'. We will
-likely change this to read netIDs instead as Name may not be unique enough
-and is pretty vauge. It may also be difficult for friends to add themselves
-to the queue with there name as they may not remember if they submitted just
-first name or first and last or some nickname. But untill then. This setup 
-requires there to be a 'name' heading in the first row of the Friend
-and Warrior list. Which means a question that says 'Name' (NOT 'Name:')
-in any google forms. (AGAIN, ITS VERY LIKELY TO CHANGE. SO ASK IF YOU
-ARE UNSURE! WE ARE HELPUL PEOPLE! I SWEAR!)
+For friend and warrior list, we need three columns 'Name' 'netID' and 
+'Verified.' Everything under the name column MUST BE A FIRST NAME. That
+is it must be a single word name. No spaces!! (Itd be best to mandate this
+in the forms using data validation.) Under netId that is their netids. And
+under verification it should say 'yes' if they are verified. Anything else
+reads as they are not verified. For all of these, capitilization and extra
+spaces before or after should not matter.
+(THIS IS ALL VERY LIKELY TO CHANGE. SO ASK IF YOU
+ARE UNSURE ASK! WE ARE HELPUL PEOPLE! I SWEAR!)
 
 
 
@@ -110,8 +107,7 @@ You have to use a test.config sheet in gsheets but idk how to do it so help
 would be nice.
 
 
-<<<<<<< HEAD
-I really hope that I make this and then it breaks horrendously in the future.
+I really hope that after I make this that it DOES NOT break horrendously in the future.
 That'd be no bueno. (aaaaaaaaaaand its all deleted the next day... yay.
 i should stop writing things like this in my code. bad omens)
 
@@ -121,12 +117,7 @@ This is actually a rewrite of the original gspread code. Why is it a rewrite?
 Because either my computer did not save my local change for some reason 
 (it was being pretty glitchy last night) or the pull request I did from 
 the master caused an overwrite of all my local files. I don't know if 
-this is the reason though
-becuase I copied the directory before doing it and the copy only contained two
-functions with sheet functionality in convey.py, (which i just remember I had
-changed to conveyor.py so something mustve gone wonky with my computer...)
-=======
-I really hope that after I make this that it DOES NOT break horrendously in the future.
-That'd be no bueno.
->>>>>>> 59701054650a92b1ff9a4393191bf697989d8e21
-
+this is the reason though becuase I copied the directory before doing it and 
+the copy only contained two functions with sheet functionality in convey.py, 
+(which i just remember I had changed to conveyor.py so something mustve gone 
+wonky with my computer...)

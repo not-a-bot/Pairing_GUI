@@ -22,8 +22,6 @@ class Pairing(object):
 		
 		total = [friendq, warriorq]
 		
-		print total
-		
 		return render.pairing_gui(list_of_names = total)
 #the rendered pairing gui contains a form on it, which
 #once submitted calls on the POST method below	
@@ -173,7 +171,7 @@ class Remove(object):
 		
 		#this is done in a similar way to the Add POST method
 		#using their netID find the associated name and remove that
-		#from the list
+		#from the queue
 		sheet = cv.open_sheet('Friend-List')
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
