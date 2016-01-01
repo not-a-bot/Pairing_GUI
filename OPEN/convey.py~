@@ -195,7 +195,6 @@ def remove_from_queue(sheet_name, name, number=1):
 
 	#return all names in current
 	current_names = names_no_null(sheet_name, 1)
-	print current_names
 	i = 0
 	new_names = []
 	if number == 1:
@@ -206,7 +205,6 @@ def remove_from_queue(sheet_name, name, number=1):
 				new_names.append(element.strip())
 		#rewrite and nnn both call open_sheet which makes
 		#this pretty slow probably, col_num always 1 for a queue
-		print new_names
 		rewrite_column(sheet_name, 1, new_names)
 	else:
 		#only change this to no i so it will remove all instances of name
@@ -217,7 +215,6 @@ def remove_from_queue(sheet_name, name, number=1):
 				new_names.append(element.strip())
 		#rewrite and nnn both call open_sheet which makes
 		#this pretty slow probably
-		print new_names
 		rewrite_column(sheet_name, 1, new_names)
 
 #this works for all upper/lower cases

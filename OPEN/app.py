@@ -48,7 +48,6 @@ class Pairing(object):
 		#for some reason, firt last becomes just first...
 		#maybe i should only allow first name..
 		chosen_pair = [form.warrior, form.friend]
-		print chosen_pair
 		
 		#these three functions just updates sheets removing both 
 		#from the queues and adding them to both pairing sheets
@@ -91,23 +90,25 @@ class Add(object):
 		form = web.input(netid = "netid", number = 1)
 		#dont need to format name here because search does it for us
 		
+		#make a default setting of nothing being because if adding is not
+		#a success then the html doesnt need the new list anyways.
+		new_list =[]
+		i =1
 		#this is the number of times their name will be added to the list
 		#it is the number of warriors they are able to help. (battle can be ruf)
 		num = int(form.number)
 		
 		#check that they are on friend list AND verified
 		
-		sheet = open_sheet('Friend-List')
+		sheet = cv.open_sheet('Friend-List')
 		#find columns of all these things
-		#name_col  = cv.search_row(sheet, 1, 'name')
-		#dont need names b/c namesnonull will display them just
+		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
 		veri_col  = cv.search_row(sheet, 1, 'verified')
 
 		#find the row the netid they give is in and use this row to
 		#and other columns we found to find their other info
 		#case and extra spaces do not matter for this function
-		
 		row_num = cv.search_column(sheet, netid_col, form.netid)
 
 		#this error becomes a problem if we have more than 1000
@@ -118,28 +119,34 @@ class Add(object):
 			message = "FAILURE! We could not find your netID on the list. Please make sure you submitted the correct netID (%s). If this is the correct netID it is possible that was incorrectly entered on our spreadsheet or there is something wrong with this code (which is a very likely possibility). Please let us know about this problem, whether through our website, facebook, slack, next meeting, or randomly in the quad. THANK YOU!" % form.netid	
 
 		else:
-			#there is probably a way to call a specific cell
-			verified_values = sheet.col_values(veri_col)
-
+			#see all values in the users row
+			the_values = sheet.row_values(row_num)
+			
+			#find the name of the person with that netID
+			#and whether or not they are verified
+			#sheets columns is one ahead of arrary
+			name = the_values[name_col - 1]
+			verified = the_values[veri_col - 1]
+	
 			#check that a friend is verified and if they are add them 
 			#to the queue 'num' times.
 			#because array starts at 0 and gsheets starts at 1
-			if verified_values[row_num + 1].lower().strip() == 'yes':
-				i = 1
+			if verified.lower().strip() == 'yes':
 				name_count = []
 				while i <= num:
 				#remember, names must be submitted as arrays.
-					name_count.append(form.name)
+					name_count.append(name)
 					i = i + 1
 			
 				cv.add_to_queue("Friend-Q", name_count)				
-				message = "SUCCESS! You have been added to the queue!"			
-		
+				message = "SUCCESS!"			
+				
+				#new list is only rendered if there is sucess so
+				#user can make sure their name is on it.
+				#actually, you should probably remove this when done testing
+				new_list = cv.names_no_null("Friend-Q", 1)
 			else:
 				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
-		#display what new queue looks like and make sure it has their name
-		#on it
-		new_list = cv.names_no_null("Friend-Q", 1)
 
 		#message, times added to queue, and new list of names on queue
 		return render.add(stuff = [message, i-1, new_list])
@@ -165,8 +172,9 @@ class Remove(object):
 		#because they need help 
 		
 		#this is done in a similar way to the Add POST method
-		#instead of verified col it is name though
-		sheet = open_sheet('Friend-Q')
+		#using their netID find the associated name and remove that
+		#from the queue
+		sheet = cv.open_sheet('Friend-List')
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
 		row_num = cv.search_column(sheet, netid_col, form.netid)
@@ -174,10 +182,10 @@ class Remove(object):
 		#use col and row info to find the name
 		#dont need to format because remove function will do that
 		name_values = sheet.col_values(name_col)
-		name = name_values[row_num + 1]
-
+		name = name_values[row_num - 1]
+		print name_values, name, row_num
 		cv.remove_from_queue("Friend-Q", name, 'rm all')
-		new_list = cv.names_no_null("Friend-Q")
+		new_list = cv.names_no_null("Friend-Q", 1)
 		return render.remove(friendq = new_list)
 
 if __name__ == '__main__':

@@ -12,23 +12,26 @@ $def with (stuff)
 
 <body style="text-align:center; background-color:lightgrey; font-family:sans-serif">
 $if stuff != 3:
+	<!if successfully added to the queue>
 	$if stuff[0][0] == 'S':
 		<p>$stuff[0]</p>
 		<p>You have been added to the queue $stuff[1] time(s).</p>
 		<p style="text-align:center; font-size:20; color:purple">
+		
+		<! this should probably not be available to all friends..>
 		<b>List of Available Friends</b></p>
 		$for element in stuff[2]:
 			<p style="color:purple; text-align:center">$element</p>
 	$else:
 		<p>$stuff[0]</p>
 
-<! having it = NONE didnt work.... so i set it to 3>
+<! having it == NONE didnt work.... so i set it to 3>
 $if stuff == 3:
 	<h1>Add Yourself to the Friend Queue</h1>
 	<p>The purpose of this page is for verified friends to be 
 	able to add themslves to the friends queue. Verification merely 
 	means that you have gone to enough trainings and we think you are 
-	ready to talke to people in delicate situations.</p>
+	ready to talk to people in delicate situations.</p>
 	<p>You can add yourself as many times as you want, though be 
 	aware that the number of times you add yourself to the list 
 	is the number of people you are willing to help.</p>
