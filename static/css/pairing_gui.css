@@ -1,0 +1,24 @@
+.selectPair{
+	text-align:center; 
+	color:green;
+}
+
+.pairButton{
+	color:white; 
+	font-family:sans-serif; 
+	background-color:purple; 
+	height:100px; 
+	width:150px; 
+	font-size:50;
+}
+
+.col-centered{
+	display:inline-block;
+	float:none;
+	text-align:left;
+	margin-right:-4px;
+}
+
+.row-centered{
+	text-align:center;
+}
