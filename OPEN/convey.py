@@ -1,5 +1,6 @@
 import time
 import authenticate as au
+import os
 
 #this is for testing atm
 def list_available_sheets(gc):
@@ -16,7 +17,7 @@ def open_sheet(spreadsheet):
 
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
-	path2secretfile = '/home/justin/pairing-gui-eee6d5bb7e29.json'
+	path2secretfile = './pairing-gui-eee6d5bb7e29.json'
 	
 	#load authentication with .json file
 	#like the file once you open a txt file
