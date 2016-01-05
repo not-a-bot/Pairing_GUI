@@ -2,7 +2,7 @@
 __pycache__/
 *.py[cod]
 *.py~
-
+.gitignore
 # C extensions
 *.so
 
@@ -56,3 +56,6 @@ docs/_build/
 
 # PyBuilder
 target/
+
+path2secretfile.txt
+clientinfo.txt
