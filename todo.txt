@@ -2,8 +2,12 @@ TODO--------------
 Mark if in progress
 
 TODO:
-[x] Warrior Information on click
-[ ]
-
+[ ] Make Chat-form feed directly into Warrior-Q
+[ ] Add a page that ends current pairs and adds notes like "never responded"
+[ ] Once paired, display emails of pair for Committee Member to email them.
+[ ] Security features (login system?)
+[ ] Add into the website.
 
 DONE:
+[jmm] Warrior Information on click (or hover?)
+[jmm] Friend Information on click

@@ -6,7 +6,10 @@ urls = (
 	'/pairing_gui', 'Pairing',
 	'/add', 'Add',
 	'/remove', 'Remove', 
-	'/info', 'GetInfo',
+	'/warriorinfo', 'WarriorInfo',
+	'/friendinfo', 'FriendInfo',
+	'/add'        , 'Add',
+	'/remove'     , 'Remove'
 )
 
 app = web.application(urls, globals())
@@ -184,13 +187,19 @@ class Remove(object):
 		return render.remove(friendq = new_list)
 
 
-class GetInfo(object):
+class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_warrior_info(textName)
-		a = json.dumps({'interests': info[0], 'hobbies': info[1], 'struggle':info[2]})
-		return a
+		return json.dumps({'sex': info[0], 'year': info[1], 'interests': info[2], 'hobbies': info[3], 'struggle':info[4]})
+
+class FriendInfo(object):
+	def POST(self):
+		warriorName = web.input()
+		textName = warriorName['name']
+		info = cv.get_friend_info(textName)
+		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
 
 if __name__ == '__main__':
 	app.run()

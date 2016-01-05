@@ -10,7 +10,6 @@ def LOAD(path_to_secret_file):
 	#oh, ill just store it in the cloud somewhere,
 	#maybe
 
-
 	#This is the webpage that the api will find the sheets from. The
 	#sheets must be shared with the 'client_email' that is 
 	scope = ['https://spreadsheets.google.com/feeds']

@@ -16,7 +16,10 @@ def open_sheet(spreadsheet):
 
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
-	path2secretfile = '/home/justin/pairing-gui-eee6d5bb7e29.json'
+	#/home/glitch/my_scripts/github/pairing-gui-eee6d5bb7e29.json
+	#/home/justin/pairing-gui-eee6d5bb7e29.json
+	pathfile = open('path2secretfile.txt', 'r')
+	path2secretfile = pathfile.readline()
 	
 	#load authentication with .json file
 	#like the file once you open a txt file
@@ -261,10 +264,41 @@ def get_warrior_info(warrior_name):
 	#means entire thing is full and just start adding at the end
 	if row < length:
 		data = sheet.row_values(row)
+		sex = data[2]
+		year = data[6]
 		interests = data[7]
 		hobbies = data[8]
 		struggle = data[10]
-		return [interests, hobbies, struggle]
+		return [sex, year, interests, hobbies, struggle]
 	else:
 		return ['','','']
+	
+def get_friend_info(friend_name):
+	sheet = open_sheet('Friend-Form')
+	
+	array = sheet.col_values(18)
+
+	#Find the appropriate row
+	row = 0
+	length = len(array)
+	while row < length:
+		if array[row] == '':
+			row += 1
+			continue
+		elif array[row].lower().strip() == friend_name.lower().strip():
+			row += 1
+			break #arrays 0 indexed, sheets 1 indexed
+
+		row += 1
+	#means entire thing is full and just start adding at the end
+	if row < length:
+		data = sheet.row_values(row)
+		sex = data[3]
+		year = data[4]
+		major = data[5]
+		interests = data[6]
+		hobbies = data[12]
+		return [sex, year, major, interests, hobbies]
+	else:
+		return ['','','','','']
 	
