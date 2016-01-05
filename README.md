@@ -1,6 +1,7 @@
 #Open Ears Pairing
 
 Open Ears pairing interface for pairing those who want someone to talk to with people who want to listen.
+The pairing interface is to be used to manage the queues for those who want to help/be helped and facilitate pairing by the pairing committee.
 
 ##Usage
 ###Requirements
