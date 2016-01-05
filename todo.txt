@@ -4,7 +4,8 @@ Mark if in progress
 TODO:
 [ ] Make Chat-form feed directly into Warrior-Q
 [ ] Add a page that ends current pairs and adds notes like "never responded"
-[ ] Once paired, display emails of pair for Committee Member to email them.
+[ jmm ] Once paired, display emails of pair for Committee Member to email them.
+[ jmm ] Add option to automatically email the paired people
 [ ] Security features (login system?)
 [ ] Add into the website.
 
