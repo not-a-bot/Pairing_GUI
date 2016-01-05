@@ -3,7 +3,9 @@ Mark if in progress
 
 TODO:
 [x] Warrior Information on click
-[ ]
+[ ] Friend Information on click
+[ ] Make Chat-form feed directly into Warrior-Q
+[ ] Add a page to end current pairs and add notes like "never responded"
 
 
 DONE:

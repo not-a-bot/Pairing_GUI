@@ -16,7 +16,9 @@ def open_sheet(spreadsheet):
 
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
-	path2secretfile = '/home/justin/pairing-gui-eee6d5bb7e29.json'
+	#/home/glitch/my_scripts/github/pairing-gui-eee6d5bb7e29.json
+	#/home/justin/pairing-gui-eee6d5bb7e29.json
+	path2secretfile = '/home/glitch/my_scripts/github/pairing-gui-eee6d5bb7e29.json'
 	
 	#load authentication with .json file
 	#like the file once you open a txt file
