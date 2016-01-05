@@ -12,13 +12,26 @@ because unsure what that does>
 <meta content="width=device-width, initial-scale=1, user-scalable=no">
 
 <head>
-<title>DISPLAY LISTS</title>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Pairing Complete</title>
+
+ 
+    <link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
+
+</head>
+
 </head>
 
 <body style="background-color:lightgrey; font-family:sans-serif" >
 
 	<h1 style="text-align:center">
-	This is the pair you chose and what the lists currently look like.
+	Pairing Complete
 	</h1>
 
 	<!these are line breaks and hr is a horizontal line>
@@ -27,7 +40,7 @@ because unsure what that does>
 
 	<p style="text-align:center">
 	<! chosen_pair = [warrior, friend]>
-	<b style="color:purple">$all_lists[0][1]</b> is going to be a friend for <b 	style="color:blue">$all_lists[0][0]</b>
+	<b style="color:purple">$all_lists[0][0]</b> is going to be a friend for <b style="color:blue">$all_lists[0][1]</b>
 	</p>
 
 
@@ -36,26 +49,28 @@ because unsure what that does>
 	eventually itd be nice to make these columns in this and the other
 	html file>
 
-	<p style="text-align=center">
-	Future home of an "I WANT TO PAIR SOMEON ELSE" button.
-	<p>
+	<div class="row row-centered">
+	<form action="/pairing_gui">
+		<button class="row-centered goBackButton" type="submit">Go Back to Pairing</button>
+	</form>
+	</div>
 
 	<hr><br>
-	<!LISTING QUEUES
-	>
-	
-	<p style="font-size:20; text-align:center; color:purple">
-	<b>List of Available Friends</b></p>
+	<!-- Remaining Queues -->
+	<div class="row">
+		<div class="col-md-6">
+			<p style="text-align:center; font-size:20; color:purple">
+			<b>List of Available Friends</b></p>
+				$for element in all_lists[1]:
+					<p style="color:purple; text-align:center">$element</p>
+		</div>
 
-	$for element in all_lists[1]:
-		<p style="text-align:center; color:purple">$element</p>
-	
-
-	<p style = "font-size:20; text-align:center; color:blue">
-	<b>List of People Seeking Help</b></p>
-
-	$for element in all_lists[2]:
-		<p style="text-align:center; color:blue">$element</p>
+		<div class="col-md-6">
+		<p style = "text-align:center; font-size:20; color:blue"><b>List of People Seeking Help</b></p>
+			$for element in all_lists[2]:
+				<p style="text-align:center; color:blue">$element</p>
+		</div>
+	</div>
 
 </body>
 </html>

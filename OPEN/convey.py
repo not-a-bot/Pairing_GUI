@@ -227,8 +227,6 @@ def remove_from_queue(sheet_name, name, number=1):
 #TO BE RANDOM EMPTY CELLS IN THE COL FROM REMOVE FUNCTION
 def add_to_queue(sheet_name, list_of_names):
 	#the queue is in column one
-	#THIS DOESNT COPY REIKAS NAME FOR SOME REASON
-	#now it does.. idk what changed though.
 	names = names_no_null(sheet_name, 1)
 	for element in list_of_names:
 		names.append(element)

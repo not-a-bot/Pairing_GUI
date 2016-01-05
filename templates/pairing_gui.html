@@ -26,15 +26,8 @@ $def with (list_of_names)
 <body style="background-color:lightgrey; font-family:sans-serif" >
 <!-- THIS WORKS!OMG INPUT FORMS -->
 <h1 style="text-align:center">Open Ears Pairing GUI</h1>
-<!-- <p>The purpose of this interface is to simplify the process
-of pairing people.</p>
-<p>Be sure to pair one person from one list with one
-person from the other list. Do not pair people in the same list.
-Furthermore, be sure to spell their names correctly, though 
-capitalization should not matter.</p> -->
 
-<!-- Line Breaks -->
-<br><hr><br>
+<!-- Line Breaks --><hr><br>
 
 <!-- <! first list the available friends and then people seeking help
 eventually itd be nice to make these columns, see pgniceformat.
@@ -67,19 +60,22 @@ LISTING QUEUES
 		<div class="col-md-1 col-centered">
 			<h3>Friend:</h3>
 			<select name="friend" id="friendQueue">
-				<option disabled selected>--friend--</option>
-				$for element in list_of_names[0]:	
-					<option value=$element>$element</option>
+				<option disabled selected>--Friend--</option>
+				$for name in list_of_names[0]:	
+					<option value="$name">$name</option>
 			</select>
+		</div>
+
+		<div class="mid-spacing">
 		</div>
 
 		<!-- Warrior Queue -->
 		<div class="col-md-1 col-centered">
-			<h3> Warrior:</h3>
+			<h3>Warrior:</h3>
 			<select name="warrior" id="warriorQueue">
-				<option disabled selected>--warrior--</option>
-				$for thing in list_of_names[1]:	
-					<option value=$thing>$thing</option>
+				<option disabled selected>--Warrior--</option>
+				$for name in list_of_names[1]:	
+					<option value="$name">$name</option>
 			</select>
 		</div>
 	</div>
@@ -95,7 +91,7 @@ LISTING QUEUES
 			<div class="modal-content">
 
 				<div class="modal-header">
-					<h1 class="modal-title">Are you sure?</h4>
+					<h1 class="modal-title">Current Pairing</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
 

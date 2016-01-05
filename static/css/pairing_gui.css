@@ -12,11 +12,17 @@
 	font-size:50;
 }
 
+.goBackButton{
+	color:white;
+	font-family:sans-serif;
+	background-color:black;
+	font-size:20;
+}
+
 .col-centered{
 	display:inline-block;
 	float:none;
-	text-align:left;
-	margin-right:-4px;
+	text-align:center;
 }
 
 .row-centered{
