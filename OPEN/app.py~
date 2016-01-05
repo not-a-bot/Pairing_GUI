@@ -34,7 +34,6 @@ class Pairing(object):
 #removes them from the current queue, adding them to the
 #current pairings list. THIS IS WHERE THE MAGIC HAPPENS.		
 		form = web.input(friend = 'friend', warrior = 'warrior')
-		
 	#let this if statement verify that the user submitted
 	#everything correctly. that means ADD MORE HERE
 	#ik what ur thinking, wheres the more? wheres
@@ -42,9 +41,6 @@ class Pairing(object):
 	#would need to be rly dumb, i guess there could be
 	#check that chosen is what they want... an r u sure button
 		
-		#form.warrior cuts off KING OF LAND to just KING...
-		#for some reason, firt last becomes just first...
-		#maybe i should only allow first name..
 		chosen_pair = [form.warrior, form.friend]
 		
 		#these three functions just updates sheets removing both 
@@ -55,7 +51,6 @@ class Pairing(object):
 		cv.remove_from_queue("Friend-Q", form.friend)
 		cv.remove_from_queue("Warrior-Q", form.warrior)
 
-
 		#redownload queues to display updated versions.
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
@@ -64,7 +59,7 @@ class Pairing(object):
 
 #this renders display.html. It shows the new queues and the
 #pair of people you added to both pairings lists
-		return render.display(all_lists = this)
+		return render.display(this)
 		
 		"""all_lists should be of the form
 		[chosen_pair, friendQ, warriorq]

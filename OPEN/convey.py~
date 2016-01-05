@@ -16,7 +16,9 @@ def open_sheet(spreadsheet):
 
 	#turn this into url to some cloud so dont have to
 	#show the file on github.
-	path2secretfile = '/home/glitch/my_scripts/github/first-eb1baeb00baf.json'
+	#/home/glitch/my_scripts/github/pairing-gui-eee6d5bb7e29.json
+	#/home/justin/pairing-gui-eee6d5bb7e29.json
+	path2secretfile = '~/my_scripts/github/pairing-gui-eee6d5bb7e29.json'
 	
 	#load authentication with .json file
 	#like the file once you open a txt file
@@ -227,8 +229,6 @@ def remove_from_queue(sheet_name, name, number=1):
 #TO BE RANDOM EMPTY CELLS IN THE COL FROM REMOVE FUNCTION
 def add_to_queue(sheet_name, list_of_names):
 	#the queue is in column one
-	#THIS DOESNT COPY REIKAS NAME FOR SOME REASON
-	#now it does.. idk what changed though.
 	names = names_no_null(sheet_name, 1)
 	for element in list_of_names:
 		names.append(element)

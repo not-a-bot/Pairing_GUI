@@ -3,8 +3,8 @@ import convey as cv
 
 urls = (
 	'/pairing_gui', 'Pairing',
-	'/add', 'Add',
-	'/remove', 'Remove'
+	'/add'        , 'Add',
+	'/remove'     , 'Remove'
 )
 
 app = web.application(urls, globals())

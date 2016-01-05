@@ -9,9 +9,13 @@ are helping said 'warriors' are named 'friends.'
 
 ###"I WANT TO USE THIS!"
 
-openearsuiuc@gmail.com has been authorized to use the drive API with google.
-This means you do not have to go through the process of authorizing your
-own account with google and sharing all of the sheets we edit with 
+**Requirements: Python 2.7.10 (or something compatible)**
+**Libraries: web.py, gspread, oauth2client, json, time, and any other library**
+**these require to function properly.**
+
+The openearsuiuc@gmail.com has been authorized to use the drive API with 
+google. This means you do not have to go through the process of authorizing 
+your own account with google and sharing all of the sheets we edit with 
 said account. Just go to the Open Ears Exec folder, open the folder
 GUI_Interface and download the .json file in there (it may be in the next
 folder down). It is either named pairing-gui or open-service with a 
@@ -56,11 +60,10 @@ form to the queue as well or have someone do it manually. Once they are
 on the queue, this sets them up to be helped by a friend.
 
 ####PAIRING PAGE
-Someone in the Pairing Commmittee will see both the queues and pair 
-someone in the 
-warrior queue with someone in the friends queue. This removes both people from
-the queues and adds them as a pair to the list of current pairings and all time
-pairings along with the date that they were paired. 
+Someone in the Pairing Commmittee will see both of the queues and pair 
+a warrior with a friend. This removes both people from
+the queues and adds them as a pair to Current-Pairings and All-Pairings
+along with the date that they were paired. 
 
 ####ANOTHER HOLE
 Once the warrior is finished being helped, the pair is removed from
@@ -98,13 +101,6 @@ with the first empty space in column one. So if you remove a pair from current
 pair please make the entire row blank or remove the whole row. If you have
 a blank cell in the first column for a pair you want to keep it will likely
 be overwritten at some point.
-
-As of now the queues MUST BE FIRST NAME ONLY (corresponding to a netid
-in the frieds list). If they have full names on it 
-everything breaks. So the name question in friends list must be one name. 
-Ill change the code to search for first name or something like that. That means
-we also need to validate that the first names are really just one name without
-a space this can be done either in the google form or somewhere in this code.
 
 For friend and warrior list, we need three columns 'Name' 'netID' and 
 'Verified.' Everything under the name column MUST BE A FIRST NAME. That
