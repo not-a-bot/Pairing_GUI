@@ -41,7 +41,7 @@ Available pages are:
 
 ####Pairing
 
-`http://0.0.0.0:8080/paring_gui`
+`http://0.0.0.0:8080/pairing_gui`
 
 Someone in the Pairing Commmittee will see both of the queues and pair 
 a warrior with a friend. This removes both people from
