@@ -42,11 +42,15 @@ Available pages are:
 ####Pairing
 
 `http://0.0.0.0:8080/paring_gui`
+
 Someone in the Pairing Commmittee will see both of the queues and pair 
 a warrior with a friend. This removes both people from
 the queues and adds them as a pair to Current-Pairings and All-Pairings
 along with the date that they were paired. 
 ####Add
+
+`http://0.0.0.0:8080/add`
+
 Let's start with the friends. If a friend has gone through training and
 has been verified, they can add themselves to a 
 queue from the /add page. Once they add themselves to the queue the 
@@ -55,17 +59,14 @@ know they are available to help a certain number of people
 (however many they put down). 
 
 ####Remove
+
+`http://0.0.0.0:8080/remove`
+
 At any point, they may remove themselves 
 from this queue. This will let us know that they are not capable of being
 paired with anymore warriors at the moment for whatever reason. Be it school
 work is piling up, they are beginning to feel mentally drained, etc.
 
-
-####ANOTHER HOLE
-Once the warrior is finished being helped, the pair is removed from
-current pairings, but remains in the all pairings list so that we have
-a record of everyone that we have helped and who helped who. This must
-currently be done manually.
 
 
 
@@ -82,6 +83,13 @@ sheets integration is complete.)
 It is up to committe to manually place in reason pair ended, 
 at the moment. We could create another interface that lets committee 
 members end pairs and add reason.
+
+
+###When pairing is finished
+Once the warrior is finished being helped, the pair is removed from
+current pairings, but remains in the all pairings list so that we have
+a record of everyone that we have helped and who helped who. This must
+currently be done manually.
 
 
 ###Sheet Formats
