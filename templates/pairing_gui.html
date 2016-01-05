@@ -24,35 +24,34 @@ $def with (list_of_names)
 
 
 <body style="background-color:lightgrey; font-family:sans-serif" >
-<!-- THIS WORKS!OMG INPUT FORMS -->
 <h1 style="text-align:center">Open Ears Pairing GUI</h1>
 
-<!-- Line Breaks --><hr><br>
-
-<!-- <! first list the available friends and then people seeking help
-eventually itd be nice to make these columns, see pgniceformat.
-Tho this may be nicer for mobile.
-
-LISTING QUEUES
-> -->
+<hr><br>
 
 <div class="row">
 	<div class="col-md-6">
-		<p style="text-align:center; font-size:20; color:purple">
-		<b>List of Available Friends</b></p>
+		<p class="friend-title">List of Available Friends</p>
+		<div class="list-group">
 			$for element in list_of_names[0]:
-				<p style="color:purple; text-align:center">$element</p>
+				<button type="button" class="list-group-item" value="$element" onclick="displayWarriorInfo(this.value)">	
+					<p class="friend-item">$element</p>
+				</button>
+		</div>
 	</div>
-
+	
 	<div class="col-md-6">
-	<p style = "text-align:center; font-size:20; color:blue"><b>List of People Seeking Help</b></p>
+	<p class="warrior-title">List of Warriors</p>
+	<div class="list-group">
 		$for element in list_of_names[1]:
-			<p style="text-align:center; color:blue">$element</p>
+			<button type="button" class="list-group-item" value="$element" onclick="displayWarriorInfo(this.value)">
+				<p class="warrior-item">$element</p>
+			</button>
 	</div>
 </div>
 
 <hr>
 
+<!-- Form Handles Submitting Data to Web.py and Modal code-->
 <form method="POST">
 	<div class="row row-centered">
 
@@ -64,9 +63,6 @@ LISTING QUEUES
 				$for name in list_of_names[0]:	
 					<option value="$name">$name</option>
 			</select>
-		</div>
-
-		<div class="mid-spacing">
 		</div>
 
 		<!-- Warrior Queue -->
@@ -114,6 +110,30 @@ LISTING QUEUES
 	</div>
 
 </form>
+
+
+<div id="warriorModal" class="modal fade" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<div class="modal-header">
+					<h1 class="modal-title">Warrior Name</h1>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+
+				<div class = "modal-body">
+					<p> This is where information about them will go
+				</div>
+
+				<div class="modal-footer">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Done</button>
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</div>
 
 
 </body>

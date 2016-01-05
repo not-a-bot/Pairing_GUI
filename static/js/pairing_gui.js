@@ -12,3 +12,24 @@ function pairClick()
 	}
 	$('#testModal').modal('show');
 }
+
+
+function displayWarriorInfo(warriorName)
+{
+	var postreq = $.post( "http://0.0.0.0:8080/info", {name: warriorName}, null, 'json')
+ 		.done(function( data ) {
+	   	 var interests = data.interests;
+	   	 var hobbies = data.hobbies;
+	   	 var struggle = data.struggle;
+	   	 $('#warriorModal').find('h1').html(warriorName);
+	   	 $('#warriorModal').find('p').html('<p><b>Interests: </b>' + interests + '</p>'
+	   	 																		+ '<p><b>Hobbies: </b>' + hobbies + '</p>'
+	   	 																		+ '<p><b>Struggles: </b>' + struggle + '</p>');
+	   	 $('#warriorModal').modal('show');
+		})
+		.fail(function(){
+			$('#warriorModal').find('h4').html(warriorName);
+	   	$('#warriorModal').find('p').html('Could not find any data');
+	   	$('#warriorModal').modal('show');
+	});
+}

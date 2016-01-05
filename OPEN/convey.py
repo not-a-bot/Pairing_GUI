@@ -241,3 +241,30 @@ def add_to_queue(sheet_name, list_of_names):
 #add_to_queue('Friend-Q', ['Maria', 'Daniel', 'Daniel', 'Daniel'])
 
 
+def get_warrior_info(warrior_name):
+	sheet = open_sheet('Chat-Form-Responses')
+	
+	array = sheet.col_values(2)
+
+	#Find the appropriate row
+	row = 0
+	length = len(array)
+	while row < length:
+		if array[row] == '':
+			row += 1
+			continue
+		elif array[row].lower().strip() == warrior_name.lower().strip():
+			row += 1
+			break #arrays 0 indexed, sheets 1 indexed
+
+		row += 1
+	#means entire thing is full and just start adding at the end
+	if row < length:
+		data = sheet.row_values(row)
+		interests = data[7]
+		hobbies = data[8]
+		struggle = data[10]
+		return [interests, hobbies, struggle]
+	else:
+		return ['','','']
+	

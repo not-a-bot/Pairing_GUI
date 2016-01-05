@@ -1,10 +1,12 @@
 import web
 import convey as cv
+import json
 
 urls = (
 	'/pairing_gui', 'Pairing',
 	'/add', 'Add',
-	'/remove', 'Remove'
+	'/remove', 'Remove', 
+	'/info', 'GetInfo',
 )
 
 app = web.application(urls, globals())
@@ -180,6 +182,15 @@ class Remove(object):
 		cv.remove_from_queue("Friend-Q", name, 'rm all')
 		new_list = cv.names_no_null("Friend-Q", 1)
 		return render.remove(friendq = new_list)
+
+
+class GetInfo(object):
+	def POST(self):
+		warriorName = web.input()
+		textName = warriorName['name']
+		info = cv.get_warrior_info(textName)
+		a = json.dumps({'interests': info[0], 'hobbies': info[1], 'struggle':info[2]})
+		return a
 
 if __name__ == '__main__':
 	app.run()

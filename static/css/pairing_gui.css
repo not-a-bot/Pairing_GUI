@@ -28,3 +28,31 @@
 .row-centered{
 	text-align:center;
 }
+
+.friend-item{
+	text-align:center;
+	color:purple;
+	font-size:18;
+	margin:auto;
+}
+
+.warrior-item{
+	text-align:center;
+	margin:auto;
+	color:blue;
+	font-size:18;
+}
+
+.friend-title{
+	text-align:center; 
+	font-size:20; 
+	color:purple;
+	font-weight:bold;
+}
+
+.warrior-title{
+	text-align:center; 
+	font-size:20; 
+	color:blue;
+	font-weight:bold;
+}
