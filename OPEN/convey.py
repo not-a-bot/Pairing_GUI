@@ -242,8 +242,11 @@ def add_to_queue(sheet_name, list_of_names):
 #before) because i forgot to increment i again in second loop		
 #add_to_queue('Friend-Q', ['Maria', 'Daniel', 'Daniel', 'Daniel'])
 
-
-def get_warrior_info(warrior_name):
+	#use col and row info to find the name
+		#dont need to format because remove function will do that
+# Gets info from the warrior sheet based on specified datatype
+# datatype: 'info', 'contact'
+def get_warrior_info(warrior_name, datatype):
 	sheet = open_sheet('Chat-Form-Responses')
 	
 	array = sheet.col_values(2)
@@ -260,19 +263,31 @@ def get_warrior_info(warrior_name):
 			break #arrays 0 indexed, sheets 1 indexed
 
 		row += 1
-	#means entire thing is full and just start adding at the end
+
+	#return the appropriate value from the sheet
 	if row < length:
 		data = sheet.row_values(row)
-		sex = data[2]
-		year = data[6]
-		interests = data[7]
-		hobbies = data[8]
-		struggle = data[10]
-		return [sex, year, interests, hobbies, struggle]
+		if datatype == 'info':
+			sex = data[2]
+			year = data[6]
+			interests = data[7]
+			hobbies = data[8]
+			struggle = data[10]
+			return [sex, year, interests, hobbies, struggle]
+		elif datatype == 'contact':
+			method = data[3]
+			phone = data[4]
+			email = data[5]
+			return [method, phone, email]
+		else:
+			return['']
 	else:
-		return ['','','']
+		return ['','','','','']
 	
-def get_friend_info(friend_name):
+
+# Gets info from the friends sheet based on specified datatype
+# datatype: 'info', 'contact'
+def get_friend_info(friend_name, datatype):
 	sheet = open_sheet('Friend-Form')
 	
 	array = sheet.col_values(18)
@@ -290,14 +305,22 @@ def get_friend_info(friend_name):
 
 		row += 1
 	#means entire thing is full and just start adding at the end
+
+
 	if row < length:
 		data = sheet.row_values(row)
-		sex = data[3]
-		year = data[4]
-		major = data[5]
-		interests = data[6]
-		hobbies = data[12]
-		return [sex, year, major, interests, hobbies]
+		if datatype == 'info':
+			sex = data[3]
+			year = data[4]
+			major = data[5]
+			interests = data[6]
+			hobbies = data[12]
+			return [sex, year, major, interests, hobbies]
+		elif datatype == 'contact':
+			phone = data[8]
+			email = data[9]
+			return [phone, email]
+		else:
+			return ['']
 	else:
 		return ['','','','','']
-	

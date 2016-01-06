@@ -56,10 +56,13 @@ class Pairing(object):
 		cv.remove_from_queue("Friend-Q", form.friend)
 		cv.remove_from_queue("Warrior-Q", form.warrior)
 
+		friendContact = cv.get_friend_info(form.friend, 'contact')
+		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
+
 		#redownload queues to display updated versions.
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
-		this = [chosen_pair, friendq, warriorq]
+		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
 	
 
 #this renders display.html. It shows the new queues and the
@@ -163,12 +166,6 @@ class Remove(object):
 	def POST(self):
 		form = web.input(netid = "netid")
 
-		#this comment is irrelevant because times change and we do
-		#things differently now.
-		#if someone put there name on there more than 15 times then
-		#I think we should just automatically add them to Warrior-Q
-		#because they need help 
-		
 		#this is done in a similar way to the Add POST method
 		#using their netID find the associated name and remove that
 		#from the queue
@@ -191,14 +188,14 @@ class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
-		info = cv.get_warrior_info(textName)
+		info = cv.get_warrior_info(textName, 'info')
 		return json.dumps({'sex': info[0], 'year': info[1], 'interests': info[2], 'hobbies': info[3], 'struggle':info[4]})
 
 class FriendInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
-		info = cv.get_friend_info(textName)
+		info = cv.get_friend_info(textName, 'info')
 		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
 
 if __name__ == '__main__':
