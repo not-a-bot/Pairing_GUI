@@ -37,6 +37,8 @@ Available pages are:
 
   example: `http://0.0.0.0:8080/pairing_gui`
 
+  NOTE: You may have to replace http://0.0.0.0:8080 with http://127.0.0.1:8080
+
 ##Pages
 
 ####Pairing
