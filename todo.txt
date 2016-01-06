@@ -4,10 +4,19 @@ Mark if in progress
 TODO:
 [ ] Make Chat-form feed directly into Warrior-Q
 [ ] Add a page that ends current pairs and adds notes like "never responded"
-[ ] Once paired, display emails of pair for Committee Member to email them.
+[ jmm ] Add option to automatically email the paired people
 [ ] Security features (login system?)
 [ ] Add into the website.
+[ ] move all the style='properties' from html to pairing_gui.css
+[ ] clean up text on add and remove pages
+[ ] clean html for add and remove and make the site look better
+[ ] make seperate css for add and remove and fill in styles
+[jmm] clean python code
+[ ] change comments in html to <-- -->
+[ ] replace display.html with a modal that pops up, no need for additional page
 
 DONE:
 [jmm] Warrior Information on click (or hover?)
 [jmm] Friend Information on click
+[jmm] navbar
+[jmm] Once paired, display emails of pair for Committee Member to email them.
