@@ -57,7 +57,7 @@ $def with (stuff)
 
 
 $if stuff != 3:
-	<!if successfully added to the queue>
+	<--if successfully added to the queue-->
 	$if stuff[0][0] == 'S':
 		<p>$stuff[0]</p>
 		<p>You have been added to the queue $stuff[1] time(s).</p>
@@ -90,10 +90,10 @@ $if stuff == 3:
 	on slack or bring it up at the next meeting.</p>
 	<p>HAPPY BUTTONING</p>
 	<br><hr><br>
-	<!Add to queue form, once we get a bluewaters login going we can just 
+	<--Add to queue form, once we get a bluewaters login going we can just 
 	make this a nice, big red button, which is obviously the end goal
 	
-	the remove will be a big blue button, this is all non-negotiable.>
+	the remove will be a big blue button, this is all non-negotiable. -->
 	<form style="text-align:center; color:blue" method="POST">
 	
 	<! does neid = 'netid' work? should it be name='netid'?
