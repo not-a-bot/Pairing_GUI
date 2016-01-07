@@ -73,7 +73,7 @@ This will let the Pairing Committee know that they are  incapable of being
 paired with anymore warriors at the moment. The reason does not matter.Be it school
 work is piling up, they are beginning to feel mentally drained, etc.
 
-###EndPair
+####EndPair
 
 `http://0.0.0.0:8080/end_pair`
 
@@ -119,10 +119,10 @@ but they MUST be spelled this way. (capitalization does not matter)
 (The location of other columns like sex and major are important as well
 but the current necessary location of theses are still being worked out.)
 
-	The name under the name column may be first, first+last, or whatever.
-	Under netId that is their netids (no spaces).
-	Under 'Verified' it should say 'yes' if they are verified. ANYTHING else
-	means they are not verified. For all of these, capitilization and extra
-	spaces before or after should not matter.
+The name under the name column may be first, first+last, or whatever.
+Under netId that is their netids (no spaces).
+Under 'Verified' it should say 'yes' if they are verified. ANYTHING else
+means they are not verified. For all of these, capitilization and extra
+spaces before or after should not matter.
 
 

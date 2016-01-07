@@ -73,7 +73,7 @@ This will let the Pairing Committee know that they are  incapable of being
 paired with anymore warriors at the moment. The reason does not matter.Be it school
 work is piling up, they are beginning to feel mentally drained, etc.
 
-###EndPair
+####EndPair
 
 `http://0.0.0.0:8080/end_pair`
 
@@ -83,7 +83,8 @@ any notes of significance. The pair is removed from the Current-Pairings sheet,
 but remains in the All-Pairings sheet so that we have
 a record of everyone that we have helped and who helped who.
 
-
+This is done by having the friend type in their netID and selecting
+their warrior's name from a drop-down list.
 
 
 
