@@ -17,7 +17,7 @@ def open_sheet(spreadsheet):
 	
 	#retrieve path to the json file and authenticate with google
 	pathfile = open('path2secretfile.txt', 'r')
-	path2secretfile = pathfile.readline()
+	path2secretfile = pathfile.readline()[:-1]
 	gc = au.LOAD(path2secretfile)
 		
 
@@ -27,10 +27,10 @@ def open_sheet(spreadsheet):
 	return sheet
 
 
-#list all values in a column below a header
+#list all values in a specified column below the header
 def list_col_values(sheet_name, col_num):
 	
-	# Array of size 100/1000 by default due to google initialization
+	#Array of size 100/1000 by default due to google initialization
 	sheet = open_sheet(sheet_name)
 
 	#Get the column values and pass them to th user
@@ -44,7 +44,7 @@ def names_no_null(sheet_name, col_num):
 	return [y for y in array if y != '']
 
 #given a sheet name and list of names this function
-#writes those names to the sheet in a given column
+#writes those names to the given sheet in the given column
 def rewrite_column(sheet_name, col_num, new_list_of_names):
 	
 	sheet = open_sheet(sheet_name)
@@ -83,11 +83,12 @@ def search_column(sheet, col_num, value):
 	array = sheet.col_values(col_num)
 
 	# find the value and return its index
-	for i in range(0, len(array)):
+	length = len(array)
+	for i in range(0, length):
 		if array[i].lower().strip() == value.lower().strip():
 			return i+1
 
-	return len(array)
+	return length
 
 
 # Given a pair, add them to the current pairings and all pairing sheets
@@ -109,7 +110,8 @@ def add_pair(chosen_pair):
 
 
 # removes names from the queue number times
-# sheet name specifies the sheet that the queue is in
+# sheet_name specifies the sheet that the queue is in
+# either 'Current-Pairings' or "All-Pairings"
 def remove_from_queue(sheet_name, name, number=1):
 
 	#return all names in current
@@ -119,7 +121,8 @@ def remove_from_queue(sheet_name, name, number=1):
 	new_names = []
 
 	for element in current_names:
-		# if we have not removed the user number times, skip the name. Otherwise append all names to new name
+		# if we have not removed the user 'number' times, dont append the 
+		# name to the new array. Otherwise append all names to new_names
 		if element.lower().strip() == name.lower().strip() and times_removed < number:
 			times_removed += 1
 		else:
@@ -212,10 +215,64 @@ def get_friend_info(friend_name, datatype):
 			hobbies = data[12]
 			return [sex, year, major, interests, hobbies]
 		elif datatype == 'contact':
-			phone = data[8]
+			phone = data[8-1]
 			email = data[9]
 			return [phone, email]
 		else:
 			return ['']
 	else:
 		return ['','','','','']
+
+#Removes a pair from Current-Pairings sheet
+#pair: [warrior, friend]
+def remove_pair(pair):
+	cp = open_sheet('Current-Pairings')
+	
+	#search sheet for a row with pair 
+	one = cp.col_values(1)
+	two = cp.col_values(2)
+	length = len(one)
+	i = 0
+	while i < length:
+		if one[i].lower().strip() == pair[0].lower().strip() and two[i].lower().strip() == pair[1].lower().strip():
+			the_row = i + 1
+			i = length + 10
+		i += 1
+
+	#Return this if go through whole sheet and no pair found
+	if i == length:
+		return 'Pair Does Not Exist'
+
+	#clear the_row in Current-Pairings (should work 
+	#because add_pair just finds first empty row)
+	cp.update_cell(the_row, 1, '')
+	cp.update_cell(the_row, 2, '')
+	cp.update_cell(the_row, 3, '')
+
+def update_all_pair(pair, notes):
+	#update the All-Pairings sheet with end date and notes
+	ap = open_sheet('All-Pairings')
+
+	one = ap.col_values(1)
+	two = ap.col_values(2)
+	length = len(one)
+	i = 0
+	while i < length:
+		if one[i].lower().strip() == pair[0] and two[i].lower().strip() == pair[1]:
+			the_row = i + 1
+			i = length + 10
+		i += 1
+
+	#Return this if go through whole sheet and no pair found
+	if i == length:
+		return 'Pair Does Not Exist'
+
+
+	#assume current date is end date
+	the_time = time.strftime("%m-%d-%y", time.gmtime())
+	ap.update_cell(the_row, 4, the_time)
+	ap.update_cell(the_row, 5, notes)
+
+
+
+

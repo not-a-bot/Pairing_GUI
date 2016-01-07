@@ -111,7 +111,7 @@ Columns must be organized as:
 			  Queues: Single Column of Names
 
 
-For Friend-List and Warrior-List we need three columns 'Name' 'netID' and 
+For Friend-List and Warrior-List, we need three columns 'Name' 'netID' and 
 'Verified.' These columns can be located anywhere in the first row, 
 but they MUST be spelled this way. (capitalization does not matter)
 

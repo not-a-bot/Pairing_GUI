@@ -5,12 +5,11 @@ import json
 # URLs and corresponding classes to handle requests to the URL for web.py
 urls = (
 	'/pairing_gui', 'Pairing',
-	'/add', 'Add',
-	'/remove', 'Remove', 
 	'/warriorinfo', 'WarriorInfo',
-	'/friendinfo', 'FriendInfo',
+	'/friendinfo ', 'FriendInfo',
 	'/add'        , 'Add',
-	'/remove'     , 'Remove'
+	'/remove'     , 'Remove',
+	'/end_pair'   , 'EndPair'
 )
 
 # Create the web application and set the render directory
@@ -116,6 +115,7 @@ class Add(object):
 		return render.add(stuff = [message, num, new_list])
 
 # /remove web.py class
+# Purpose: GET disp
 class Remove(object):
 	def GET(self):
 		# default value of 3 to have the correct part of if statement - CHECK: this comment
@@ -167,6 +167,38 @@ class FriendInfo(object):
 		textName = warriorName['name']
 		info = cv.get_friend_info(textName, 'info')
 		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
+
+
+class EndPair(object):
+	def GET(self):
+		#display warrior names for dropdown list
+		warriors = cv.names_no_null('Current-Pairings', 1)
+		
+		return render.end_pair(table = [warriors])
+
+	def POST(self):
+		form = web.input(warrior = "warrior", netid = 'netid', notes = "notes")
+		
+		#friend types netID and uses it to pair
+		sheet = cv.open_sheet('Friend-List')
+		name_col  = cv.search_row(sheet, 1, 'name')
+		netid_col = cv.search_row(sheet, 1, 'netid')
+		row_num = cv.search_column(sheet, netid_col, form.netid)
+
+		# find the name of the user within the sheet
+		name_values = sheet.col_values(name_col)
+		friend = name_values[row_num - 1]
+		
+		
+		pair = [form.warrior, friend]
+		#removes given pair from Current-Pairings and updates status in All-Pairings
+		if cv.remove_pair(pair) != 'Pair Does Not Exist':
+				cv.update_all_pair(pair, form.notes)
+		else:
+			pair = [['PAIR NOT'],['FOUND']]
+
+		
+		return render.end_pair(table = [pair, form.notes])
 
 if __name__ == '__main__':
 	app.run()

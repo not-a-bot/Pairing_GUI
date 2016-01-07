@@ -5,14 +5,60 @@ $def with (stuff)
 <meta content="width=device-width, initial-scale=1, user-scalable=no">
 
 <head>
-	<title>
-	ADD TO QUEUE
-	</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Open Ears - Add</title>
+
+    <link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/add_page.css" type="text/css" rel="stylesheet">
+    <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
+    <script type="text/javascript" src="/static/js/pairing_gui.js"></script>
 </head>
 
-<body style="text-align:center; background-color:lightgrey; font-family:sans-serif">
+<body>
+
+
+<!-- Navigation -->
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="http://www.openearsuiuc.com">Open Ears</a>
+            </div>
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="add">Add</a>
+                    </li>
+                    <li>
+                        <a href="remove">Remove</a>
+                    </li>
+                    <li>
+                        <a href="pairing_gui">Pairing</a>
+                    </li>
+                </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </div>
+        <!-- /.container -->
+    </nav>
+
+
 $if stuff != 3:
-	<!if successfully added to the queue>
+	<!--if successfully added to the queue-->
 	$if stuff[0][0] == 'S':
 		<p>$stuff[0]</p>
 		<p>You have been added to the queue $stuff[1] time(s).</p>
@@ -27,42 +73,33 @@ $if stuff != 3:
 
 <! having it == NONE didnt work.... so i set it to 3>
 $if stuff == 3:
-	<h1>Add Yourself to the Friend Queue</h1>
-	<p>The purpose of this page is for verified friends to be 
-	able to add themslves to the friends queue. Verification merely 
-	means that you have gone to enough trainings and we think you are 
-	ready to talke to people in delicate situations.</p>
-	<p>You can add yourself as many times as you want, though be 
-	aware that the number of times you add yourself to the list 
-	is the number of people you are willing to help.</p>
-	<p>At any point, you are able to go to the remove page and 
-	remove all instances of your name from the queue. This lets 
-	us know that you are too busy to be able to help at the moment.</p>
-	<p>However, at any point you are able to re-add yourself on 
-	this page again.</p>
-	<p>If you notice anything wrong on this or any 
-	other pages of the interface please let us know in #webdev 
-	on slack or bring it up at the next meeting.</p>
-	<p>HAPPY BUTTONING</p>
-	<br><hr><br>
+	<div id = "add_instructions">
+		<h1 style = "margin-bottom: 10px">Add Yourself to the Friend Queue</h1>
+		<p style = "background-color: #9BD7D5">Add yourself to the queue once for each person you're willing to help.</p>
+		<p style = "background-color: #129793">If you're too busy to help, you can also go to the remove page and remove yourself from the queue.</p>
+		<p style="background-color: #9BD7D5">Don't worry, you can always re-add yourself later</p>
+		<p style = "background-color: #129793">If you notice anything wrong on this or any 
+		other pages of the interface please let us know in #webdev 
+		on slack or bring it up at the next meeting.</p>
+	</div>
+
 	<!Add to queue form, once we get a bluewaters login going we can just 
 	make this a nice, big red button, which is obviously the end goal
 	
 	the remove will be a big blue button, this is all non-negotiable.>
-	<form style="text-align:center; color:blue" method="POST">
+	<form id = "add_form" method="POST">
 	
-	<! does neid = 'netid' work? should it be name='netid'?
-	no must be name='netid' b/c all inputs need name attribute but netid
-	becomes the thing you call and set a default to in app/add form = stuff>
-	netID:<input style="background-color:darkgrey" type="text" name="netid">
-	<! should we even allow 7? this will somewhat limit that 15
-	thing unless people add 7 three times>
-	<br>
-	MAXIMUM NUMBER OF PEOPLE YOU ARE WILLING TO PAIR WITH:
-	<br>
-	<input style="background-color:darkgrey" type="number" name="number" min="1" max="7">
-	<br>
-	<input style="background-color:red; color:white; height:100px; width:500px; font-size:50; font-family:sans-serif" type="submit" value="ADD TO QUEUE">
+		<! does neid = 'netid' work? should it be name='netid'?
+		no must be name='netid' b/c all inputs need name attribute but netid
+		becomes the thing you call and set a default to in app/add form = stuff>
+		My netid is <input type="text" name="netid">.
+		<! should we even allow 7? this will somewhat limit that 15
+		thing unless people add 7 three times>
+		I can pair with
+		<input type="number" name="number" min="1" max="7">
+		people.
+		<br>
+		<input id = "add_button" type="submit" value="ADD TO QUEUE">
 	</form>
 
 

@@ -1,64 +1,56 @@
 import web
 import convey as cv
+import json
 
+# URLs and corresponding classes to handle requests to the URL for web.py
 urls = (
 	'/pairing_gui', 'Pairing',
-	'/add', 'Add',
-	'/remove', 'Remove'
+	'/warriorinfo', 'WarriorInfo',
+	'/friendinfo ', 'FriendInfo',
+	'/add'        , 'Add',
+	'/remove'     , 'Remove',
+	'/end_pair'   , 'EndPair'
 )
 
+# Create the web application and set the render directory
 app = web.application(urls, globals())
 render = web.template.render('templates/')
 
+#/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
-	#once /Pairing webpage is loaded the GET method
-	#renders the pairing gui.html from the templates folder
-
-		#list names in the Friend and Warrior qs
-		#both are formatted so names are in column 1
+		# get the friend and warrior queues from spreadsheets
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		
+		#place in a single object to pass to webpage
 		total = [friendq, warriorq]
 		
+		#render the pairing_gui webpage and pass queues as data to it
 		return render.pairing_gui(list_of_names = total)
-#the rendered pairing gui contains a form on it, which
-#once submitted calls on the POST method below	
 	
-
-	#the pairing gui in templates will call upon this method to
-	#record information submitted to the website
 	def POST(self):
-#once this method is called upon it takes the pairs and 
-#removes them from the current queue, adding them to the
-#current pairings list. THIS IS WHERE THE MAGIC HAPPENS.		
+		#recieve friend and warrior name to be paired from request	
 		form = web.input(friend = 'friend', warrior = 'warrior')
-	#let this if statement verify that the user submitted
-	#everything correctly. that means ADD MORE HERE
-	#ik what ur thinking, wheres the more? wheres
-	#the if statements? well, now its dropdown, so user
-	#would need to be rly dumb, i guess there could be
-	#check that chosen is what they want... an r u sure button
 		
+		# add the paired friend and warrior to the paired spreadsheet
 		chosen_pair = [form.warrior, form.friend]
-		
-		#these three functions just updates sheets removing both 
-		#from the queues and adding them to both pairing sheets
 		cv.add_pair(chosen_pair)
 		
-		#this runs default and only removes their names once
+		# remove the friend and warrior from respective queues as they have been paired
 		cv.remove_from_queue("Friend-Q", form.friend)
 		cv.remove_from_queue("Warrior-Q", form.warrior)
 
-		#redownload queues to display updated versions.
+		# retrieve contact information for the friend and warrior to display to pairing committee member
+		friendContact = cv.get_friend_info(form.friend, 'contact')
+		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
+
+		#retrieve queues to display updated versions.
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
-		this = [chosen_pair, friendq, warriorq]
-	
-
-#this renders display.html. It shows the new queues and the
-#pair of people you added to both pairings lists
+		
+		# create a single object to pass to /display webpage and render /display
+		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
 		return render.display(this)
 		
 		"""all_lists should be of the form
@@ -66,120 +58,147 @@ class Pairing(object):
 		where chosen_pair = [chosen_friend, chosen_warrior]
 		"""
 
+# /add web.py class
 class Add(object):
-	#this is the code for the buttons for friends to add 
-	#themselves to the queue
 	def GET(self):
 		return render.add(stuff = 3)
 		
-
-	#THIS whole thing needs to be rewritten to check if 
-	#a friend is verified and if they are then add them to the list
-	#if not then display a correct error message of them either
-	#not being verified or not being on the list
-	#
+	# Recieves a friend's netid and number of pairs to be made
+	# Checks that the friend is approved to help people and if so adds them to teh friend queue.
 	def POST(self):	
-		#im assuming this means the default setting is 1
+		# recieve user information from POST request
+		# form.netid - netid of the friend to be paired
+		# form.number - number of times the friend wants to be paired
 		form = web.input(netid = "netid", number = 1)
-		#dont need to format name here because search does it for us
-		
-		#make a default setting of nothing being because if adding is not
-		#a success then the html doesnt need the new list anyways.
+	
+		# initialization
 		new_list =[]
-		i =1
-		#this is the number of times their name will be added to the list
-		#it is the number of warriors they are able to help. (battle can be ruf)
 		num = int(form.number)
-		
-		#check that they are on friend list AND verified
-		
 		sheet = cv.open_sheet('Friend-List')
-		#find columns of all these things
+		
+		# find the column number for name, netid, and verified
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
 		veri_col  = cv.search_row(sheet, 1, 'verified')
 
-		#find the row the netid they give is in and use this row to
-		#and other columns we found to find their other info
-		#case and extra spaces do not matter for this function
+		# find the users row within the spreadsheet
 		row_num = cv.search_column(sheet, netid_col, form.netid)
 
-		#this error becomes a problem if we have more than 1000
-		#people sign up OR if we randomly get a spreadsheet that is
-		#automatically sized to 100 rows. (default was said to be 100
-		#or 1000 but ive only seen 1000 so far.)
+		# if more than 1000 people sign up or if the spreadsheet is resized to > 1000.
 		if row_num >= 1000:
 			message = "FAILURE! We could not find your netID on the list. Please make sure you submitted the correct netID (%s). If this is the correct netID it is possible that was incorrectly entered on our spreadsheet or there is something wrong with this code (which is a very likely possibility). Please let us know about this problem, whether through our website, facebook, slack, next meeting, or randomly in the quad. THANK YOU!" % form.netid	
 
 		else:
-			#see all values in the users row
 			the_values = sheet.row_values(row_num)
 			
-			#find the name of the person with that netID
-			#and whether or not they are verified
-			#sheets columns is one ahead of arrary
-			name = the_values[name_col - 1]
+			# retrieve the friend's name and if they are verified
+			name = the_values[name_col - 1] # -1 due to 1 indexing for spreadsheets
 			verified = the_values[veri_col - 1]
 	
-			#check that a friend is verified and if they are add them 
-			#to the queue 'num' times.
-			#because array starts at 0 and gsheets starts at 1
+			# if verified add to friend queue num (form.number) times.
 			if verified.lower().strip() == 'yes':
 				name_count = []
-				while i <= num:
-				#remember, names must be submitted as arrays.
+				for i in range(0, num):
 					name_count.append(name)
-					i = i + 1
 			
+				# names must be submitted as an array to the add_to_queue function
 				cv.add_to_queue("Friend-Q", name_count)				
 				message = "SUCCESS!"			
 				
-				#new list is only rendered if there is sucess so
-				#user can make sure their name is on it.
-				#actually, you should probably remove this when done testing
+				# retrieve the friend queue to pass to user
+				# TODO: Remove following testing unless we want to display this
 				new_list = cv.names_no_null("Friend-Q", 1)
 			else:
 				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 
-		#message, times added to queue, and new list of names on queue
-		return render.add(stuff = [message, i-1, new_list])
+		# render /add and pass the message, number of times added and friend queue to the user
+		return render.add(stuff = [message, num, new_list])
 
-
+# /remove web.py class
+# Purpose: GET disp
 class Remove(object):
-	#this is the code for the buttons for friends to 
-	#remove themselves from the queue
 	def GET(self):
-		#this is three to display the part of if statement i want
-		#maybe calling a different .html woulda been better. maybe
+		# default value of 3 to have the correct part of if statement - CHECK: this comment
 		return render.remove(friendq = 3)
 		
-	#This requires a rewrite of the function remove_from_queue()
-	#so that it allows a more lenient input
 	def POST(self):
+		# retrieve data from request
+		# form.netid - friend's netid to remove from queue
 		form = web.input(netid = "netid")
 
-		#this comment is irrelevant because times change and we do
-		#things differently now.
-		#if someone put there name on there more than 15 times then
-		#I think we should just automatically add them to Warrior-Q
-		#because they need help 
-		
-		#this is done in a similar way to the Add POST method
-		#using their netID find the associated name and remove that
-		#from the queue
+		# find the corresponding columns within the sheet Friend-List
 		sheet = cv.open_sheet('Friend-List')
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
 		row_num = cv.search_column(sheet, netid_col, form.netid)
 
-		#use col and row info to find the name
-		#dont need to format because remove function will do that
+		# find the name of the user within the sheet
 		name_values = sheet.col_values(name_col)
 		name = name_values[row_num - 1]
-		print name_values, name, row_num
+		# print name_values, name, row_num #debugging purposes
+		
+		# remove the user from the queue
 		cv.remove_from_queue("Friend-Q", name, 'rm all')
+		
+		# retrieve the friend qeuue to pass to /remove to ensure they are removed
 		new_list = cv.names_no_null("Friend-Q", 1)
+		
+		# render /remove
 		return render.remove(friendq = new_list)
+
+# /warrior webpy class
+# Purpose: POST request sent to server to retrieve warrior information to display to pairing committee
+#		Requests currently recieved from /pairing_gui on click of a warrior's name
+# Return: JSON object with information is sent back to the user
+class WarriorInfo(object):
+	def POST(self):
+		warriorName = web.input()
+		textName = warriorName['name']
+		info = cv.get_warrior_info(textName, 'info')
+		return json.dumps({'sex': info[0], 'year': info[1], 'interests': info[2], 'hobbies': info[3], 'struggle':info[4]})
+
+# /friend webpy class
+# Purpose: POST request sent to server to retrieve friend information to display to pairing committee
+# 		Requests currently recieved from /pairing_gui on click of a friend's name
+# Return: JSON object with information is sent back to the user
+class FriendInfo(object):
+	def POST(self):
+		warriorName = web.input()
+		textName = warriorName['name']
+		info = cv.get_friend_info(textName, 'info')
+		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
+
+
+class EndPair(object):
+	def GET(self):
+		#display warrior names for dropdown list
+		warriors = cv.names_no_null('Current-Pairings', 1)
+		
+		return render.end_pair(table = warriors)
+
+	def POST(self):
+		form = web.input(warrior = "warrior", netid = 'netid', notes = "notes")
+		
+		#friend types netID and uses it to pair
+		sheet = cv.open_sheet('Friend-List')
+		name_col  = cv.search_row(sheet, 1, 'name')
+		netid_col = cv.search_row(sheet, 1, 'netid')
+		row_num = cv.search_column(sheet, netid_col, form.netid)
+
+		# find the name of the user within the sheet
+		name_values = sheet.col_values(name_col)
+		friend = name_values[row_num - 1]
+		
+		
+		pair = [form.warrior, friend]
+		#removes given pair from Current-Pairings and updates status in All-Pairings
+		if cv.remove_pair(pair) != 'Pair Does Not Exist':
+				cv.update_all_pair(pair, form.notes)
+		else:
+			pair = [['PAIR NOT'],['FOUND']]
+
+		
+		return render.end_pair(table = [pair, form.notes])
 
 if __name__ == '__main__':
 	app.run()
