@@ -174,7 +174,7 @@ class EndPair(object):
 		#display warrior names for dropdown list
 		warriors = cv.names_no_null('Current-Pairings', 1)
 		
-		return render.end_pair(table = warriors)
+		return render.end_pair(table = [warriors])
 
 	def POST(self):
 		form = web.input(warrior = "warrior", netid = 'netid', notes = "notes")

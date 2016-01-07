@@ -12,7 +12,7 @@ TODO:
 [     ] make seperate css for add and remove and fill in styles
 [     ] change comments in html to <-- -->
 [     ] replace display.html with a modal that pops up, no need for additional page
-[     ] create tests using nose https://github.com/burnash/gspread#testing
+[     ] create tests using nose: https://github.com/burnash/gspread#testing
 [     ] create a base template for all of the html files
 [     ] fix and fancy up end_pair.css and end_pair.html
 

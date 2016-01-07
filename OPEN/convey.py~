@@ -234,7 +234,7 @@ def remove_pair(pair):
 	length = len(one)
 	i = 0
 	while i < length:
-		if one[i].lower().strip() == pair[0] and two[i].lower().strip() == pair[1]:
+		if one[i].lower().strip() == pair[0].lower().strip() and two[i].lower().strip() == pair[1].lower().strip():
 			the_row = i + 1
 			i = length + 10
 		i += 1

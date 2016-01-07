@@ -249,7 +249,9 @@ def remove_pair(pair):
 	cp.update_cell(the_row, 2, '')
 	cp.update_cell(the_row, 3, '')
 
-def update_all_pair(pair, notes):
+#updates the All-Pairings sheet with the end date (assumed date submitted)
+#and any additional notes that were submitted
+def update_all_pair(pair, notes=''):
 	#update the All-Pairings sheet with end date and notes
 	ap = open_sheet('All-Pairings')
 

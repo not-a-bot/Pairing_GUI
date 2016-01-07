@@ -79,11 +79,12 @@ work is piling up, they are beginning to feel mentally drained, etc.
 
 Once a pair is finished actively (definition currently fluid) meeting, the
 friend will go to this page and mark the pair as inactive, including
-significant notes. The pair is removed from the Current-Pairings sheet, 
+any notes of significance. The pair is removed from the Current-Pairings sheet, 
 but remains in the All-Pairings sheet so that we have
 a record of everyone that we have helped and who helped who.
 
-Note: )
+This is done by having the friend type in their netID and selecting
+their warrior's name from a drop-down list.
 
 
 
