@@ -9,7 +9,7 @@ config = {
     'url': 'URL',
     #'download_url': 'Where to download it.',
     'version': '0.1',
-    'install_requires': ['nose'],
+    'install_requires': ['nose', 'gspread', 'time', 'oauth2client'],
     #folder named NAME in the basic folder
 	'packages': ['OPEN'],
     'name': 'Open Ears'
