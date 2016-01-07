@@ -30,6 +30,7 @@ pairing_gui
   `python2.7 OPEN/app.py`
   
 5.  Navigate to ```0.0.0.0:8080/pageToVisit``` in your web browser
+	(localhost:8080 is completely valid as well)
 Available pages are:
 
   * /pairing_gui - pairing interface
@@ -39,6 +40,7 @@ Available pages are:
   example: `http://0.0.0.0:8080/pairing_gui`
 
   NOTE: You may have to replace http://0.0.0.0:8080 with http://127.0.0.1:8080
+	    or localhost:8080
 
 ##Pages
 
@@ -50,26 +52,38 @@ Someone in the Pairing Commmittee will see both of the queues and pair
 a warrior with a friend. This removes both people from
 the queues and adds them as a pair to Current-Pairings and All-Pairings
 along with the date that they were paired. 
+
 ####Add
 
 `http://0.0.0.0:8080/add`
 
-Let's start with the friends. If a friend has gone through training and
-has been verified, they can add themselves to a 
+If a friend has gone through training and
+has been verified, they can add themselves to the friend
 queue from the /add page. Once they add themselves to the queue the 
-Pairing Committee will
-know they are available to help a certain number of people
+Pairing Committee will know that
+they are available to help a certain number of people
 (however many they put down). 
 
 ####Remove
 
 `http://0.0.0.0:8080/remove`
 
-At any point, they may remove themselves 
-from this queue. This will let us know that they are not capable of being
-paired with anymore warriors at the moment for whatever reason. Be it school
+At any point a friend may remove themselves from the friend queue. 
+This will let the Pairing Committee know that they are  incapable of being
+paired with anymore warriors at the moment. The reason does not matter.Be it school
 work is piling up, they are beginning to feel mentally drained, etc.
 
+###EndPair
+
+`http://0.0.0.0:8080/end_pair`
+
+Once a pair is finished actively (definition currently fluid) meeting, the
+friend will go to this page and mark the pair as inactive, including
+significant notes. The pair is removed from the Current-Pairings sheet, 
+but remains in the All-Pairings sheet so that we have
+a record of everyone that we have helped and who helped who.
+
+Note: )
 
 
 
@@ -77,37 +91,37 @@ work is piling up, they are beginning to feel mentally drained, etc.
 
 * Only friends who are trained may add themselves to the queue. 
 
-The pairing happens before the pair ever meets, so if someone gets cold feet then after a certain
-amount of time they will be removed from the current pairings, but will remain
-in all pairings with a description of what happened.
-It would be nice if all pairings  would change inactive pairs to red 
-and have active as greeen. (This is something to consider onces google 
-sheets integration is complete.)
-It is up to committe to manually place in reason pair ended, 
-at the moment. We could create another interface that lets committee 
-members end pairs and add reason.
+* For emphasis, The ending of a pair must be done for every warrior a 
+friend is assigned too. Since the actual act of pairing occurs 
+before the pair ever meets,
+then even a pair that has never met (example: warrior gets cold feet)
+must still be removed from Current-Pairings by the friend.
+
+* Unfortunately, gspread does not allow formatting of updated data.
+Therefore active and inactive pairs must be changed to red or green
+manually, if we still wish to do this.
 
 
-###When pairing is finished
-Once the warrior is finished being helped, the pair is removed from
-current pairings, but remains in the all pairings list so that we have
-a record of everyone that we have helped and who helped who. This must
-currently be done manually.
+
+###Necessary Sheet Format
+Columns must be organized as:
+
+	Current-Pairings: Warrior - Friend - Start Date
+	    All-Pairings: Warrior - Friend - Start Date - End Date - Notes
+			  Queues: Single Column of Names
 
 
-###Sheet Formats
-Current and All Pairings:
-Columns must be organized as: Warrior - Friend - Date
+For Friend-List and Warrior-List, we need three columns 'Name' 'netID' and 
+'Verified.' These columns can be located anywhere in the first row, 
+but they MUST be spelled this way. (capitalization does not matter)
 
-Queues:
-Single Column of Names
-Current and All pairings must be formated as warrior, friend, date paired as
+(The location of other columns like sex and major are important as well
+but the current necessary location of theses are still being worked out.)
 
-For friend and warrior list, we need three columns 'Name' 'netID' and 
-'Verified.' The name under name column can be first, first/last, or whatever.
-Under netId that is their netids. And
-under verification it should say 'yes' if they are verified. Anything else
-reads as they are not verified. For all of these, capitilization and extra
-spaces before or after should not matter.
+	The name under the name column may be first, first+last, or whatever.
+	Under netId that is their netids (no spaces).
+	Under 'Verified' it should say 'yes' if they are verified. ANYTHING else
+	means they are not verified. For all of these, capitilization and extra
+	spaces before or after should not matter.
 
 
