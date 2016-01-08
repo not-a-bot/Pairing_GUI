@@ -90,6 +90,10 @@ their warrior's name from a drop-down list.
 
 ##Notes
 
+* Be careful that any html files you edit are indented properly. Improper
+indentation results in the custom .css for the page to not load properly.
+The reason is unkown and may just be a correlation.
+
 * Only friends who are trained may add themselves to the queue. 
 
 * For emphasis, The ending of a pair must be done for every warrior a 
