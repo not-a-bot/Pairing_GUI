@@ -2,8 +2,6 @@ $def with (table)
 
 <html>
 
-<meta content="width=device-width, initial-scale=1, user-scalable=no">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,15 +11,12 @@ $def with (table)
 
     <title>Open Ears - End Pair</title>
 
-    <link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
     <link href="/static/css/end_pair.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
-    <script type="text/javascript" src="/static/js/pairing_gui.js"></script>
 </head>
 
-<body>
 
 
 <!-- Navigation -->
@@ -60,50 +55,86 @@ $def with (table)
     </nav>
 
 
+<body>
+
 <!-- Start of End Pair Page Contents-->
 
 $if len(table) == 1:
 	<div class = "info">
 	<h3>End an Active Pairing</h3>
-	<p>This page is to be used by a friend who's pairing has become inactive. Please input
-		the person who you have been helping's name, your netID, and any notes on how the 
-		pairing went or why it ended.</p>
+	<p>
+	This page is to be used by a friend who's pairing has become inactive.
+	</p>
+	<p>
+	Please input the name of the person you have been helping and your netID.
+	</p>
+	<p>
+	Also, submit any notes about how the pairing went or why it ended. Some examples
+	of what you may write are: 'never responded to first text,' 'all went well. they
+	are feeling better,' 'referred to counseling center for further help,' or 
+	'entered into an open ears support group for further help'
+	</p>
 	</div>
+	<hr>
 	
-	<!-- Select Pair to End -->
-	<div class = "form">
+	<!-- Submit a Pair to End -->
+	<div class="form">
 		<form id="end_form" method="POST">
-			<h3>End Pair:</h3>
+			<h4 style="text-align:center">End Pair:</h3>
 			
-			<select name="warrior" id="warrior">
-				<option disabled selected>--Warrior--</option>
-				$for warrior in table[0]:	
-					<option value="$warrior">$warrior</option>
-			</select>
-			<p>Friend's NetID:
-			<input type="text" name="netid">
-			</p>	
+			<!-- Friend selects the name of their warrior from drop down list-->
+			<div class="warrior">
+				<p>Name of Person (You) Helped:</p>
+				<select name="warrior" id="warrior">
+					<option disabled selected>--Warrior--</option>
+					$for warrior in table[0]:	
+						<option value="$warrior">$warrior</option>
+				</select>
+			</div>
+			
+			<!-- Friend submits their netid -->
+			<div class="netid">
+				<p>Friend's (Your) NetID:</p>
+				<input type="text" name="netid">
+			</div>
+			<br>
+			
 			<!-- Add notes stating why the pairing ended -->
-			<p>Notes:
-			<input type="text" name="notes">
-			</p>
+			<div class="notes">
+				<p>Notes:
+					<input style="width:417px" type="text" name="notes">
+				</p>
+			</div>
 			<div class="button">
-				<input style = "background-color:green"type="submit" value="END PAIR">
+				<input type="submit" value="END PAIR">
 			</div>
 		</form>
 	</div>
 
-<!-- Display to user pair that has been ended and notes (for confirmation) -->
+<!-- Display to user the pair that has been ended and submitted notes -->
 $if len(table) == 2:
-	<div class = "info">
-	<h3>End an Active Pairing</h3>
-	</div>
-	<p>
-	The pair <b>$table[0][0]</b> and <b>$table[0][1]</b> has been ended.
-	</p>
-	<p>
-	Notes: $table[1]
-	</p>
+	<!-- Error message if the pair the user entered could not be found -->
+	$if table[1] == 'FOUND':
+		<div class="info">
+			<h3>End an Active Pairing</h3>
+			<p>
+			The pair that you entered does not exist in our records. You may have made a mistake
+			entering your netID or the name your friend submitted to us is different from the name
+			they use with you. If these problems persist contact someone on the Pairing Committee
+			and inform them of the problem so we can fix it and they can remove you manually.
+			</p>
+		</div>
+	<!-- Display pair that was successfully ended and notes -->
+	$if table[1] != 'FOUND':
+		<div class="info">
+			<h3>End an Active Pairing</h3>
+			<p>
+			The pair <b>$table[0][0]</b> and <b>$table[0][1]</b> has been ended.
+			</p>
+			<p>
+			Notes: $table[1]
+			</p>
+		</div>
 
 </body>
 </html>

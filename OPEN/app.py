@@ -172,8 +172,8 @@ class FriendInfo(object):
 class EndPair(object):
 	def GET(self):
 		#display warrior names for dropdown list
-		warriors = cv.names_no_null('Current-Pairings', 1)
-		
+		#warriors = cv.names_no_null('Current-Pairings', 1)
+		warriors = ['Hannah', "montana"]
 		return render.end_pair(table = [warriors])
 
 	def POST(self):

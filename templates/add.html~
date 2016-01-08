@@ -49,6 +49,9 @@ $def with (stuff)
                     <li>
                         <a href="pairing_gui">Pairing</a>
                     </li>
+					<li>
+                        <a href="end_pair">End Pair</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->

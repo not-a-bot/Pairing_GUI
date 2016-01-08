@@ -22,4 +22,4 @@ DONE:
 [jmm] Once paired, display emails of pair for Committee Member to email them.
 [jmm] clean python code
 [bwx] Add into the website.
-[jd] Add a page that ends current pairs and adds notes like "never responded"
+[jd ] Add a page that ends current pairs and adds notes like "never responded"

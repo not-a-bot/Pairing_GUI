@@ -46,6 +46,9 @@ $def with (list_of_names)
                     <li>
                         <a href="pairing_gui">Pairing</a>
                     </li>
+					<li>
+                        <a href="end_pair">End Pair</a>
+                    </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -156,7 +159,7 @@ $def with (list_of_names)
 				</div>
 
 				<div class = "modal-body">
-					<p> This is where information about them will go
+					<p> This is where information about them will go </p>
 				</div>
 
 				<div class="modal-footer">

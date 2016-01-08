@@ -1,8 +1,40 @@
-body = {}
-.info = {}
-.table = {}
-.warrior-table = {}
-.friend-table = {}
-.time-table = {}
-.form = {}
-.button = {}
+body {
+	padding-top:70px;
+	background-color: blue;
+	font-family:sans-serif;
+}
+
+.info {
+	text-align:center;
+}
+
+.form {
+	text-align:center;
+}
+
+.warrior {
+	position: relative;
+    right: 153px;
+	top: 4px;
+}
+
+.netid {
+	color: 500;
+	position: relative;
+    left: 120px;
+	bottom: 50px;
+}
+
+.notes {
+	position: relative;
+    right: 17px;
+	bottom: 50px;
+}
+
+.button {
+	position: relative;
+    text-align: center;
+	bottom: 30px;
+	color:green;
+	font-size: 30;
+}
