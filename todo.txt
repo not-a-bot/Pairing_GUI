@@ -8,12 +8,10 @@ TODO:
 [     ] move all the style='properties' from html to pairing_gui.css
 [ kb  ] clean up text on add and remove pages
 [ kb  ] clean html for add and remove and make the site look better
-[     ] make seperate css for add and remove and fill in styles
-[     ] change comments in html to <-- -->
 [     ] replace display.html with a modal that pops up, no need for additional page
 [     ] create tests using nose: https://github.com/burnash/gspread#testing
 [     ] create a base template for all of the html files
-[     ] fix and fancy up end_pair.css and end_pair.html
+
 
 DONE:
 [jmm] Warrior Information on click
@@ -23,3 +21,6 @@ DONE:
 [jmm] clean python code
 [bwx] Add into the website.
 [jd ] Add a page that ends current pairs and adds notes like "never responded"
+[jd ] fix and fancy up end_pair.css and end_pair.html
+[idk] change comments in html to <-- -->
+[idk] make seperate css for add and remove and fill in styles
