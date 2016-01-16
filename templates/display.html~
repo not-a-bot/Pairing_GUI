@@ -75,72 +75,74 @@ $if len(data) == 1:
 	
 	<div class="row row-centered">
 		<form action="/pairing_gui">
-			<button class="row-centered goBackButton" type="submit">Go Back to Pairing</button>
+			<button class="row-centered goBackButton" type="submit">
+			Go Back to Pairing</button>
 		</form>
 	</div>
 
 <!-- Correctly entered password -->
 $if len(data) == 5:
-<h1 style="text-align:center">
-	Pairing Complete!
-</h1>
+	<h1 style="text-align:center">
+		Pairing Complete!
+	</h1>
 
-<!-- br is a line break; hr is a horizontal line -->
-<br><hr>
+	<!-- br is a line break; hr is a horizontal line -->
+	<br><hr>
 
 
-<p style="text-align:center">
-<!-- chosen_pair = [warrior, friend] -->
-	<b style="color:purple">$data[0][0]</b>
-	is going to be a friend for
-	<b style="color:blue">$data[0][1]</b>
-</p>
+	<p style="text-align:center">
+	<!-- chosen_pair = [warrior, friend] -->
+		<b style="color:purple">$data[0][0]</b>
+		is going to be a friend for
+		<b style="color:blue">$data[0][1]</b>
+	</p>
 
-<br>
+	<br>
 
-<div class="row row-centered">
-	<div class="col-md-6">
-		<p><b>$data[0][1] (Friend) Contact Information: </b><p>
-		<p><b>Email:</b> $data[3][1]</p>
-		<p><b>Phone:</b> $data[3][0]</p>		
+	<div class="row row-centered">
+		<div class="col-md-6">
+			<p><b>$data[0][1] (Friend) Contact Information: </b><p>
+			<p><b>Email:</b> $data[3][1]</p>
+			<p><b>Phone:</b> $data[3][0]</p>		
+		</div>
+		<div class="col-md-6">
+			<p><b>$data[0][0] (Warrior) Contact Information: </b><p>
+			<p><b>Preferred Method:</b> $data[4][0]
+			<p><b>Email:</b> $data[4][2]</p>
+			<p><b>Phone:</b> $data[4][1]</p>
+		</div>
 	</div>
-	<div class="col-md-6">
-		<p><b>$data[0][0] (Warrior) Contact Information: </b><p>
-		<p><b>Preferred Method:</b> $data[4][0]
-		<p><b>Email:</b> $data[4][2]</p>
-		<p><b>Phone:</b> $data[4][1]</p>
+	<hr>
+
+	<div class="row row-centered">
+		<form action="/pairing_gui">
+			<button class="row-centered goBackButton" type="submit">
+			Go Back to Pairing</button>
+		</form>
 	</div>
-</div>
-<hr>
 
-<div class="row row-centered">
-	<form action="/pairing_gui">
-		<button class="row-centered goBackButton" type="submit">Go Back to Pairing</button>
-	</form>
-</div>
+	<hr><br>
 
-<hr><br>
-
-<!-- Remaining Queues -->
-<div class="row">
+	<!-- Remaining Queues -->
+	<div class="row">
 	
-	<!-- List of Friends -->
-	<div class="col-md-6">
-		<p style="text-align:center; font-size:20; color:purple">
-		<b>List of Available Friends</b></p>
-			$for element in data[1]:
-				<p style="color:purple; text-align:center">$element</p>
-	</div>
+		<!-- List of Friends -->
+		<div class="col-md-6">
+			<p style="text-align:center; font-size:20; color:purple">
+			<b>List of Available Friends</b></p>
+				$for element in data[1]:
+					<p style="color:purple; text-align:center">$element</p>
+		</div>
 	
-	<!-- List of Warriors -->
-	<div class="col-md-6">
-		<p style="text-align:center; font-size:20; color:blue">
-		<b>List of People Seeking Help</b>
-		</p>
-			$for element in data[2]:
-				<p style="text-align:center; color:blue">$element</p>
+		<!-- List of Warriors -->
+		<div class="col-md-6">
+			<p style="text-align:center; font-size:20; color:blue">
+			<b>List of People Seeking Help</b>
+			</p>
+				$for element in data[2]:
+					<p style="text-align:center; color:blue">$element</p>
+		</div>
 	</div>
-</div>
 
 </body>
 </html>

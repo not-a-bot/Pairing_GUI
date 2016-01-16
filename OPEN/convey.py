@@ -172,7 +172,7 @@ def get_warrior_info(warrior_name, datatype):
 			email  = data[5]
 			return [method, phone, email]
 		
-else:
+		else:
 			return['']
 	else:
 		return ['','','','','']

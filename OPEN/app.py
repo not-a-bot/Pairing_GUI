@@ -102,7 +102,7 @@ class Add(object):
 class Remove(object):
 	def GET(self):
 		# default value of 3 to have the correct part of if statement - CHECK: this comment
-		return render.remove(friendq = 3)
+		return render.remove(option = 1)
 		
 	def POST(self):
 		# retrieve data from request
@@ -113,20 +113,24 @@ class Remove(object):
 		sheet = cv.open_sheet('Friend-List')
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
+		
 		row_num = cv.search_column(sheet, netid_col, form.netid)
-
-		# find the name of the user within the sheet
-		name_values = sheet.col_values(name_col)
-		name = name_values[row_num - 1]
 		
-		# remove the user from the queue
-		cv.remove_from_queue("Friend-Q", name, 'rm all')
+		#this wont work if we have more than 950 entries.
+		if row_num < 950:
+			# find the name of the user within the sheet
+			name_values = sheet.col_values(name_col)
+			name = name_values[row_num - 1]
 		
-		# retrieve the friend qeuue to pass to /remove to ensure they are removed
-		new_list = cv.names_no_null("Friend-Q", 1)
-		
+			# remove the user from the queue
+			cv.remove_from_queue("Friend-Q", name, 'rm all')
+			choice = 2
+		else:
+			#cant find netid error message
+			choice = 3		
+			
 		# render /remove
-		return render.remove(friendq = new_list)
+		return render.remove(option = choice)
 
 
 # /warrior webpy class

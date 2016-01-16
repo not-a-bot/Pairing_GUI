@@ -102,7 +102,7 @@ class Add(object):
 class Remove(object):
 	def GET(self):
 		# default value of 3 to have the correct part of if statement - CHECK: this comment
-		return render.remove(friendq = 3)
+		return render.remove(option = 1)
 		
 	def POST(self):
 		# retrieve data from request
@@ -113,43 +113,52 @@ class Remove(object):
 		sheet = cv.open_sheet('Friend-List')
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
+		
 		row_num = cv.search_column(sheet, netid_col, form.netid)
+		
+		#this wont work if we have more than 950 entries.
+		if row_num < 950:
+			# find the name of the user within the sheet
+			name_values = sheet.col_values(name_col)
+			name = name_values[row_num - 1]
+		
+			# remove the user from the queue
+			cv.remove_from_queue("Friend-Q", name, 'rm all')
+			choice = 2
+		else:
+			#cant find netid error message
+			choice = 3		
+			
+			# render /remove
+			return render.remove(option = choice)
 
-		# find the name of the user within the sheet
-		name_values = sheet.col_values(name_col)
-		name = name_values[row_num - 1]
-		# print name_values, name, row_num #debugging purposes
-		
-		# remove the user from the queue
-		cv.remove_from_queue("Friend-Q", name, 'rm all')
-		
-		# retrieve the friend qeuue to pass to /remove to ensure they are removed
-		new_list = cv.names_no_null("Friend-Q", 1)
-		
-		# render /remove
-		return render.remove(friendq = new_list)
 
 # /warrior webpy class
 # Purpose: POST request sent to server to retrieve warrior information to display to pairing committee
-#		Requests currently recieved from /pairing_gui on click of a warrior's name
+
+# Requests currently recieved from /pairing_gui on click of a warrior's name
 # Return: JSON object with information is sent back to the user
 class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_warrior_info(textName, 'info')
-		return json.dumps({'sex': info[0], 'year': info[1], 'interests': info[2], 'hobbies': info[3], 'struggle':info[4]})
+		return json.dumps({'sex'    : info[0], 'year'    : info[1], 'interests': info[2], 
+						   'hobbies': info[3], 'struggle':info[4]})
+
 
 # /friend webpy class
 # Purpose: POST request sent to server to retrieve friend information to display to pairing committee
-# 		Requests currently recieved from /pairing_gui on click of a friend's name
+
+# Requests currently recieved from /pairing_gui on click of a friend's name
 # Return: JSON object with information is sent back to the user
 class FriendInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_friend_info(textName, 'info')
-		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
+		return json.dumps({'sex'      :info[0], 'year'   : info[1], 'major':info[2], 
+						   'interests':info[3], 'hobbies':info[4]})
 
 
 class EndPair(object):

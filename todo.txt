@@ -6,11 +6,12 @@ TODO:
 [     ] Add option to automatically email the paired people
 [     ] Enhanced security features for Pairing and End Pair page
 [     ] Security features for add and remove remove page
-[     ] move all the style='properties' from html to pairing_gui.css
 [     ] replace display.html w/ modal that pops up, no need for additional page
 [     ] create tests using nose: https://github.com/burnash/gspread#testing
 [     ] create a base template for all of the html files
 [     ] create .css sheet for display.html 
+[     ] make functions in convey.py faster. 
+
 
 DONE:
 [jmm] Warrior Information on click

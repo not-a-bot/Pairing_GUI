@@ -1,6 +1,6 @@
 body {
 	padding-top:      70px;
-	background-color: blue;
+	background-color: #c8e6c9;
 	font-family:      sans-serif;
 }
 
@@ -14,7 +14,7 @@ body {
 
 .warrior {
 	position: relative;
-    right:    153px;
+    right:    123px;
 	top:      4px;
 }
 

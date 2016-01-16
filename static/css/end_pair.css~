@@ -1,6 +1,6 @@
 body {
 	padding-top:      70px;
-	background-color: blue;
+	background-color: #b3e5fc;
 	font-family:      sans-serif;
 }
 
@@ -14,7 +14,7 @@ body {
 
 .warrior {
 	position: relative;
-    right:    153px;
+    right:    123px;
 	top:      4px;
 }
 
@@ -28,19 +28,19 @@ body {
 .notes {
 	position: relative;
     right:    17px;
-	bottom:   50px;
+	bottom:   60px;
 }
 
 .password {
 	position: relative;
     right:    152px;
-	bottom:   50px;
+	bottom:   60px;
 }
 
 .button {
 	position:   relative;
     text-align: center;
-	bottom:     30px;
+	bottom:     40px;
 	color:      green;
 	font-size:  30;
 }

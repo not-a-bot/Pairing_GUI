@@ -11,9 +11,8 @@ $def with (stuff)
 	
     <title>Open Ears - Add</title>
 	
-    <link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
-    <link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
     <link href="/static/css/add_page.css" type="text/css" rel="stylesheet">
+    <link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
     <script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
     <script type="text/javascript" src="/static/js/pairing_gui.js"></script>
@@ -68,12 +67,12 @@ $if stuff != 3:
 
 <!-- having it == NONE didnt work.... so i set it to 3 -->
 $if stuff == 3:
-	<div id = "add_instructions">
-		<h1 style = "margin-bottom: 10px">Add Yourself to the Friend Queue</h1>
-		<p style = "background-color: #9BD7D5">Add yourself to the queue once for each person you're willing to help.</p>
+	<div id="add_instructions">
+		<h1 style="margin-bottom: 10px">Add Yourself to the Friend Queue</h1>
+		<p style="background-color: #9BD7D5">Add yourself to the queue once for each person you're willing to help.</p>
 		<p style = "background-color: #129793">If you're too busy to help, you can also go to the remove page and remove yourself from the queue.</p>
 		<p style="background-color: #9BD7D5">Don't worry, you can always re-add yourself later</p>
-		<p style = "background-color: #129793">If you notice anything wrong on this or any 
+		<p style="background-color: #129793">If you notice anything wrong on this or any 
 		other pages of the interface please let us know in #webdev 
 		on slack or bring it up at the next meeting.</p>
 	</div>
@@ -82,14 +81,14 @@ $if stuff == 3:
 	make this a nice, big red button, which is obviously the end goal
 	
 	the remove will be a big blue button, this is all non-negotiable.-->
-	<form id = "add_form" method="POST">
+	<form id="add_form" method="POST">
 		My netid is <input type="text" name="netid">
 		<!--The user can add themselves to the queue up to seven times-->
 		I can pair with
 		<input type="number" name="number" min="1" max="7">
 		people.
 		<br>
-		<input id = "add_button" type="submit" value="ADD TO QUEUE">
+		<input id="add_button" type="submit" value="ADD TO QUEUE">
 	</form>
 
 </body>

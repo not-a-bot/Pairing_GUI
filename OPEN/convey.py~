@@ -38,10 +38,12 @@ def list_col_values(sheet_name, col_num):
 	values = val[1::] # index 0 column value is column information
 	return values
 
+
 # return a list in the column number specified without empty values
 def names_no_null(sheet_name, col_num):
 	array = list_col_values(sheet_name, col_num)
 	return [y for y in array if y != '']
+
 
 #given a sheet name and list of names this function
 #writes those names to the given sheet in the given column
@@ -146,9 +148,9 @@ def add_to_queue(sheet_name, list_of_names):
 # Gets info from the warrior sheet based on specified datatype
 # datatype: 'info', 'contact'
 def get_warrior_info(warrior_name, datatype):
-	sheet = open_sheet('Chat-Form-Responses')
 	
 	#search col 2 for row with warrior_name
+	sheet = open_sheet('Chat-Form-Responses')	
 	row = search_column(sheet, 2, warrior_name)
 
 	#return the appropriate value from the sheet
@@ -170,7 +172,7 @@ def get_warrior_info(warrior_name, datatype):
 			email  = data[5]
 			return [method, phone, email]
 		
-else:
+		else:
 			return['']
 	else:
 		return ['','','','','']
@@ -189,16 +191,18 @@ def get_friend_info(friend_name, datatype):
 	if row < 1000:
 		data = sheet.row_values(row)
 		if datatype == 'info':
-			sex = data[3]
-			year = data[4]
-			major = data[5]
+			sex       = data[3]
+			year      = data[4]
+			major     = data[5]
 			interests = data[6]
-			hobbies = data[12]
+			hobbies   = data[12]
 			return [sex, year, major, interests, hobbies]
+		
 		elif datatype == 'contact':
 			phone = data[8-1]
 			email = data[9]
 			return [phone, email]
+
 		else:
 			return ['']
 	else:
