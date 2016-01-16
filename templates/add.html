@@ -63,15 +63,10 @@ $if stuff != 3:
 		<p>$stuff[0]</p>
 		<p>You have been added to the queue $stuff[1] time(s).</p>
 		<p style="text-align:center; font-size:20; color:purple">
-		
-		<! this should probably not be available to all friends..>
-		<b>List of Available Friends</b></p>
-		$for element in stuff[2]:
-			<p style="color:purple; text-align:center">$element</p>
 	$else:
 		<p>$stuff[0]</p>
 
-<! having it == NONE didnt work.... so i set it to 3>
+<!-- having it == NONE didnt work.... so i set it to 3 -->
 $if stuff == 3:
 	<div id = "add_instructions">
 		<h1 style = "margin-bottom: 10px">Add Yourself to the Friend Queue</h1>
@@ -82,19 +77,14 @@ $if stuff == 3:
 		other pages of the interface please let us know in #webdev 
 		on slack or bring it up at the next meeting.</p>
 	</div>
-
-	<!Add to queue form, once we get a bluewaters login going we can just 
+	
+	<!-- Add to queue form, 
 	make this a nice, big red button, which is obviously the end goal
 	
-	the remove will be a big blue button, this is all non-negotiable.>
+	the remove will be a big blue button, this is all non-negotiable.-->
 	<form id = "add_form" method="POST">
-	
-		<! does neid = 'netid' work? should it be name='netid'?
-		no must be name='netid' b/c all inputs need name attribute but netid
-		becomes the thing you call and set a default to in app/add form = stuff>
-		My netid is <input type="text" name="netid">.
-		<! should we even allow 7? this will somewhat limit that 15
-		thing unless people add 7 three times>
+		My netid is <input type="text" name="netid">
+		<!--The user can add themselves to the queue up to seven times-->
 		I can pair with
 		<input type="number" name="number" min="1" max="7">
 		people.

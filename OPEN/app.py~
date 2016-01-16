@@ -2,20 +2,6 @@ import web
 import convey as cv
 import json
 
-# URLs and corresponding classes to handle requests to the URL for web.py
-urls = (
-	'/pairing_gui', 'Pairing',
-	'/warriorinfo', 'WarriorInfo',
-	'/friendinfo ', 'FriendInfo',
-	'/add'        , 'Add',
-	'/remove'     , 'Remove',
-	'/end_pair'   , 'EndPair'
-)
-
-# Create the web application and set the render directory
-app = web.application(urls, globals())
-render = web.template.render('templates/')
-
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
@@ -23,34 +9,35 @@ class Pairing(object):
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		
-		#place in a single object to pass to webpage
-		total = [friendq, warriorq]
-		
 		#render the pairing_gui webpage and pass queues as data to it
-		return render.pairing_gui(list_of_names = total)
+		return render.pairing_gui(list_of_names = [friendq, warriorq])
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior')
+		form = web.input(friend = 'friend', warrior = 'warrior', password = 'password')
 		
-		# add the paired friend and warrior to the paired spreadsheet
-		chosen_pair = [form.warrior, form.friend]
-		cv.add_pair(chosen_pair)
+		if form.password == cv.secret([3,3,0]):
+			# add the paired friend and warrior to the paired spreadsheet
+			chosen_pair = [form.warrior, form.friend]
+			cv.add_pair(chosen_pair)
 		
-		# remove the friend and warrior from respective queues as they have been paired
-		cv.remove_from_queue("Friend-Q", form.friend)
-		cv.remove_from_queue("Warrior-Q", form.warrior)
+			# remove the friend and warrior from respective queues as they have been paired
+			cv.remove_from_queue("Friend-Q", form.friend)
+			cv.remove_from_queue("Warrior-Q", form.warrior)
 
-		# retrieve contact information for the friend and warrior to display to pairing committee member
-		friendContact = cv.get_friend_info(form.friend, 'contact')
-		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
+			# retrieve contact information for the friend and warrior to display to pairing committee member
+			friendContact = cv.get_friend_info(form.friend, 'contact')
+			warriorContact = cv.get_warrior_info(form.warrior, 'contact')
 
-		#retrieve queues to display updated versions.
-		friendq  = cv.names_no_null("Friend-Q", 1)
-		warriorq = cv.names_no_null("Warrior-Q", 1)
+			#retrieve queues to display updated versions.
+			friendq  = cv.names_no_null("Friend-Q", 1)
+			warriorq = cv.names_no_null("Warrior-Q", 1)
 		
-		# create a single object to pass to /display webpage and render /display
-		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
+			# create a single object to pass to /display webpage and render /display
+			this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
+		else:
+			this = ["Incorrect password! Please try again."]
+
 		return render.display(this)
 		
 		"""all_lists should be of the form
@@ -72,7 +59,6 @@ class Add(object):
 		form = web.input(netid = "netid", number = 1)
 	
 		# initialization
-		new_list =[]
 		num = int(form.number)
 		sheet = cv.open_sheet('Friend-List')
 		
@@ -105,14 +91,11 @@ class Add(object):
 				cv.add_to_queue("Friend-Q", name_count)				
 				message = "SUCCESS!"			
 				
-				# retrieve the friend queue to pass to user
-				# TODO: Remove following testing unless we want to display this
-				new_list = cv.names_no_null("Friend-Q", 1)
 			else:
 				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 
-		# render /add and pass the message, number of times added and friend queue to the user
-		return render.add(stuff = [message, num, new_list])
+		# render /add and pass the message and number of times added to the user
+		return render.add(stuff = [message, num])
 
 # /remove web.py class
 # Purpose: GET disp
@@ -174,31 +157,54 @@ class EndPair(object):
 		#display warrior names for dropdown list
 		warriors = cv.names_no_null('Current-Pairings', 1)
 		
+		#for testing
+		#warriors = ['Hannah', "montana"]
 		return render.end_pair(table = [warriors])
 
 	def POST(self):
-		form = web.input(warrior = "warrior", netid = 'netid', notes = "notes")
+		# password gaurentees someone IN open ears ends the pair
+		form = web.input(warrior="warrior", netid   ='netid',
+						 notes  ="notes"  , password="password")
 		
-		#friend types netID and uses it to pair
-		sheet = cv.open_sheet('Friend-List')
-		name_col  = cv.search_row(sheet, 1, 'name')
-		netid_col = cv.search_row(sheet, 1, 'netid')
-		row_num = cv.search_column(sheet, netid_col, form.netid)
+		if form.password == cv.secret([3,3,1]):
+			#friend types netID and uses it to pair
+			sheet = cv.open_sheet('Friend-List')
+			name_col  = cv.search_row(sheet, 1, 'name')
+			netid_col = cv.search_row(sheet, 1, 'netid')
+			row_num = cv.search_column(sheet, netid_col, form.netid)
 
-		# find the name of the user within the sheet
-		name_values = sheet.col_values(name_col)
-		friend = name_values[row_num - 1]
+			# find the name of the user within the sheet
+			name_values = sheet.col_values(name_col)
+			friend = name_values[row_num - 1]
 		
 		
-		pair = [form.warrior, friend]
-		#removes given pair from Current-Pairings and updates status in All-Pairings
-		if cv.remove_pair(pair) != 'Pair Does Not Exist':
-				cv.update_all_pair(pair, form.notes)
+			pair = [form.warrior, friend]
+			#removes given pair from Current-Pairings and updates status in All-Pairings
+			if cv.remove_pair(pair) == 'Pair Removed':
+					cv.update_all_pair(pair, form.notes)
+			else:
+				pair = [['PAIR NOT'],['FOUND']]
+			
+			data = [pair, form.notes]
 		else:
-			pair = [['PAIR NOT'],['FOUND']]
-
+			#extras because len(1 and 2) conditionals already taken
+			data = ["Incorrect Password! Please try again.",3,4]
 		
-		return render.end_pair(table = [pair, form.notes])
+		return render.end_pair(table = data)
+
 
 if __name__ == '__main__':
+	# URLs and corresponding classes to handle requests to the URL for web.py
+	urls = (
+		'/pairing_gui', 'Pairing',
+		'/warriorinfo', 'WarriorInfo',
+		'/friendinfo ', 'FriendInfo',
+		'/add'        , 'Add',
+		'/remove'     , 'Remove',
+		'/end_pair'   , 'EndPair'
+	)
+	
+	# Create the web application and set the render directory
+	app = web.application(urls, globals())
+	render = web.template.render('templates/')
 	app.run()

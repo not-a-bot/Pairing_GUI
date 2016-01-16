@@ -1,40 +1,46 @@
 body {
-	padding-top:70px;
+	padding-top:      70px;
 	background-color: blue;
-	font-family:sans-serif;
+	font-family:      sans-serif;
 }
 
 .info {
-	text-align:center;
+	text-align: center;
 }
 
 .form {
-	text-align:center;
+	text-align: center;
 }
 
 .warrior {
 	position: relative;
-    right: 153px;
-	top: 4px;
+    right:    153px;
+	top:      4px;
 }
 
 .netid {
-	color: 500;
+	color:    500;
 	position: relative;
-    left: 125px;
-	bottom: 50px;
+    left:     125px;
+	bottom:   50px;
 }
 
 .notes {
 	position: relative;
-    right: 17px;
-	bottom: 50px;
+    right:    17px;
+	bottom:   60px;
+}
+
+.password {
+	position: relative;
+    right:    152px;
+	bottom:   60px;
 }
 
 .button {
-	position: relative;
+	position:   relative;
     text-align: center;
-	bottom: 30px;
-	color:green;
-	font-size: 30;
+	bottom:     40px;
+	color:      green;
+	font-size:  30;
 }

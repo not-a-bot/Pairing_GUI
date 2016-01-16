@@ -38,10 +38,12 @@ def list_col_values(sheet_name, col_num):
 	values = val[1::] # index 0 column value is column information
 	return values
 
+
 # return a list in the column number specified without empty values
 def names_no_null(sheet_name, col_num):
 	array = list_col_values(sheet_name, col_num)
 	return [y for y in array if y != '']
+
 
 #given a sheet name and list of names this function
 #writes those names to the given sheet in the given column
@@ -146,39 +148,31 @@ def add_to_queue(sheet_name, list_of_names):
 # Gets info from the warrior sheet based on specified datatype
 # datatype: 'info', 'contact'
 def get_warrior_info(warrior_name, datatype):
-	sheet = open_sheet('Chat-Form-Responses')
 	
-	array = sheet.col_values(2)
-
-	#Find the appropriate row
-	row = 0
-	length = len(array)
-	while row < length:
-		if array[row] == '':
-			row += 1
-			continue
-		elif array[row].lower().strip() == warrior_name.lower().strip():
-			row += 1
-			break #arrays 0 indexed, sheets 1 indexed
-
-		row += 1
+	#search col 2 for row with warrior_name
+	sheet = open_sheet('Chat-Form-Responses')	
+	row = search_column(sheet, 2, warrior_name)
 
 	#return the appropriate value from the sheet
-	if row < length:
+	#not sure if necessary since we know person exists if this is called
+	#this will mess up if we get a lot of people
+	if row < 1000:
 		data = sheet.row_values(row)
 		if datatype == 'info':
-			sex = data[2]
-			year = data[6]
+			sex       = data[2]
+			year      = data[6]
 			interests = data[7]
-			hobbies = data[8]
-			struggle = data[10]
+			hobbies   = data[8]
+			struggle  = data[10]
 			return [sex, year, interests, hobbies, struggle]
+		
 		elif datatype == 'contact':
 			method = data[3]
-			phone = data[4]
-			email = data[5]
+			phone  = data[4]
+			email  = data[5]
 			return [method, phone, email]
-		else:
+		
+else:
 			return['']
 	else:
 		return ['','','','','']
@@ -187,37 +181,28 @@ def get_warrior_info(warrior_name, datatype):
 # Gets info from the friends sheet based on specified datatype
 # datatype: 'info', 'contact'
 def get_friend_info(friend_name, datatype):
-	sheet = open_sheet('Friend-Form')
 	
-	array = sheet.col_values(18)
-
-	#Find the appropriate row
-	row = 0
-	length = len(array)
-	while row < length:
-		if array[row] == '':
-			row += 1
-			continue
-		elif array[row].lower().strip() == friend_name.lower().strip():
-			row += 1
-			break #arrays 0 indexed, sheets 1 indexed
-
-		row += 1
+	#R column with names is 18
+	sheet = open_sheet('Friend-Form')
+	row = search_column(sheet, 18, friend_name)
+	
 
 	# if the row is valid get the data corresponding to the datatype and pass it to the user
-	if row < length:
+	if row < 1000:
 		data = sheet.row_values(row)
 		if datatype == 'info':
-			sex = data[3]
-			year = data[4]
-			major = data[5]
+			sex       = data[3]
+			year      = data[4]
+			major     = data[5]
 			interests = data[6]
-			hobbies = data[12]
+			hobbies   = data[12]
 			return [sex, year, major, interests, hobbies]
+		
 		elif datatype == 'contact':
 			phone = data[8-1]
 			email = data[9]
 			return [phone, email]
+
 		else:
 			return ['']
 	else:
@@ -248,6 +233,7 @@ def remove_pair(pair):
 	cp.update_cell(the_row, 1, '')
 	cp.update_cell(the_row, 2, '')
 	cp.update_cell(the_row, 3, '')
+	return 'Pair Removed'
 
 #updates the All-Pairings sheet with the end date (assumed date submitted)
 #and any additional notes that were submitted
@@ -275,6 +261,9 @@ def update_all_pair(pair, notes=''):
 	ap.update_cell(the_row, 4, the_time)
 	ap.update_cell(the_row, 5, notes)
 
-
-
+def secret(code):
+	import random
+	phrase = 'woehpdieupnccearateriasom1n'
+	key = random.randint(code[0], code[1])
+	return phrase[code[2]::key]
 

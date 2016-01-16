@@ -2,20 +2,6 @@ import web
 import convey as cv
 import json
 
-# URLs and corresponding classes to handle requests to the URL for web.py
-urls = (
-	'/pairing_gui', 'Pairing',
-	'/warriorinfo', 'WarriorInfo',
-	'/friendinfo ', 'FriendInfo',
-	'/add'        , 'Add',
-	'/remove'     , 'Remove',
-	'/end_pair'   , 'EndPair'
-)
-
-# Create the web application and set the render directory
-app = web.application(urls, globals())
-render = web.template.render('templates/')
-
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
@@ -23,34 +9,35 @@ class Pairing(object):
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		
-		#place in a single object to pass to webpage
-		total = [friendq, warriorq]
-		
 		#render the pairing_gui webpage and pass queues as data to it
-		return render.pairing_gui(list_of_names = total)
+		return render.pairing_gui(list_of_names = [friendq, warriorq])
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior')
+		form = web.input(friend = 'friend', warrior = 'warrior', password = 'password')
 		
-		# add the paired friend and warrior to the paired spreadsheet
-		chosen_pair = [form.warrior, form.friend]
-		cv.add_pair(chosen_pair)
+		if form.password == cv.secret([3,3,0]):
+			# add the paired friend and warrior to the paired spreadsheet
+			chosen_pair = [form.warrior, form.friend]
+			cv.add_pair(chosen_pair)
 		
-		# remove the friend and warrior from respective queues as they have been paired
-		cv.remove_from_queue("Friend-Q", form.friend)
-		cv.remove_from_queue("Warrior-Q", form.warrior)
+			# remove the friend and warrior from respective queues as they have been paired
+			cv.remove_from_queue("Friend-Q", form.friend)
+			cv.remove_from_queue("Warrior-Q", form.warrior)
 
-		# retrieve contact information for the friend and warrior to display to pairing committee member
-		friendContact = cv.get_friend_info(form.friend, 'contact')
-		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
+			# retrieve contact information for the friend and warrior to display to pairing committee member
+			friendContact = cv.get_friend_info(form.friend, 'contact')
+			warriorContact = cv.get_warrior_info(form.warrior, 'contact')
 
-		#retrieve queues to display updated versions.
-		friendq  = cv.names_no_null("Friend-Q", 1)
-		warriorq = cv.names_no_null("Warrior-Q", 1)
+			#retrieve queues to display updated versions.
+			friendq  = cv.names_no_null("Friend-Q", 1)
+			warriorq = cv.names_no_null("Warrior-Q", 1)
 		
-		# create a single object to pass to /display webpage and render /display
-		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
+			# create a single object to pass to /display webpage and render /display
+			this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
+		else:
+			this = ["Incorrect password! Please try again."]
+
 		return render.display(this)
 		
 		"""all_lists should be of the form
@@ -131,7 +118,6 @@ class Remove(object):
 		# find the name of the user within the sheet
 		name_values = sheet.col_values(name_col)
 		name = name_values[row_num - 1]
-		# print name_values, name, row_num #debugging purposes
 		
 		# remove the user from the queue
 		cv.remove_from_queue("Friend-Q", name, 'rm all')
@@ -142,59 +128,88 @@ class Remove(object):
 		# render /remove
 		return render.remove(friendq = new_list)
 
+
 # /warrior webpy class
 # Purpose: POST request sent to server to retrieve warrior information to display to pairing committee
-#		Requests currently recieved from /pairing_gui on click of a warrior's name
+
+# Requests currently recieved from /pairing_gui on click of a warrior's name
 # Return: JSON object with information is sent back to the user
 class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_warrior_info(textName, 'info')
-		return json.dumps({'sex': info[0], 'year': info[1], 'interests': info[2], 'hobbies': info[3], 'struggle':info[4]})
+		return json.dumps({'sex'    : info[0], 'year'    : info[1], 'interests': info[2], 
+						   'hobbies': info[3], 'struggle':info[4]})
+
 
 # /friend webpy class
 # Purpose: POST request sent to server to retrieve friend information to display to pairing committee
-# 		Requests currently recieved from /pairing_gui on click of a friend's name
+
+# Requests currently recieved from /pairing_gui on click of a friend's name
 # Return: JSON object with information is sent back to the user
 class FriendInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_friend_info(textName, 'info')
-		return json.dumps({'sex': info[0], 'year': info[1], 'major':info[2], 'interests':info[3], 'hobbies':info[4]})
+		return json.dumps({'sex'      :info[0], 'year'   : info[1], 'major':info[2], 
+						   'interests':info[3], 'hobbies':info[4]})
 
 
 class EndPair(object):
 	def GET(self):
 		#display warrior names for dropdown list
-		#warriors = cv.names_no_null('Current-Pairings', 1)
-		warriors = ['Hannah', "montana"]
+		warriors = cv.names_no_null('Current-Pairings', 1)
+		
+		#for testing
+		#warriors = ['Hannah', "montana"]
 		return render.end_pair(table = [warriors])
 
 	def POST(self):
-		form = web.input(warrior = "warrior", netid = 'netid', notes = "notes")
+		# password gaurentees someone IN open ears ends the pair
+		form = web.input(warrior="warrior", netid   ='netid',
+						 notes  ="notes"  , password="password")
 		
-		#friend types netID and uses it to pair
-		sheet = cv.open_sheet('Friend-List')
-		name_col  = cv.search_row(sheet, 1, 'name')
-		netid_col = cv.search_row(sheet, 1, 'netid')
-		row_num = cv.search_column(sheet, netid_col, form.netid)
+		if form.password == cv.secret([3,3,1]):
+			#friend types netID and uses it to pair
+			sheet = cv.open_sheet('Friend-List')
+			name_col  = cv.search_row(sheet, 1, 'name')
+			netid_col = cv.search_row(sheet, 1, 'netid')
+			row_num = cv.search_column(sheet, netid_col, form.netid)
 
-		# find the name of the user within the sheet
-		name_values = sheet.col_values(name_col)
-		friend = name_values[row_num - 1]
+			# find the name of the user within the sheet
+			name_values = sheet.col_values(name_col)
+			friend = name_values[row_num - 1]
 		
 		
-		pair = [form.warrior, friend]
-		#removes given pair from Current-Pairings and updates status in All-Pairings
-		if cv.remove_pair(pair) != 'Pair Does Not Exist':
-				cv.update_all_pair(pair, form.notes)
+			pair = [form.warrior, friend]
+			#removes given pair from Current-Pairings and updates status in All-Pairings
+			if cv.remove_pair(pair) == 'Pair Removed':
+					cv.update_all_pair(pair, form.notes)
+			else:
+				pair = [['PAIR NOT'],['FOUND']]
+			
+			data = [pair, form.notes]
 		else:
-			pair = [['PAIR NOT'],['FOUND']]
-
+			#extras because len(1 and 2) conditionals already taken
+			data = ["Incorrect Password! Please try again.",3,4]
 		
-		return render.end_pair(table = [pair, form.notes])
+		return render.end_pair(table = data)
+
 
 if __name__ == '__main__':
+	# URLs and corresponding classes to handle requests to the URL for web.py
+	urls = (
+		'/pairing_gui', 'Pairing',
+		'/warriorinfo', 'WarriorInfo',
+		'/friendinfo ', 'FriendInfo',
+		'/add'        , 'Add',
+		'/remove'     , 'Remove',
+		'/end_pair'   , 'EndPair'
+	)
+	
+	# Create the web application and set the render directory
+	app = web.application(urls, globals())
+	render = web.template.render('templates/')
 	app.run()

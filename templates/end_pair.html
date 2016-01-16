@@ -17,7 +17,7 @@ $def with (table)
     <script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
 </head>
 
-
+<body>
 
 <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -54,26 +54,37 @@ $def with (table)
         <!-- /.container -->
     </nav>
 
-
-<body>
-
 <!-- Start of End Pair Page Contents-->
 
+<!-- If password is entered incorrectly -->
+$if len(table) == 3:
+	<div class = "info">
+		<h3>$table[0]</h3>
+		<p>
+		Use the navbar above to navigate back to the previous page.
+		</p>
+	</div>
+
+<!-- Initially show user this page -->
 $if len(table) == 1:
 	<div class = "info">
 	<h3>End an Active Pairing</h3>
-	<p>
-	This page is to be used by a friend who's pairing has become inactive.
-	</p>
-	<p>
-	Please input the name of the person you have been helping and your netID.
-	</p>
-	<p>
-	Also, submit any notes about how the pairing went or why it ended. Some examples
-	of what you may write are: 'never responded to first text,' 'all went well. they
-	are feeling better,' 'referred to counseling center for further help,' or 
-	'entered into an open ears support group for further help'
-	</p>
+		<p>
+		This page is to be used by a friend who's pairing has become inactive.
+		</p>
+		<p>
+		Please input the name of the person you have been helping and your netID
+		Also, submit any notes about how the pairing went or why it ended. Once
+		you have done this enter the required password and click submit. If you
+		do not know what the password is please check the google drive folder
+		for it or ask someone. We are very helpful people on ocassion.
+		</p>
+		<p>
+		Some examples of notes you may write are: 'never responded to
+		first text', 'all went well. they are feeling better', 
+		'referred to counseling center for further help', or 
+		'entered into an open ears support group for further help', etc.
+		</p>
 	</div>
 	<hr>
 	
@@ -84,7 +95,7 @@ $if len(table) == 1:
 			
 			<!-- Friend selects the name of their warrior from drop down list-->
 			<div class="warrior">
-				<p>Name of Person (You) Helped:</p>
+				<h5>Name of Person (You) Helped:</h5>
 				<select name="warrior" id="warrior">
 					<option disabled selected>--Warrior--</option>
 					$for warrior in table[0]:	
@@ -94,40 +105,52 @@ $if len(table) == 1:
 			
 			<!-- Friend submits their netid -->
 			<div class="netid">
-				<p>Friend's (Your) NetID:</p>
+				<h5>Friend's (Your) NetID:</h5>
 				<input type="text" name="netid">
 			</div>
 			<br>
 			
 			<!-- Add notes stating why the pairing ended -->
 			<div class="notes">
-				<p>Notes:
+				<h5>Notes:
 					<input style="width:417px" type="text" name="notes">
-				</p>
+				</h5>
 			</div>
+
+			<!-- Require a password to end a pair -->
+			<div class="password">
+				<h5>Password:
+					<input type="password" name="password">
+				</h5>
+			</div>
+
 			<div class="button">
 				<input type="submit" value="END PAIR">
 			</div>
 		</form>
 	</div>
 
-<!-- Display to user the pair that has been ended and submitted notes -->
+<!-- Display to user the pair that has(n't) been ended and submitted notes -->
 $if len(table) == 2:
+	
 	<!-- Error message if the pair the user entered could not be found -->
-	$if table[1] == 'FOUND':
+	$if table[0][1] == ['FOUND']:
 		<div class="info">
-			<h3>End an Active Pairing</h3>
+			<h3>Pair Not Found</h3>
 			<p>
-			The pair that you entered does not exist in our records. You may have made a mistake
-			entering your netID or the name your friend submitted to us is different from the name
-			they use with you. If these problems persist contact someone on the Pairing Committee
-			and inform them of the problem so we can fix it and they can remove you manually.
+			The pair that you entered does not exist in our records.
+			You may have made a mistake entering your netID or the 
+			name your friend submitted to us is different from the name
+			they use with you. If these problems persist contact someone 
+			on the Pairing Committee and inform them of the problem 
+			so we can fix it and they can remove you manually.
 			</p>
 		</div>
+	
 	<!-- Display pair that was successfully ended and notes -->
-	$if table[1] != 'FOUND':
+	$if table[0][1] != ['FOUND']:
 		<div class="info">
-			<h3>End an Active Pairing</h3>
+			<h3>Pairing Ended</h3>
 			<p>
 			The pair <b>$table[0][0]</b> and <b>$table[0][1]</b> has been ended.
 			</p>

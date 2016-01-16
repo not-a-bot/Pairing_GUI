@@ -3,15 +3,14 @@ Mark if in progress
 
 TODO:
 [     ] Make Chat-form feed directly into Warrior-Q
-[ jmm ] Add option to automatically email the paired people
-[ kb  ] Security features (login system?)
+[     ] Add option to automatically email the paired people
+[     ] Enhanced security features for Pairing and End Pair page
+[     ] Security features for add and remove remove page
 [     ] move all the style='properties' from html to pairing_gui.css
-[ kb  ] clean up text on add and remove pages
-[ kb  ] clean html for add and remove and make the site look better
-[     ] replace display.html with a modal that pops up, no need for additional page
+[     ] replace display.html w/ modal that pops up, no need for additional page
 [     ] create tests using nose: https://github.com/burnash/gspread#testing
 [     ] create a base template for all of the html files
-
+[     ] create .css sheet for display.html 
 
 DONE:
 [jmm] Warrior Information on click
@@ -24,3 +23,5 @@ DONE:
 [jd ] fix and fancy up end_pair.css and end_pair.html
 [idk] change comments in html to <-- -->
 [idk] make seperate css for add and remove and fill in styles
+[jd ] clean up text on add and remove pages
+[jd ] clean html for add and remove and move style elements to .css
