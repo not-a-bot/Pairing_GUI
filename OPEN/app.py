@@ -72,7 +72,6 @@ class Add(object):
 		form = web.input(netid = "netid", number = 1)
 	
 		# initialization
-		new_list =[]
 		num = int(form.number)
 		sheet = cv.open_sheet('Friend-List')
 		
@@ -105,14 +104,11 @@ class Add(object):
 				cv.add_to_queue("Friend-Q", name_count)				
 				message = "SUCCESS!"			
 				
-				# retrieve the friend queue to pass to user
-				# TODO: Remove following testing unless we want to display this
-				new_list = cv.names_no_null("Friend-Q", 1)
 			else:
 				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 
-		# render /add and pass the message, number of times added and friend queue to the user
-		return render.add(stuff = [message, num, new_list])
+		# render /add and pass the message and number of times added to the user
+		return render.add(stuff = [message, num])
 
 # /remove web.py class
 # Purpose: GET disp
