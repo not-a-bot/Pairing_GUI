@@ -10,7 +10,8 @@ TODO:
 [     ] create tests using nose: https://github.com/burnash/gspread#testing
 [     ] create a base template for all of the html files
 [     ] create .css sheet for display.html 
-[     ] make functions in convey.py faster. 
+[     ] make functions in convey.py faster.
+[     ] make the pairing page require a password (not just redirect from interface) 
 
 
 DONE:

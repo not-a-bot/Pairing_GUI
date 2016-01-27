@@ -1,0 +1,21 @@
+body {
+	background-color: #e3f2fd;
+	color:            #505050;
+	padding:          70px;
+}
+
+.header .form {
+	text-align: center;
+}
+
+
+.password {
+	position: relative;
+}
+
+
+.button {
+	position:   relative;
+	color:      green;
+	font-size:  30;
+}

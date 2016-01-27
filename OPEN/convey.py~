@@ -15,6 +15,19 @@ def list_available_sheets(gc):
 # open-service@pairing-gui.iam.gserviceaccount.com
 def open_sheet(spreadsheet):
 	
+	#if a sheet or sheet name is changed then
+	#change the key to the corresponding form it is
+	keys = {"All-Pairings"       : "1iAbMuffaPEGyoOrOvwQXVDbbzIjwfvME4wERXRa34TE",
+			"Current-Pairings"   : "10DwO7ImIWqGVHLHCHGEtbXStRJczJ8LUEQOIa2dBRSY",
+			"Friend-Form"        : "1M5Qn18Nee5ZxMhx1dlJ1w7Pfe-4QZANoHXkDTpemPqg",
+			"Friend-Q"           : "1gVbRIaOQml7Qor9eVx_6B8JJGBovUrjPuFHwwSMzw1w",
+			"Friend-List"        : "1mvBR6MocZIRR_obvtlfoGdbpTdRz9amho5BqeegXcVM",
+			"Warrior-Q"          : "1Ka_vFAZf7F8MI0oUequGfJ7Z72Tm9yyQ0lMfWOQ3lMQ",
+			"Warrior-List"       : "1Yw0vuaD9NAitqMXJ8Fv5w1rH_oclz0mcCq4yttr4Qw0",
+			#unnecessary forms
+			"Chat-Form-Responses": "1c8Z_nR1XC12dIHVt2vNKz9SqXChPMR36ocVattgZsiM"
+			}
+
 	#retrieve path to the json file and authenticate with google
 	pathfile = open('path2secretfile.txt', 'r')
 	path2secretfile = pathfile.readline()[:-1]
@@ -22,7 +35,8 @@ def open_sheet(spreadsheet):
 		
 
 	# Open the spreadsheet, throws exception if sheet does not exist
-	sheet = gc.open(spreadsheet).sheet1
+	# we will assume that it does exist
+	sheet = gc.open_by_key(keys[spreadsheet]).sheet1
 
 	return sheet
 

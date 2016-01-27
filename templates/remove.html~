@@ -120,7 +120,7 @@ $if option == 1:
 	<form id="remove_form" method="POST" autocomplete="off">
 		My NetID is <input type="text" name="netid">.
 		<br>
-		<input id = "remove_button" type="submit" value="REMOVE FROM QUEUE">
+		<input id="remove_button" type="submit" value="REMOVE FROM QUEUE">
 	</form>
 
 </body>

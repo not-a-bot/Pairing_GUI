@@ -2,6 +2,22 @@ import web
 import convey as cv
 import json
 
+#/interface webpy class
+#user submits password then is
+#redirected to Pairing
+class Interface(object):
+	def GET(self):
+		return render.interface(message = 1)
+
+	def POST(self):
+		form = web.input(password = 'password')
+		if form.password == cv.secret([3,3,0]):
+			raise web.seeother('pairing_gui')
+		else:
+			error = ["Incorrect password! Please try again."]
+			return render.interface(message = error)
+
+
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
@@ -14,29 +30,29 @@ class Pairing(object):
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior', password = 'password')
+		form = web.input(friend = 'friend', warrior = 'warrior')
 		
-		if form.password == cv.secret([3,3,0]):
-			# add the paired friend and warrior to the paired spreadsheet
-			chosen_pair = [form.warrior, form.friend]
-			cv.add_pair(chosen_pair)
-		
-			# remove the friend and warrior from respective queues as they have been paired
-			cv.remove_from_queue("Friend-Q", form.friend)
-			cv.remove_from_queue("Warrior-Q", form.warrior)
 
-			# retrieve contact information for the friend and warrior to display to pairing committee member
-			friendContact = cv.get_friend_info(form.friend, 'contact')
-			warriorContact = cv.get_warrior_info(form.warrior, 'contact')
-
-			#retrieve queues to display updated versions.
-			friendq  = cv.names_no_null("Friend-Q", 1)
-			warriorq = cv.names_no_null("Warrior-Q", 1)
+		# add the paired friend and warrior to the paired spreadsheet
+		chosen_pair = [form.warrior, form.friend]
+		cv.add_pair(chosen_pair)
 		
-			# create a single object to pass to /display webpage and render /display
-			this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
-		else:
-			this = ["Incorrect password! Please try again."]
+		# remove the friend and warrior from respective 
+		# queues as they have been paired
+		cv.remove_from_queue("Friend-Q", form.friend)
+		cv.remove_from_queue("Warrior-Q", form.warrior)
+
+		# retrieve contact information for the friend and 
+		# warrior to display to pairing committee member
+		friendContact = cv.get_friend_info(form.friend, 'contact')
+		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
+
+		#retrieve queues to display updated versions.
+		friendq  = cv.names_no_null("Friend-Q", 1)
+		warriorq = cv.names_no_null("Warrior-Q", 1)
+		
+		# create a single object to pass to /display webpage and render /display
+		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
 
 		return render.display(this)
 		
@@ -51,7 +67,8 @@ class Add(object):
 		return render.add(stuff = 3)
 		
 	# Recieves a friend's netid and number of pairs to be made
-	# Checks that the friend is approved to help people and if so adds them to teh friend queue.
+	# Checks that the friend is approved to help people 
+	#and if so adds them to teh friend queue.
 	def POST(self):	
 		# recieve user information from POST request
 		# form.netid - netid of the friend to be paired
@@ -143,8 +160,9 @@ class WarriorInfo(object):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_warrior_info(textName, 'info')
-		return json.dumps({'sex'    : info[0], 'year'    : info[1], 'interests': info[2], 
-						   'hobbies': info[3], 'struggle':info[4]})
+		return json.dumps({'sex'       :info[0], 'year'    : info[1], 
+						   'interests' :info[2], 'hobbies' : info[3],
+						   'struggle'  :info[4]})
 
 
 # /friend webpy class
@@ -157,8 +175,9 @@ class FriendInfo(object):
 		warriorName = web.input()
 		textName = warriorName['name']
 		info = cv.get_friend_info(textName, 'info')
-		return json.dumps({'sex'      :info[0], 'year'   : info[1], 'major':info[2], 
-						   'interests':info[3], 'hobbies':info[4]})
+		return json.dumps({'sex'    :info[0], 'year'     :info[1], 
+						   'major'  :info[2], 'interests':info[3],
+						   'hobbies':info[4]})
 
 
 class EndPair(object):
@@ -188,7 +207,8 @@ class EndPair(object):
 		
 		
 			pair = [form.warrior, friend]
-			#removes given pair from Current-Pairings and updates status in All-Pairings
+			#removes given pair from Current-Pairings 
+			#and updates status in All-Pairings
 			if cv.remove_pair(pair) == 'Pair Removed':
 					cv.update_all_pair(pair, form.notes)
 			else:
@@ -203,9 +223,11 @@ class EndPair(object):
 
 
 if __name__ == '__main__':
-	# URLs and corresponding classes to handle requests to the URL for web.py
+#URLs and corresponding classes to handle requests to the URL for web.py
+	
 	urls = (
 		'/pairing_gui', 'Pairing',
+		'/interface'  , 'Interface', 
 		'/warriorinfo', 'WarriorInfo',
 		'/friendinfo ', 'FriendInfo',
 		'/add'        , 'Add',

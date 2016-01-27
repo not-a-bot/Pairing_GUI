@@ -11,8 +11,8 @@ $def with (list_of_names)
 	
     <title>Open Ears - Pairing</title>
 	
-	<link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
 	<link href="/static/css/bootstrap.min.css" type="text/css" rel="stylesheet">
+	<link href="/static/css/pairing_gui.css" type="text/css" rel="stylesheet">
 	<script type="text/javascript" src="/static/js/jquery-1.11.3.min.js"></script>
 	<script type="text/javascript" src="/static/js/bootstrap.min.js" ></script>
 	<script type="text/javascript" src="/static/js/pairing_gui.js"></script>
@@ -44,7 +44,7 @@ $def with (list_of_names)
                     <a href="remove">Remove</a>
                 </li>
                 <li>
-                    <a href="pairing_gui">Pairing</a>
+                    <a href="interface">Pairing</a>
                 </li>
 				<li>
                     <a href="end_pair">End Pair</a>
