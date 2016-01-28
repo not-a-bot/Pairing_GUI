@@ -21,7 +21,9 @@ class Interface(object):
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
+		# update the warrior queue with any new entries then
 		# get the friend and warrior queues from spreadsheets
+		cv.update_warrior()
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		
@@ -30,7 +32,7 @@ class Pairing(object):
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior')
+		form = web.input(friend = 'friend', warrior = 'warrior', PC = 'your_name')
 		
 
 		# add the paired friend and warrior to the paired spreadsheet
@@ -118,7 +120,8 @@ class Add(object):
 # Purpose: GET disp
 class Remove(object):
 	def GET(self):
-		# default value of 3 to have the correct part of if statement - CHECK: this comment
+
+		# option = 1 is initial page, 2 if POST works, 3 if error
 		return render.remove(option = 1)
 		
 	def POST(self):
@@ -134,6 +137,7 @@ class Remove(object):
 		row_num = cv.search_column(sheet, netid_col, form.netid)
 		
 		#this wont work if we have more than 950 entries.
+		#thats ALOOOOOOT of people on the queue
 		if row_num < 950:
 			# find the name of the user within the sheet
 			name_values = sheet.col_values(name_col)
@@ -164,9 +168,9 @@ class WarriorInfo(object):
 						   'interests' :info[2], 'hobbies' : info[3],
 						   'struggle'  :info[4]})
 
-
 # /friend webpy class
-# Purpose: POST request sent to server to retrieve friend information to display to pairing committee
+# Purpose: POST request sent to server to retrieve friend information 
+# to display to pairing committee
 
 # Requests currently recieved from /pairing_gui on click of a friend's name
 # Return: JSON object with information is sent back to the user
@@ -191,7 +195,7 @@ class EndPair(object):
 
 	def POST(self):
 		# password gaurentees someone IN open ears ends the pair
-		form = web.input(warrior="warrior", netid   ='netid',
+		form = web.input(warrior="warrior", netid   ="netid",
 						 notes  ="notes"  , password="password")
 		
 		if form.password == cv.secret([3,3,1]):
@@ -217,7 +221,7 @@ class EndPair(object):
 			data = [pair, form.notes]
 		else:
 			#extras because len(1 and 2) conditionals already taken
-			data = ["Incorrect Password! Please try again.",3,4]
+			data = ["Incorrect Password! Please try again.",3 ,4]
 		
 		return render.end_pair(table = data)
 
@@ -229,7 +233,7 @@ if __name__ == '__main__':
 		'/pairing_gui', 'Pairing',
 		'/interface'  , 'Interface', 
 		'/warriorinfo', 'WarriorInfo',
-		'/friendinfo ', 'FriendInfo',
+		'/friendinfo' , 'FriendInfo',
 		'/add'        , 'Add',
 		'/remove'     , 'Remove',
 		'/end_pair'   , 'EndPair'

@@ -12,7 +12,7 @@ TODO:
 [     ] create .css sheet for display.html 
 [     ] make functions in convey.py faster.
 [     ] make the pairing page require a password (not just redirect from interface) 
-
+[     ] add paired by input
 
 DONE:
 [jmm] Warrior Information on click
@@ -27,3 +27,4 @@ DONE:
 [idk] make seperate css for add and remove and fill in styles
 [jd ] clean up text on add and remove pages
 [jd ] clean html for add and remove and move style elements to .css
+[jd ] add an update queue function

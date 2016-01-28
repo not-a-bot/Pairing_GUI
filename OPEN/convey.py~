@@ -14,30 +14,43 @@ def list_available_sheets(gc):
 # spreadsheets must be hosted on gdrive and shared with
 # open-service@pairing-gui.iam.gserviceaccount.com
 def open_sheet(spreadsheet):
-	
 	#if a sheet or sheet name is changed then
 	#change the key to the corresponding form it is
-	keys = {"All-Pairings"       : "1iAbMuffaPEGyoOrOvwQXVDbbzIjwfvME4wERXRa34TE",
-			"Current-Pairings"   : "10DwO7ImIWqGVHLHCHGEtbXStRJczJ8LUEQOIa2dBRSY",
-			"Friend-Form"        : "1M5Qn18Nee5ZxMhx1dlJ1w7Pfe-4QZANoHXkDTpemPqg",
-			"Friend-Q"           : "1gVbRIaOQml7Qor9eVx_6B8JJGBovUrjPuFHwwSMzw1w",
-			"Friend-List"        : "1mvBR6MocZIRR_obvtlfoGdbpTdRz9amho5BqeegXcVM",
-			"Warrior-Q"          : "1Ka_vFAZf7F8MI0oUequGfJ7Z72Tm9yyQ0lMfWOQ3lMQ",
-			"Warrior-List"       : "1Yw0vuaD9NAitqMXJ8Fv5w1rH_oclz0mcCq4yttr4Qw0",
-			#unnecessary forms
-			"Chat-Form-Responses": "1c8Z_nR1XC12dIHVt2vNKz9SqXChPMR36ocVattgZsiM"
-			}
+	test_keys = {
+		"All-Pairings"       : "1iAbMuffaPEGyoOrOvwQXVDbbzIjwfvME4wERXRa34TE",
+		"Current-Pairings"   : "10DwO7ImIWqGVHLHCHGEtbXStRJczJ8LUEQOIa2dBRSY",
 
+		"Friend-Form"        : "1M5Qn18Nee5ZxMhx1dlJ1w7Pfe-4QZANoHXkDTpemPqg",
+		"Friend-Q"           : "1gVbRIaOQml7Qor9eVx_6B8JJGBovUrjPuFHwwSMzw1w",
+		"Friend-List"        : "1mvBR6MocZIRR_obvtlfoGdbpTdRz9amho5BqeegXcVM",
+			
+		"Chat-Form-Responses": "1c8Z_nR1XC12dIHVt2vNKz9SqXChPMR36ocVattgZsiM",
+		"Warrior-Q"          : "1Ka_vFAZf7F8MI0oUequGfJ7Z72Tm9yyQ0lMfWOQ3lMQ",
+		"Warrior-List"       : "1Yw0vuaD9NAitqMXJ8Fv5w1rH_oclz0mcCq4yttr4Qw0"
+		}
+	
+	live_keys = {
+		"All-Pairings"       : "1LC-zMkJogC3MDSJ8NvOSFDd5ey-h-cmf2HgDXt7nwMA",
+		"Current-Pairings"   : "1dXyKnU2rdy9L_JV95GLdmo4CNLQaN44-kv8nxsHWXbE",
+		
+		# aka Friend-Form
+		"Friend-List"        : "1ZRHLNY7_X_HbNkq1aPgGqO_7St9yfP0sGzVrnoZErec",
+		"Friend-Q"           : "14OW258k2SshWdUl2ZSPh9aqBt7Y66f1RPJbUh4iH1oY",
+
+		# aka Chat-Form-Responses
+		"Warrior-List"       : "1tWI7ZH_LBLSM_nvfX9OvfMkYkPy6CXCYd6SmxhhG2qQ",
+		"Warrior-Q"          : "13fyRN5e5ZPjQFaPE4qItDBRSoJcWM_5Oh7a9kaUrFHI"
+		}
+	
 	#retrieve path to the json file and authenticate with google
 	pathfile = open('path2secretfile.txt', 'r')
 	path2secretfile = pathfile.readline()[:-1]
 	gc = au.LOAD(path2secretfile)
-		
-
+	
 	# Open the spreadsheet, throws exception if sheet does not exist
 	# we will assume that it does exist
-	sheet = gc.open_by_key(keys[spreadsheet]).sheet1
-
+	sheet = gc.open_by_key(test_keys[spreadsheet]).sheet1
+	
 	return sheet
 
 
@@ -46,8 +59,8 @@ def list_col_values(sheet_name, col_num):
 	
 	#Array of size 100/1000 by default due to google initialization
 	sheet = open_sheet(sheet_name)
-
-	#Get the column values and pass them to th user
+	
+	#Get the column values and pass them to the user
 	val = sheet.col_values(col_num)
 	values = val[1::] # index 0 column value is column information
 	return values
@@ -281,3 +294,63 @@ def secret(code):
 	key = random.randint(code[0], code[1])
 	return phrase[code[2]::key]
 
+#update the warrior queue with new people who
+#submitted the form since last time checked
+def update_warrior_q():
+	import datetime
+	
+	#open queue
+	queue = open_sheet("Warrior-Q")
+
+	#get date last checked and get time_diff with right now
+	lc_string =  queue.cell(2, 2).value
+	last_checked = datetime.datetime.strptime(lc_string, "%m/%d/%Y %H:%M:%S")
+	time_diff = datetime.datetime.now() - last_checked
+
+	#only allow checking every 15 minutes so the GET isnt
+	#unbearably slow running this all the time
+	if datetime.timedelta(minutes=0) <= time_diff:
+		#open list (b/c didnt nee outside if)
+		Wlist = open_sheet("Chat-Form-Responses")
+
+		#get the dates and names of individuals
+		col_num = search_row(Wlist, 1, "Name")
+		names = Wlist.col_values(col_num)[1::]
+		dates = Wlist.col_values(1)[1::]
+
+		#get date that the sheet was last updated
+		#month/day/year
+		
+		#last_date = datetime.date(last_year, last_month, last_day)
+
+
+		not_on_queue = []
+
+		i = 0
+		while i < len(dates):
+			if dates[i] != "":
+				date = dates[i].split(" ")
+				print date
+				separated = date[0].split("/")
+				month = int(separated[0])
+				day   = int(separated[1])
+				year  = int(separated[2])
+				if datetime.date(year, month, day) >= last_checked.date():
+					not_on_queue.append(names[i])
+			i+=1
+	
+		#update the queue with the lastest time checked
+		current_date = datetime.datetime.now()
+		queue.update_cell(2, 2, current_date)
+
+
+		#rewrite takes time, dont do it if no one new is there.	
+		if len(not_on_queue) > 0:
+			#EXTEND???!?! how exciting. this takes old queue
+			#and adds new names then rewrites the column
+			new_list = []
+			new_list.extend(names_no_null("Warrior-Q", 1))
+			new_list.extend(not_on_queue)
+			rewrite_column("Warrior-Q", 1, new_list)
+
+update_warrior_q()
