@@ -21,7 +21,9 @@ class Interface(object):
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
+		# update the warrior queue with any new entries then
 		# get the friend and warrior queues from spreadsheets
+		cv.update_warrior()
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		

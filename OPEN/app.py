@@ -32,7 +32,7 @@ class Pairing(object):
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior', PC = 'your_name')
+		form = web.input(friend = 'friend', warrior = 'warrior')
 		
 
 		# add the paired friend and warrior to the paired spreadsheet
