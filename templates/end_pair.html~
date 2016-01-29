@@ -73,12 +73,13 @@ $if len(table) == 1:
 		This page is to be used by a friend who's pairing has become inactive.
 		</p>
 		<p>
-		Please input the name of the person you have been helping and your netID
+		Please input the name of the person you have been helping and your netID.
 		Also, submit any notes about how the pairing went or why it ended. Once
 		you have done this enter the required password and click submit. If you
 		do not know what the password is please check the google drive folder
-		for it or ask someone. We are very helpful people on ocassion.
+		for it or ask someone. We are very helpful people on ocassion!
 		</p>
+		<br>
 		<p>
 		Some examples of notes you may write are: 'never responded to
 		first text', 'all went well. they are feeling better', 
@@ -89,6 +90,7 @@ $if len(table) == 1:
 	<hr>
 	
 	<!-- Submit a Pair to End -->
+	<div class="form">
 	<form id="end_form" method="POST">
 		<div class="form-title">
 			<h4>End Pair:</h3>
@@ -131,7 +133,7 @@ $if len(table) == 1:
 			<input type="submit" value="END PAIR">
 		</div>
 	</form>
-
+	</div>
 
 <!-- Display to user the pair that has(n't) been ended and submitted notes -->
 $if len(table) == 2:
