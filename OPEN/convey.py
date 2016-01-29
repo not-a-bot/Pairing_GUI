@@ -296,7 +296,7 @@ def secret(code):
 
 #update the warrior queue with new people who
 #submitted the form since last time checked
-def update_warrior_q():
+def update_warriorq():
 	import datetime
 	
 	#open queue

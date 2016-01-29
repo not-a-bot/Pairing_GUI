@@ -352,5 +352,3 @@ def update_warrior_q():
 			new_list.extend(names_no_null("Warrior-Q", 1))
 			new_list.extend(not_on_queue)
 			rewrite_column("Warrior-Q", 1, new_list)
-
-update_warrior_q()

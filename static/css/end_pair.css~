@@ -1,6 +1,6 @@
 body {
 	padding-top:      70px;
-	background-color: #b3e5fc;
+	background-color: #c8e6c9;
 	font-family:      sans-serif;
 }
 
@@ -10,37 +10,38 @@ body {
 
 .form {
 	text-align: center;
+	position: relative;
 }
 
 .warrior {
-	position: relative;
-    right:    123px;
-	top:      4px;
+	position: absolute;
+    right:    52vw;
+	bottom:   -5vh;
 }
 
 .netid {
+	position: absolute;
+    right:    35vw;
+	bottom:   -5vh;
 	color:    500;
-	position: relative;
-    left:     125px;
-	bottom:   50px;
 }
 
 .notes {
-	position: relative;
-    right:    17px;
-	bottom:   60px;
+	position: absolute;
+    right:    35vw;
+	bottom:   -15vh;
 }
 
 .password {
-	position: relative;
-    right:    152px;
-	bottom:   60px;
+	position: absolute;
+    right:    52vw;
+	bottom:   -20vh;
 }
 
 .button {
-	position:   relative;
-    text-align: center;
-	bottom:     40px;
+	position:   absolute;
+    right:      45vw;
+	bottom:     -30vh;
 	color:      green;
 	font-size:  30;
 }

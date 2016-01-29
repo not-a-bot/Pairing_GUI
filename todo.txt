@@ -1,7 +1,13 @@
 TODO--------------
 Mark if in progress
 
-TODO:
+TODO SOON:
+[     ] add paired by input in pairing page
+[     ] check that it works with live forms
+[     ] should any additional information be submitted with the forms?
+
+
+TODO FUTURE:
 [     ] Add option to automatically email the paired people
 [     ] Enhanced security features for Pairing and End Pair page
 [     ] Security features for add and remove page
@@ -11,7 +17,7 @@ TODO:
 [     ] create .css sheet for display.html 
 [     ] make functions in convey.py faster.
 [     ] make the pairing page require a password (not just redirect from interface) 
-[     ] add paired by input
+
 
 DONE:
 [jmm] Warrior Information on click

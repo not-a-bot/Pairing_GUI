@@ -7,6 +7,9 @@ import json
 #redirected to Pairing
 class Interface(object):
 	def GET(self):
+		# update the warrior queue with any new entries. do it here 
+		# and not in Pairing so Pairing doesnt run even slower
+		cv.update_warriorq()
 		return render.interface(message = 1)
 
 	def POST(self):
@@ -21,9 +24,8 @@ class Interface(object):
 #/pairing_gui webpy class
 class Pairing(object):
 	def GET(self):
-		# update the warrior queue with any new entries then
+		
 		# get the friend and warrior queues from spreadsheets
-		cv.update_warrior()
 		friendq  = cv.names_no_null("Friend-Q", 1)
 		warriorq = cv.names_no_null("Warrior-Q", 1)
 		
@@ -230,7 +232,9 @@ if __name__ == '__main__':
 #URLs and corresponding classes to handle requests to the URL for web.py
 	
 	urls = (
-		'/pairing_gui', 'Pairing',
+		#formerly pairing_gui, changed so randos cant find
+		#like this until legit password system set up
+		'/o8908wqhfepvuhi08ehpqi87dhvuihoia87sh0dvu', 'Pairing',
 		'/interface'  , 'Interface', 
 		'/warriorinfo', 'WarriorInfo',
 		'/friendinfo' , 'FriendInfo',
