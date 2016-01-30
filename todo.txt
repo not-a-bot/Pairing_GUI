@@ -2,7 +2,6 @@ TODO--------------
 Mark if in progress
 
 TODO SOON:
-[     ] add paired by input in pairing page
 [     ] check that it works with live forms
 [     ] should any additional information be submitted with the forms?
 
@@ -33,3 +32,4 @@ DONE:
 [jd ] clean up text on add and remove pages
 [jd ] clean html for add and remove and move style elements to .css
 [jd ] add an update queue function
+[jd ] add paired by input in pairing page
