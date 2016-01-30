@@ -61,10 +61,11 @@ $def with (list_of_names)
 <div class="row-centered">
 	<h1>Open Ears Pairing GUI</h1>
 	<p>Welcome to the Pairing GUI. (Short for graphical user interface.)
-	The purpose of this interface is to simplify the process of pairing people.
-	We also have other pages (see navbar above) to help streamline other administrative
-	tasks. If anything anywhere doesn't work please be sure to let us know and we will
-	try to the best of our abilities to make it work.</p>
+	The purpose of this interface is to simplify the process of pairing 
+	people. We also have other pages (see navbar above) to help streamline 
+	other administrative tasks. If anything anywhere doesn't work please 
+	be sure to let us know and we will
+	try to the best of our abilities to fix it.</p>
 </div>
 
 
@@ -102,6 +103,7 @@ $def with (list_of_names)
 </div>
 	
 <!-- Form Handles Submitting Data to Web.py and Modal code-->
+<!-- Submits info: Warrior, Friend, Pairer, -->
 <form method="POST">
 	<div class="row-centered">
 		
@@ -126,7 +128,25 @@ $def with (list_of_names)
 					<option value="$name">$name</option>
 			</select>
 		</div>
+		<br>
+
+		<!-- Pairied By -->
+		<div class="col-centered">
+			<h3>Paired By:</h3>
+			<select name="pairedby" id="pairedby">
+				<option disabled selected>--Pairing Committee--</option>
+				<!-- List of People in Pairing Committee -->
+				$for name in ['Karthik', 'Reika', 'Charles']:	
+					<option value="$name">$name</option>
+			</select>
+		</div>
 		
+		<!-- Any NOTES they have regarding why they made the pairing -->
+		<div class="col-centered">
+			<h3>Notes:</h3>
+			<input type="text" name="notes" id="notes">
+		</div>
+
 		<!-- Password -->
 		<div class="col-centered">
 			<h3>Password:</h3>

@@ -103,6 +103,7 @@ $def with (list_of_names)
 </div>
 	
 <!-- Form Handles Submitting Data to Web.py and Modal code-->
+<!-- Submits info: Warrior, Friend, Pairer, -->
 <form method="POST">
 	<div class="row-centered">
 		
@@ -127,7 +128,26 @@ $def with (list_of_names)
 					<option value="$name">$name</option>
 			</select>
 		</div>
+		<br>
+
+		<!-- Pairied By -->
+		<div class="col-centered">
+			<h3>Paired By:</h3>
+			<select name="pairedby" id="pairedby">
+				<option disabled selected>--Pairing Committee--</option>
+				<!-- List of People in Pairing Committee -->
+				$for name in ['Karthik', 'Reika', 'Charles']:	
+					<option value="$name">$name</option>
+			</select>
+		</div>
 		
+		<!-- Any NOTES they have regarding why they made the pairing -->
+		<div class="col-centered">
+			<h3>Notes:</h3>
+			<input type="text" name="notes" id="notes">
+		</div>
+		<br>
+
 		<!-- Password -->
 		<div class="col-centered">
 			<h3>Password:</h3>

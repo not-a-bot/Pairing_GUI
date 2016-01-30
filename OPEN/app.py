@@ -15,7 +15,7 @@ class Interface(object):
 	def POST(self):
 		form = web.input(password = 'password')
 		if form.password == cv.secret([3,3,0]):
-			raise web.seeother('pairing_gui')
+			raise web.seeother('o8908wqhfepvuhi08ehpqi87dhvuihoia87sh0dvu')
 		else:
 			error = ["Incorrect password! Please try again."]
 			return render.interface(message = error)
@@ -34,12 +34,14 @@ class Pairing(object):
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior')
+		form = web.input(friend = 'friend', warrior = 'warrior', 
+						 pb     = 'pairedby', notes = 'notes')
 		
 
 		# add the paired friend and warrior to the paired spreadsheet
+		# as well as who paired them
 		chosen_pair = [form.warrior, form.friend]
-		cv.add_pair(chosen_pair)
+		cv.add_pair(chosen_pair, form.pb, form.notes)
 		
 		# remove the friend and warrior from respective 
 		# queues as they have been paired

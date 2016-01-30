@@ -121,7 +121,8 @@ def search_column(sheet, col_num, value):
 
 
 # Given a pair, add them to the current pairings and all pairing sheets
-def add_pair(chosen_pair):
+# also add the person who paired them to the sheet
+def add_pair(chosen_pair, pc_person, notes):
 
 	#Find the first empty row within the column and update it for both spreadsheets
 	for element in ["Current-Pairings", "All-Pairings"]:
@@ -133,10 +134,17 @@ def add_pair(chosen_pair):
 		sheet.update_cell(first_empty_row, 1, chosen_pair[0])
 		sheet.update_cell(first_empty_row, 2, chosen_pair[1])
 		
+		if element == 'Current-Pairings':
+					sheet.update_cell(first_empty_row, 4, pc_person)
+					sheet.update_cell(first_empty_row, 7, notes)
+		
+		if element == 'All-Pairings':
+					sheet.update_cell(first_empty_row, 5, pc_person)
+		
 		the_time = time.strftime("%m-%d-%y", time.gmtime())
 		sheet.update_cell(first_empty_row, 3, the_time)
 
-
+	
 
 # removes names from the queue number times
 # sheet_name specifies the sheet that the queue is in
@@ -296,7 +304,7 @@ def secret(code):
 
 #update the warrior queue with new people who
 #submitted the form since last time checked
-def update_warrior_q():
+def update_warriorq():
 	import datetime
 	
 	#open queue
