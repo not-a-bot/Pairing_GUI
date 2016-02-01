@@ -146,6 +146,7 @@ $def with (list_of_names)
 			<h3>Notes:</h3>
 			<input type="text" name="notes" id="notes">
 		</div>
+		<br>
 
 		<!-- Password -->
 		<div class="col-centered">
