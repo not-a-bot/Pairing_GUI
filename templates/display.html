@@ -92,9 +92,9 @@ $if len(data) == 5:
 
 	<p style="text-align:center">
 	<!-- chosen_pair = [warrior, friend] -->
-		<b style="color:purple">$data[0][0]</b>
+		<b style="color:purple">$data[0][1]</b>
 		is going to be a friend for
-		<b style="color:blue">$data[0][1]</b>
+		<b style="color:blue">$data[0][0]</b>
 	</p>
 
 	<br>
@@ -115,7 +115,7 @@ $if len(data) == 5:
 	<hr>
 
 	<div class="row row-centered">
-		<form action="/pairing_gui">
+		<form action="/interface">
 			<button class="row-centered goBackButton" type="submit">
 			Go Back to Pairing</button>
 		</form>
@@ -123,10 +123,10 @@ $if len(data) == 5:
 
 	<hr><br>
 
-	<!-- Remaining Queues -->
+	<!-- Remaining Queues --
 	<div class="row">
 	
-		<!-- List of Friends -->
+		<!-- List of Friends --
 		<div class="col-md-6">
 			<p style="text-align:center; font-size:20; color:purple">
 			<b>List of Available Friends</b></p>
@@ -134,7 +134,7 @@ $if len(data) == 5:
 					<p style="color:purple; text-align:center">$element</p>
 		</div>
 	
-		<!-- List of Warriors -->
+		<!-- List of Warriors --
 		<div class="col-md-6">
 			<p style="text-align:center; font-size:20; color:blue">
 			<b>List of People Seeking Help</b>
@@ -142,7 +142,7 @@ $if len(data) == 5:
 				$for element in data[2]:
 					<p style="text-align:center; color:blue">$element</p>
 		</div>
-	</div>
+	</div> Commented out because we dont need to redisplay the queues.-->
 
 </body>
 </html>

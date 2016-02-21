@@ -34,29 +34,31 @@ class Pairing(object):
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
-		form = web.input(friend = 'friend', warrior = 'warrior', 
-						 pb     = 'pairedby', notes = 'notes')
-		
-
-		# add the paired friend and warrior to the paired spreadsheet
-		# as well as who paired them
-		chosen_pair = [form.warrior, form.friend]
-		cv.add_pair(chosen_pair, form.pb, form.notes)
+		form = web.input(friend = 'friend',   warrior = 'warrior', 
+						 pb     = 'pb',       notes = 'notes')
 		
 		# remove the friend and warrior from respective 
 		# queues as they have been paired
 		cv.remove_from_queue("Friend-Q", form.friend)
 		cv.remove_from_queue("Warrior-Q", form.warrior)
 
+		# add the paired friend and warrior to the paired spreadsheet
+		# as well as who paired them
+		chosen_pair = [form.warrior, form.friend]
+		cv.add_pair(chosen_pair, form.pb, form.notes)
+
 		# retrieve contact information for the friend and 
 		# warrior to display to pairing committee member
 		friendContact = cv.get_friend_info(form.friend, 'contact')
 		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
 
+		#dont need to display updated, plus this saves time
 		#retrieve queues to display updated versions.
-		friendq  = cv.names_no_null("Friend-Q", 1)
-		warriorq = cv.names_no_null("Warrior-Q", 1)
-		
+		#friendq  = cv.names_no_null("Friend-Q", 1)
+		#warriorq = cv.names_no_null("Warrior-Q", 1)
+		friendq  = ["None"]
+		warriorq = ["None"]
+
 		# create a single object to pass to /display webpage and render /display
 		this = [chosen_pair, friendq, warriorq, friendContact, warriorContact]
 
@@ -88,7 +90,8 @@ class Add(object):
 		# find the column number for name, netid, and verified
 		name_col  = cv.search_row(sheet, 1, 'name')
 		netid_col = cv.search_row(sheet, 1, 'netid')
-		veri_col  = cv.search_row(sheet, 1, 'verified')
+		#fill in name of "verified" column title correctly
+		veri_col  = cv.search_row(sheet, 1, 'trained')
 
 		# find the users row within the spreadsheet
 		row_num = cv.search_column(sheet, netid_col, form.netid)
@@ -106,13 +109,9 @@ class Add(object):
 	
 			# if verified add to friend queue num (form.number) times.
 			if verified.lower().strip() == 'yes':
-				name_count = []
-				for i in range(0, num):
-					name_count.append(name)
-			
 				# names must be submitted as an array to the add_to_queue function
-				cv.add_to_queue("Friend-Q", name_count)				
-				message = "SUCCESS!"			
+				cv.add_to_queue("Friend-Q", name, num)				
+				message = "SUCCESS!"
 				
 			else:
 				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."

@@ -51,10 +51,10 @@ warriorContact = [method, phone, email] -->
                     <a href="remove">Remove</a>
                 </li>
                 <li>
-                    <a href="pairing_gui">Pairing</a>
+                    <a href="interface">Pairing</a>
                 </li>
 				<li>
-                    <a href="pairing_gui">End Pair</a>
+                    <a href="end_pair">End Pair</a>
                 </li>
             </ul>
         </div>
@@ -92,9 +92,9 @@ $if len(data) == 5:
 
 	<p style="text-align:center">
 	<!-- chosen_pair = [warrior, friend] -->
-		<b style="color:purple">$data[0][0]</b>
+		<b style="color:purple">$data[0][1]</b>
 		is going to be a friend for
-		<b style="color:blue">$data[0][1]</b>
+		<b style="color:blue">$data[0][0]</b>
 	</p>
 
 	<br>
