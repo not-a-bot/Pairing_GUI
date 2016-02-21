@@ -4,7 +4,7 @@ Mark if in progress
 TODO SOON:
 [     ] check that it works with live forms
 [     ] should any additional information be submitted with the forms?
-
+[     ] if someone clicks re-pair it should end the pair then put them back on queue
 
 TODO FUTURE:
 [     ] Add option to automatically email the paired people
