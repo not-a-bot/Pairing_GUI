@@ -217,7 +217,8 @@ class EndPair(object):
 			#removes given pair from Current-Pairings 
 			#and updates status in All-Pairings
 			if cv.remove_pair(pair) == 'Pair Removed':
-					cv.update_all_pair(pair, form.notes)
+					if cv.update_all_pair(pair, form.notes) == 'Pair Does Not Exist':
+						pair = [['PAIR NOT'],['FOUND']]
 			else:
 				pair = [['PAIR NOT'],['FOUND']]
 			

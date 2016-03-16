@@ -335,6 +335,10 @@ def remove_pair(pair):
 	cp.update_cell(the_row, 1, '')
 	cp.update_cell(the_row, 2, '')
 	cp.update_cell(the_row, 3, '')
+	cp.update_cell(the_row, 4, '')
+	cp.update_cell(the_row, 5, '')
+	cp.update_cell(the_row, 6, '')
+	cp.update_cell(the_row, 7, '')
 	return 'Pair Removed'
 
 #updates the All-Pairings sheet with the end date (assumed date submitted)
@@ -342,22 +346,22 @@ def remove_pair(pair):
 def update_all_pair(pair, notes=''):
 	#update the All-Pairings sheet with end date and notes
 	ap = open_sheet('All-Pairings')
-
+	
 	one = ap.col_values(1)
 	two = ap.col_values(2)
 	length = len(one)
 	i = 0
-	while i < length:
+	while i =< length:
 		if one[i].lower().strip() == pair[0] and two[i].lower().strip() == pair[1]:
 			the_row = i + 1
 			i = length + 10
 		i += 1
-
+	
 	#Return this if go through whole sheet and no pair found
-	if i == length:
+	if i == length+1:
 		return 'Pair Does Not Exist'
-
-
+	
+	
 	#assume current date is end date
 	the_time = time.strftime("%m-%d-%y", time.gmtime())
 	ap.update_cell(the_row, 4, the_time)

@@ -109,12 +109,6 @@ class Add(object):
 	
 			# if verified add to friend queue num (form.number) times.
 			if verified.lower().strip() == 'yes':
-				'''
-				name_count = []
-				for i in range(0, num):
-					name_count.append(name)
-				'''
-			
 				# names must be submitted as an array to the add_to_queue function
 				cv.add_to_queue("Friend-Q", name, num)				
 				message = "SUCCESS!"
