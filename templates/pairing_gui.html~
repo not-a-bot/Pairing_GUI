@@ -49,6 +49,10 @@ $def with (list_of_names)
 				<li>
                     <a href="end_pair">End Pair</a>
                 </li>
+                <li>
+                    <a href="https://docs.google.com/forms/d/1nVthwBxIauDWurilurZOxVwIMBAjHhMeiM7qQG2fPRw/viewform">
+					Suggestions</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -65,7 +69,8 @@ $def with (list_of_names)
 	people. We also have other pages (see navbar above) to help streamline 
 	other administrative tasks. If anything anywhere doesn't work please 
 	be sure to let us know and we will
-	try to the best of our abilities to fix it.</p>
+	try to the best of our abilities to fix it.
+	</p>
 </div>
 
 
@@ -78,9 +83,9 @@ $def with (list_of_names)
 	<div class="col-md-6">
 		<p class="friend-title">List of Available Friends</p>
 		<div class="list-group">
-			$for element in list_of_names[0]:
-				<button type="button" class="list-group-item" value="$element" onclick="displayFriendInfo(this.value)">	
-				<p class="friend-item">$element</p>
+			$for i in range(len(list_of_names[0])):
+				<button type="button" class="list-group-item" value="list_of_names[0][i]" onclick="displayFriendInfo(this.value)">	
+				<p class="friend-item">$list_of_names[0][i] : list_of_names[2][i]</p>
 				</button>
 		</div>
 	</div>
@@ -111,11 +116,11 @@ $def with (list_of_names)
 		<!-- if something breaks, class was "col-md-1 col-centered"
 		but it wouldn't center that way so removed it.-->
 		<div class="col-centered">
-			<h3>Friend:</h3>
+			<h3>Friend (netID):</h3>
 			<select name="friend" id="friendQueue">
 				<option disabled selected>--Friend--</option>
-				$for name in list_of_names[0]:	
-					<option value="$name">$name</option>
+				$for netid in list_of_names[2]:	
+					<option value="$netid">$netid</option>
 			</select>
 		</div>
 		
@@ -148,7 +153,7 @@ $def with (list_of_names)
 		</div>
 		<br>
 
-		<!-- Password ->
+		<!-- Password -> Dont need a password here because its in the "login"
 		<div class="col-centered">
 			<h3>Password:</h3>
 			<input type="password" name="password" id="password">

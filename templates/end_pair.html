@@ -47,6 +47,10 @@ $def with (table)
 					<li>
                         <a href="end_pair">End Pair</a>
                     </li>
+		            <li>
+		                <a href="https://docs.google.com/forms/d/1nVthwBxIauDWurilurZOxVwIMBAjHhMeiM7qQG2fPRw/viewform">
+						Suggestions</a>
+		            </li>
                 </ul>
             </div>
             <!-- /.navbar-collapse -->
@@ -101,7 +105,7 @@ $if len(table) == 1:
 		<!-- This dropdown menu does not work if there is a higher div element
 		stylized in the .css file modulating it.-->
 		<div class="warrior">
-			<h5>Name of Person (You) Helped:</h5>
+			<h5>Name of Person You Helped:</h5>
 			<select name="warrior" id="warrior">
 				<option disabled selected>--Warrior--</option>
 				$for warrior in table[0]:	
@@ -111,7 +115,7 @@ $if len(table) == 1:
 			
 		<!-- Friend submits their netid -->
 		<div class="netid">
-			<h5>Friend's (Your) NetID:</h5>
+			<h5>Your NetID:</h5>
 			<input type="text" name="netid">
 		</div>
 		<br>
@@ -123,12 +127,12 @@ $if len(table) == 1:
 			</h5>
 		</div>
 
-		<!-- Require a password to end a pair -->
+		<!-- Require a password to end a pair
 		<div class="password">
 			<h5>Password:
 				<input type="password" name="password">
 			</h5>
-		</div>
+		</div> -->
 
 		<div class="button">
 			<input type="submit" value="END PAIR">
@@ -140,7 +144,7 @@ $if len(table) == 1:
 $if len(table) == 2:
 	
 	<!-- Error message if the pair the user entered could not be found -->
-	$if table[0][1] == ['FOUND']:
+	$if table[0][1] == ["FOUND"]:
 		<div class="info">
 			<h3>Pair Not Found</h3>
 			<p>

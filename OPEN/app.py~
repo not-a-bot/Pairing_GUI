@@ -27,29 +27,35 @@ class Pairing(object):
 		
 		# get the friend and warrior queues from spreadsheets
 		friendq  = cv.names_no_null("Friend-Q", 1)
+		friendni = cv.names_no_null("Friend-Q", 2)
+
 		warriorq = cv.names_no_null("Warrior-Q", 1)
-		
+
 		#render the pairing_gui webpage and pass queues as data to it
-		return render.pairing_gui(list_of_names = [friendq, warriorq])
+		return render.pairing_gui(list_of_names = [friendq, warriorq, friendni])
 	
 	def POST(self):
 		#recieve friend and warrior name to be paired from request	
 		form = web.input(friend = 'friend',   warrior = 'warrior', 
 						 pb     = 'pb',       notes = 'notes')
-		
+
+		sheet = cv.open_sheet("Friend-List")
+		name = cv.id2name(sheet, form.friend)		
+
 		# remove the friend and warrior from respective 
 		# queues as they have been paired
-		cv.remove_from_queue("Friend-Q", form.friend)
+		# doesnt use name for friend q currently, and hopefully futurely too
+		cv.remove_from_queue("Friend-Q", name, form.friend)
 		cv.remove_from_queue("Warrior-Q", form.warrior)
 
 		# add the paired friend and warrior to the paired spreadsheet
 		# as well as who paired them
-		chosen_pair = [form.warrior, form.friend]
+		chosen_pair = [form.warrior, name]
 		cv.add_pair(chosen_pair, form.pb, form.notes)
 
 		# retrieve contact information for the friend and 
 		# warrior to display to pairing committee member
-		friendContact = cv.get_friend_info(form.friend, 'contact')
+		friendContact = cv.get_friend_info(name, 'contact')
 		warriorContact = cv.get_warrior_info(form.warrior, 'contact')
 
 		#dont need to display updated, plus this saves time
@@ -110,11 +116,11 @@ class Add(object):
 			# if verified add to friend queue num (form.number) times.
 			if verified.lower().strip() == 'yes':
 				# names must be submitted as an array to the add_to_queue function
-				cv.add_to_queue("Friend-Q", name, num)				
+				cv.add_to_queue("Friend-Q", name, form.netid, num)				
 				message = "SUCCESS!"
 				
 			else:
-				message = "FAILURE! You're name is on the list but it looks like you have not been verified. In order to become verified you must come to a sufficient amount of trainings. At the trainings we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been verified though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
+				message = "FAILURE! You're name is on the list but it looks like you have not been trained. In order to become trained you must come to a sufficient amount of trainings. While there we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been trained though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 
 		# render /add and pass the message and number of times added to the user
 		return render.add(stuff = [message, num])
@@ -147,7 +153,7 @@ class Remove(object):
 			name = name_values[row_num - 1]
 		
 			# remove the user from the queue
-			cv.remove_from_queue("Friend-Q", name, 'rm all')
+			cv.remove_from_queue("Friend-Q", name, form.netid, 'rm all')
 			choice = 2
 		else:
 			#cant find netid error message
@@ -166,6 +172,7 @@ class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
+		print textName
 		info = cv.get_warrior_info(textName, 'info')
 		return json.dumps({'sex'       :info[0], 'year'    : info[1], 
 						   'interests' :info[2], 'hobbies' : info[3],
@@ -198,35 +205,47 @@ class EndPair(object):
 
 	def POST(self):
 		# password gaurentees someone IN open ears ends the pair
-		form = web.input(warrior="warrior", netid   ="netid",
-						 notes  ="notes"  , password="password")
+		form = web.input(warrior = "warrior", netid = "netid",
+						 notes   = "notes")
 		
-		if form.password == cv.secret([3,3,1]):
-			#friend types netID and uses it to pair
-			sheet = cv.open_sheet('Friend-List')
-			name_col  = cv.search_row(sheet, 1, 'name')
-			netid_col = cv.search_row(sheet, 1, 'netid')
-			row_num = cv.search_column(sheet, netid_col, form.netid)
-
-			# find the name of the user within the sheet
-			name_values = sheet.col_values(name_col)
-			friend = name_values[row_num - 1]
+		#friend types netID and uses it to pair
+		sheet = cv.open_sheet('Friend-List')
+		name_col  = cv.search_row(sheet, 1, 'name')
+		netid_col = cv.search_row(sheet, 1, 'netid')
+		row_num = cv.search_column(sheet, netid_col, form.netid)
+		
+		# find the name of the user within the sheet
+		name_values = sheet.col_values(name_col)
+		friend = name_values[row_num - 1]
 		
 		
-			pair = [form.warrior, friend]
-			#removes given pair from Current-Pairings 
-			#and updates status in All-Pairings
-			if cv.remove_pair(pair) == 'Pair Removed':
-					cv.update_all_pair(pair, form.notes)
-			else:
+		pair = [form.warrior, friend]
+		#removes given pair from Current-Pairings 
+		#and updates status in All-Pairings
+		if cv.remove_pair(pair) == 'Pair Removed':
+			if cv.update_all_pair(pair, form.notes) == 'Pair Does Not Exist':
 				pair = [['PAIR NOT'],['FOUND']]
-			
-			data = [pair, form.notes]
 		else:
-			#extras because len(1 and 2) conditionals already taken
-			data = ["Incorrect Password! Please try again.",3 ,4]
+			pair = [['PAIR NOT'],['FOUND']]
 		
+		data = [pair, form.notes]	
 		return render.end_pair(table = data)
+
+
+class EndPairStart(object):
+	def GET(self):
+		return render.end_pair_start(message = 1)
+
+	def POST(self):
+		form = web.input(password = 'password')
+		if form.password == cv.secret([3,3,1]):
+			raise web.seeother('98hwerfyvug97843q870fv870324fv')
+		else:
+			error = ["Incorrect password! Please try again."]
+			return render.end_pair_start(message = error)
+
+
+
 
 
 if __name__ == '__main__':
@@ -236,12 +255,13 @@ if __name__ == '__main__':
 		#formerly pairing_gui, changed so randos cant find
 		#like this until legit password system set up
 		'/o8908wqhfepvuhi08ehpqi87dhvuihoia87sh0dvu', 'Pairing',
+		'/98hwerfyvug97843q870fv870324fv'   , 'EndPair',
 		'/interface'  , 'Interface', 
 		'/warriorinfo', 'WarriorInfo',
 		'/friendinfo' , 'FriendInfo',
 		'/add'        , 'Add',
 		'/remove'     , 'Remove',
-		'/end_pair'   , 'EndPair'
+		'/end_pair'   , 'EndPairStart'
 	)
 	
 	# Create the web application and set the render directory

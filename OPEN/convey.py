@@ -152,21 +152,22 @@ def add_pair(chosen_pair, pc_person, notes):
 # removes names from the queue number times
 # sheet_name specifies the sheet that the queue is in
 # either 'Current-Pairings' or "All-Pairings"
-def remove_from_queue(sheet_name, name, number=1):
+def remove_from_queue(sheet_name, name, netid="none", number=1):
 	
 	sheet = open_sheet(sheet_name)
 	#return all names in current
 	
-	if sheet_name == "Friend-Q":
-		current_names = names_no_null(sheet_name, 1)
-		the_numbers   = names_no_null(sheet_name, 2)
+	if sheet_name == "Friend-Q" and netid != "none":
+		current_names  = names_no_null(sheet_name, 1)
+		current_netids = names_no_null(sheet_name, 2)
+		the_numbers    = names_no_null(sheet_name, 3)
 
 		i = 0
 		j = 0
 		length = len(current_names)
 		while i < length:
 		#for i in range(len(current_names)):
-			if current_names[i].lower().strip() == name.lower().strip():
+			if current_netids[i].lower().strip() == netid.lower().strip():
 				j = i
 				i = length + 3
 			i+=1
@@ -176,14 +177,16 @@ def remove_from_queue(sheet_name, name, number=1):
 		#decrement number of people they can help if they are at 1 or more
 		if number == 1 and temp > 1:
 			#1 because thats where array starts and 1 for being past header.
-			sheet.update_cell(j + 1 + 1, 2, temp - 1)
+			sheet.update_cell(j + 1 + 1, 3, temp - 1)
 		else:
 			#delete the elements from the array
 			del the_numbers[j]
 			del current_names[j]
+			del current_netids[j]
 			
 			rewrite_column(sheet_name, 1, current_names)
-			rewrite_column(sheet_name, 2, the_numbers)
+			rewrite_column(sheet_name, 2, current_netids)
+			rewrite_column(sheet_name, 3, the_numbers)
 
 	  
 	#this is for the warrior queue, because we want to remove in original way
@@ -205,22 +208,23 @@ def remove_from_queue(sheet_name, name, number=1):
 # adds the list of names to the queue specified in the sheet
 # this should only be used with the friend queue
 # see update warrior queue for adding to that list
-def add_to_queue(sheet_name, name, number):
+def add_to_queue(sheet_name, name, netid, number):
 	#this is gonna fuck up if theres blanks within the list
 	#but you need this to keep things short enough.
-	current_names = names_no_null(sheet_name, 1)
+	#current_names  = names_no_null(sheet_name, 1)
 
-	the_numbers   = names_no_null(sheet_name, 2)
+	current_netids = names_no_null(sheet_name, 2)
+	the_numbers    = names_no_null(sheet_name, 3)
 
 	sheet = open_sheet(sheet_name)
 
 	in_list = False
-	length = len(current_names)
+	length = len(current_netids)
 	i = 0
 	while i < length:
 		#if name is in list then only update the number
-		if current_names[i].lower().strip() == name.lower().strip():
-			sheet.update_cell(i+2, 2, int(the_numbers[i])+number)
+		if current_netids[i].lower().strip() == netid.lower().strip():
+			sheet.update_cell(i+2, 3, int(the_numbers[i])+number)
 			in_list = True
 			i = length + 10
 		i+=1
@@ -229,18 +233,9 @@ def add_to_queue(sheet_name, name, number):
 		#add to first empty place if not in list already
 		first_empty_row = search_column(sheet, 1, '')
 		sheet.update_cell(first_empty_row, 1, name)
-		sheet.update_cell(first_empty_row, 2, number)
+		sheet.update_cell(first_empty_row, 2, netid)
+		sheet.update_cell(first_empty_row, 3, number)
 
-
-	"""#old way of doing things
-	# get the current list of names and append list_of_names to it
-	names = names_no_null(sheet_name, 1)
-	for element in list_of_names:
-		names.append(element)
-	
-	# rewrite the column within the spreadsheet
-	rewrite_column(sheet_name, 1, names)
-	"""
 
 # Gets info from the warrior sheet based on specified datatype
 # datatype: 'info', 'contact'
@@ -248,9 +243,12 @@ def get_warrior_info(warrior_name, datatype):
 	
 	#entries numbers edited for live sheets
 
-	#search col 2 for row with warrior_name
-	sheet = open_sheet('Chat-Form-Responses')	
-	row = search_column(sheet, 2, warrior_name)
+	#find row for person with warrior_name
+	sheet = open_sheet('Chat-Form-Responses')
+	col = search_row(sheet, 1, "name")	
+	row = search_column(sheet, col, warrior_name)
+
+	offset = -1
 
 	#return the appropriate value from the sheet
 	#not sure if necessary since we know person exists if this is called
@@ -258,17 +256,17 @@ def get_warrior_info(warrior_name, datatype):
 	if row < 1000:
 		data = sheet.row_values(row)
 		if datatype == 'info':
-			sex       = data[2]
-			year      = data[6]
-			interests = data[7]
-			hobbies   = data[8]
-			struggle  = data[10]
+			sex       = data[search_row(sheet, 1, "sex/gender")+offset]
+			year      = data[search_row(sheet, 1, "year")+offset]
+			interests = data[search_row(sheet, 1, "Professional Interests")+offset]
+			hobbies   = data[search_row(sheet, 1, "hobbies")+offset]
+			struggle  = data[search_row(sheet, 1, "Tell us a bit about what you are going through")+offset]
 			return [sex, year, interests, hobbies, struggle]
 		
 		elif datatype == 'contact':
-			method = data[3]
-			phone  = data[4]
-			email  = data[5]
+			method = data[search_row(sheet, 1, "How would you like to chat?")+offset]
+			phone  = data[search_row(sheet, 1, "phone number")+offset]
+			email  = data[search_row(sheet, 1, "email")+offset]
 			return [method, phone, email]
 		
 		else:
@@ -281,28 +279,29 @@ def get_warrior_info(warrior_name, datatype):
 # datatype: 'info', 'contact'
 def get_friend_info(friend_name, datatype):
 	
-	#R column with names is 18
+	#find row for person with name friend_name
 	sheet = open_sheet('Friend-Form')
-	row = search_column(sheet, 18, friend_name)
+	col = search_row(sheet, 1, "name")
+	row = search_column(sheet, col, friend_name)
 	
-	offset = 1
+	offset = -1
 
 	# if the row is valid get the data corresponding to the 
 	# datatype and pass it to the user
 	if row < 1000:
 		data = sheet.row_values(row)
 		if datatype == 'info':
-			sex       = data[3+offset]
-			year      = data[4+offset]
-			major     = data[5+offset]
-			interests = data[6+offset]
-			hobbies   = data[12+offset]
+			sex       = data[search_row(sheet, 1, "sex/gender")+offset]
+			year      = data[search_row(sheet, 1, "year")+offset]
+			major     = data[search_row(sheet, 1, "Major/Minor/Pre-Professional Interests")+offset]
+			interests = data[search_row(sheet, 1, "Whom are you interested in helping?")+offset]
+			hobbies   = data[search_row(sheet, 1, "hobbies")+offset]
 			return [sex, year, major, interests, hobbies]
 		
 		elif datatype == 'contact':
 			#add preffered method of contact = data[16+offset]
-			phone = data[8+offset]
-			email = data[9+offset]
+			phone = data[search_row(sheet, 1, "phone number")+offset]
+			email = data[search_row(sheet, 1, "email")+offset]
 			return [phone, email]
 
 		else:
@@ -351,7 +350,7 @@ def update_all_pair(pair, notes=''):
 	two = ap.col_values(2)
 	length = len(one)
 	i = 0
-	while i =< length:
+	while i <= length:
 		if one[i].lower().strip() == pair[0] and two[i].lower().strip() == pair[1]:
 			the_row = i + 1
 			i = length + 10
@@ -431,3 +430,15 @@ def update_warriorq():
 			new_list.extend(names_no_null("Warrior-Q", 1))
 			new_list.extend(not_on_queue)
 			rewrite_column("Warrior-Q", 1, new_list)
+
+
+#given a friend or warrior sheet this converts a netid to a name
+def id2name(sheet, netid):
+	id_col = search_row(sheet, 1, "netid")
+	nm_col = search_row(sheet, 1, "name")
+	
+	row = search_column(sheet, id_col, netid)
+
+	info = sheet.row_values(row)
+	return info[nm_col-1]
+
