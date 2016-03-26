@@ -30,7 +30,10 @@ def open_sheet(spreadsheet):
 		}
 	
 	live_keys = {
-		"All-Pairings"       : "1LC-zMkJogC3MDSJ8NvOSFDd5ey-h-cmf2HgDXt7nwMA",
+
+		# used as current pairings prior to gui, better to use new sheet
+		#"All-Pairings"      : "1LC-zMkJogC3MDSJ8NvOSFDd5ey-h-cmf2HgDXt7nwMA",
+		"All-Pairings"       : "1PBuw6JMfmW7gI3LjKCFyvG40urO26jv2-woyrgBLikI",
 		"Current-Pairings"   : "1dXyKnU2rdy9L_JV95GLdmo4CNLQaN44-kv8nxsHWXbE",
 		
 		# Friend-Form = Friend-List
@@ -51,7 +54,7 @@ def open_sheet(spreadsheet):
 	
 	# Open the spreadsheet, throws exception if sheet does not exist
 	# we will assume that it does exist
-	sheet = gc.open_by_key(test_keys[spreadsheet]).sheet1
+	sheet = gc.open_by_key(live_keys[spreadsheet]).sheet1
 	
 	return sheet
 

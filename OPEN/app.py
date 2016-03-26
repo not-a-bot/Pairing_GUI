@@ -104,7 +104,7 @@ class Add(object):
 
 		# if more than 1000 people sign up or if the spreadsheet is resized to > 1000.
 		if row_num >= 1000:
-			message = "FAILURE! We could not find your netID on the list. Please make sure you submitted the correct netID (%s). If this is the correct netID it is possible that was incorrectly entered on our spreadsheet or there is something wrong with this code (which is a very likely possibility). Please let us know about this problem, whether through our website, facebook, slack, next meeting, or randomly in the quad. THANK YOU!" % form.netid	
+			message = "FAILURE! We could not find your netID on the list. Please make sure you submitted the correct netID (%s). If this is the correct netID it is possible that was incorrectly entered on our spreadsheet or there is something wrong with this code (which is a very likely possibility). Please let us know about this problem, whether through our the suggestions link above, facebook, slack, the next meeting, or randomly in the quad. THANK YOU!" % form.netid	
 
 		else:
 			the_values = sheet.row_values(row_num)
@@ -120,7 +120,7 @@ class Add(object):
 				message = "SUCCESS!"
 				
 			else:
-				message = "FAILURE! You're name is on the list but it looks like you have not been trained. In order to become trained you must come to a sufficient amount of trainings. While there we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. If you believe you have been trained though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
+				message = "FAILURE! You're name is on the list but it looks like you have not been trained. In order to become trained you must come to a sufficient amount of trainings. While there we go over situations you may encounter and talk about what the process of being a friend will be like (good ole logistics and all.) It is really quite fun. Once there was even candy. So please try to come out if you have not yet. If anything you'll at least learn how this stupid interface works. (We may also be going through kognito too.) If you believe you have been trained though and have gone through trainings then please let somebody know so they can fix it. Again, its a stupid interface. But with your help maybe it can just be dumb."
 
 		# render /add and pass the message and number of times added to the user
 		return render.add(stuff = [message, num])
@@ -172,7 +172,6 @@ class WarriorInfo(object):
 	def POST(self):
 		warriorName = web.input()
 		textName = warriorName['name']
-		print textName
 		info = cv.get_warrior_info(textName, 'info')
 		return json.dumps({'sex'       :info[0], 'year'    : info[1], 
 						   'interests' :info[2], 'hobbies' : info[3],
@@ -187,7 +186,6 @@ class WarriorInfo(object):
 class FriendInfo(object):
 	def POST(self):
 		warriorName = web.input()
-		print warriorName
 		textName = warriorName['name']
 		info = cv.get_friend_info(textName, 'info')
 		return json.dumps({'sex'    :info[0], 'year'     :info[1], 
@@ -256,7 +254,7 @@ if __name__ == '__main__':
 		#formerly pairing_gui, changed so randos cant find
 		#like this until legit password system set up
 		'/o8908wqhfepvuhi08ehpqi87dhvuihoia87sh0dvu', 'Pairing',
-		'/98hwerfyvug97843q870fv870324fv'   , 'EndPair',
+		#'/98hwerfyvug97843q870fv870324fv'   , 'EndPair',
 		'/interface'  , 'Interface', 
 		'/warriorinfo', 'WarriorInfo',
 		'/friendinfo' , 'FriendInfo',

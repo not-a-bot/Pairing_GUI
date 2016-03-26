@@ -4,13 +4,10 @@ body {
 	padding:          70px;
 }
 
-.header .form {
-	text-align: center;
-}
-
 
 .password {
 	position: relative;
+	bottom:   -20px;
 }
 
 
