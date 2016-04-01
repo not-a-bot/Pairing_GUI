@@ -49,6 +49,10 @@ $def with (list_of_names)
 				<li>
                     <a href="end_pair">End Pair</a>
                 </li>
+                <li>
+                    <a href="https://docs.google.com/forms/d/1nVthwBxIauDWurilurZOxVwIMBAjHhMeiM7qQG2fPRw/viewform">
+					Suggestions</a>
+                </li>
             </ul>
         </div>
         <!-- /.navbar-collapse -->
@@ -64,8 +68,16 @@ $def with (list_of_names)
 	The purpose of this interface is to simplify the process of pairing 
 	people. We also have other pages (see navbar above) to help streamline 
 	other administrative tasks. If anything anywhere doesn't work please 
-	be sure to let us know and we will
-	try to the best of our abilities to fix it.</p>
+	navigate to the suggestions link above and fill out a form. A highly 
+	trained and highly capable team will begin work on your input
+	at two times the speed of beauracracy! (That is about 1/c in SI units.)
+	</p>
+	<p>
+	If entries are blank please don't press submit as things are likely to break
+	from that. Also clicking names is suppossed to give you a pop up with their info
+	but is very slow and not working atm. Stay tuned for possible updates with it
+	working.
+	</p>
 </div>
 
 
@@ -78,9 +90,11 @@ $def with (list_of_names)
 	<div class="col-md-6">
 		<p class="friend-title">List of Available Friends</p>
 		<div class="list-group">
-			$for element in list_of_names[0]:
-				<button type="button" class="list-group-item" value="$element" onclick="displayFriendInfo(this.value)">	
-				<p class="friend-item">$element</p>
+			$for i in range(len(list_of_names[0])):
+				<!-- FIX THESE CLICKING FUNCTIONS-->
+				<!-- onclick="displayFriendInfo(this.value)" -->
+				<button type="button" class="list-group-item" value="list_of_names[0][i]">
+				<p class="friend-item">$list_of_names[0][i] : $list_of_names[2][i]</p>
 				</button>
 		</div>
 	</div>
@@ -90,9 +104,10 @@ $def with (list_of_names)
 		<p class="warrior-title">List of Warriors</p>
 		<div class="list-group">
 			$for element in list_of_names[1]:
-			<button type="button" class="list-group-item" value="$element" onclick="displayWarriorInfo(this.value)">
+			<!-- onclick="displayWarriorInfo(this.value)" -->
+			<button type="button" class="list-group-item" value="$element" >
 				<p class="warrior-item">$element</p>
-			</button>
+			<!</button>
 		</div>
 	</div>
 
@@ -111,11 +126,11 @@ $def with (list_of_names)
 		<!-- if something breaks, class was "col-md-1 col-centered"
 		but it wouldn't center that way so removed it.-->
 		<div class="col-centered">
-			<h3>Friend:</h3>
+			<h3>Friend (netID):</h3>
 			<select name="friend" id="friendQueue">
-				<option disabled selected>--Friend--</option>
-				$for name in list_of_names[0]:	
-					<option value="$name">$name</option>
+				<!-- <option disabled selected>--Friend--</option> -->
+				$for netid in list_of_names[2]:	
+					<option value="$netid">$netid</option>
 			</select>
 		</div>
 		
@@ -123,7 +138,7 @@ $def with (list_of_names)
 		<div class="col-centered">
 			<h3>Warrior:</h3>
 			<select name="warrior" id="warriorQueue">
-				<option disabled selected>--Warrior--</option>
+				<!-- <option disabled selected>--Warrior--</option> -->
 				$for name in list_of_names[1]:	
 					<option value="$name">$name</option>
 			</select>
@@ -133,8 +148,8 @@ $def with (list_of_names)
 		<!-- Pairied By -->
 		<div class="col-centered">
 			<h3>Paired By:</h3>
-			<select name="pairedby" id="pairedby">
-				<option disabled selected>--Pairing Committee--</option>
+			<select name="pb" id="pb">
+				<option disabled selected>NA</option>
 				<!-- List of People in Pairing Committee -->
 				$for name in ['Karthik', 'Reika', 'Charles']:	
 					<option value="$name">$name</option>
@@ -148,16 +163,17 @@ $def with (list_of_names)
 		</div>
 		<br>
 
-		<!-- Password -->
+		<!-- Password -> Dont need a password here because its in the "login"
 		<div class="col-centered">
 			<h3>Password:</h3>
 			<input type="password" name="password" id="password">
-		</div>
+		</div> -->
 	</div>
 	
 	<br>
 	<!-- Submit Pairing -->
 	<div class="row-centered">
+		<!-- pairClick is to pair, not for pop up... lol -->
 		<button type="button" class="pairButton" id="pairButton" onclick="pairClick()">
 		Pair</button>
 	</div>

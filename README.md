@@ -33,11 +33,12 @@ pairing_gui
 	(localhost:8080 is completely valid as well)
 Available pages are:
 
-  * /pairing_gui - pairing interface
-  * /add - add self to the queue
-  * /remove - remove self from the queue
+  * /interface - pairing interface
+  * /add       - add self to the queue
+  * /remove    - remove self from the queue
+  * /end_pair  - end the current pairing
 
-  example: `http://0.0.0.0:8080/pairing_gui`
+  example: `http://0.0.0.0:8080/add`
 
   NOTE: You may have to replace http://0.0.0.0:8080 with http://127.0.0.1:8080
 	    or localhost:8080
@@ -46,7 +47,7 @@ Available pages are:
 
 ####Pairing
 
-`http://0.0.0.0:8080/pairing_gui`
+`http://0.0.0.0:8080/interface`
 
 Someone in the Pairing Commmittee will see both of the queues and pair 
 a warrior with a friend. This removes both people from
@@ -112,7 +113,7 @@ manually, if we still wish to do this.
 Columns must be organized as:
 
 	Current-Pairings: Warrior - Friend - Start Date
-	    All-Pairings: Warrior - Friend - Start Date - End Date - Notes
+	    All-Pairings: Warrior - Friend - Start Date - End Date - [Extra Col] - [Extra Col] - Notes
 			  Queues: Single Column of Names
 
 
@@ -128,5 +129,3 @@ Under netId that is their netids (no spaces).
 Under 'Verified' it should say 'yes' if they are verified. ANYTHING else
 means they are not verified. For all of these, capitilization and extra
 spaces before or after should not matter.
-
-

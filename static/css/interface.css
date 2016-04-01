@@ -4,18 +4,15 @@ body {
 	padding:          70px;
 }
 
-.header .form {
-	text-align: center;
-}
-
 
 .password {
 	position: relative;
+	bottom:   -20px;
 }
 
 
 .button {
 	position:   relative;
-	color:      green;
-	font-size:  30;
+	color:      purple;
+	font-size:  20;
 }
